@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Empite.TribechimpService.CoreService.Data\Empite.TribechimpService.PaymentService.Data.csproj" />
+    <ProjectReference Include="..\Empite.TribechimpService.CoreService.Domain\Empite.TribechimpService.PaymentService.Domain.csproj" />
+    <ProjectReference Include="..\Empite.TribechimpService.Core\Empite.TribechimpService.Core.csproj" />
+    <ProjectReference Include="..\Empite.TribechimpService.Shared\Empite.TribechimpService.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.Extensions.Http">
+      <HintPath>C:\Users\MichikaP\.nuget\packages\microsoft.extensions.http\2.1.1\lib\netstandard2.0\Microsoft.Extensions.Http.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

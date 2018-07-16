@@ -1,0 +1,93 @@
+2018-07-10 03:44:42.391 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-10 03:45:11.643 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-10 03:45:12.269 +00:00 [Information] Executed DbCommand ("62"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA=N'dev-tribechimpcore' AND TABLE_NAME=N'__EFMigrationsHistory';"
+2018-07-10 03:45:12.303 +00:00 [Information] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA=N'dev-tribechimpcore' AND TABLE_NAME=N'__EFMigrationsHistory';"
+2018-07-10 03:45:12.362 +00:00 [Information] Executed DbCommand ("32"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT `MigrationId`, `ProductVersion`
+FROM `__EFMigrationsHistory`
+ORDER BY `MigrationId`;"
+2018-07-10 03:45:12.371 +00:00 [Information] Applying migration '"20180710034442_add primary contact id"'.
+2018-07-10 03:45:12.573 +00:00 [Information] Executed DbCommand ("150"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE `InvoiceContacts` ADD `ZohoPrimaryContactId` longtext NULL;"
+2018-07-10 03:45:12.581 +00:00 [Information] Executed DbCommand ("8"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""INSERT INTO `__EFMigrationsHistory` (`MigrationId`, `ProductVersion`)
+VALUES (N'20180710034442_add primary contact id', N'2.1.1-rtm-30846');"
+2018-07-10 05:43:00.822 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-10 05:43:14.327 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-10 05:43:15.014 +00:00 [Information] Executed DbCommand ("30"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA=N'dev-tribechimpcore' AND TABLE_NAME=N'__EFMigrationsHistory';"
+2018-07-10 05:43:15.055 +00:00 [Information] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA=N'dev-tribechimpcore' AND TABLE_NAME=N'__EFMigrationsHistory';"
+2018-07-10 05:43:15.071 +00:00 [Information] Executed DbCommand ("7"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT `MigrationId`, `ProductVersion`
+FROM `__EFMigrationsHistory`
+ORDER BY `MigrationId`;"
+2018-07-10 05:43:15.083 +00:00 [Information] Applying migration '"20180710054301_Added zoho invoice job queue"'.
+2018-07-10 05:43:15.241 +00:00 [Information] Executed DbCommand ("48"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE `ZohoInvoiceJobQueues` (
+    `CreatedAt` datetime(6) NOT NULL,
+    `CreatedBy` char(36) NULL,
+    `UpdatedAt` datetime(6) NULL,
+    `UpdatedBy` char(36) NULL,
+    `DeletedAt` datetime(6) NULL,
+    `DeletedBy` char(36) NULL,
+    `Id` varchar(255) NOT NULL,
+    `JsonData` longtext NULL,
+    `JobType` int NOT NULL,
+    `IsSuccess` bit NOT NULL,
+    `ReTryCount` int NOT NULL,
+    CONSTRAINT `PK_ZohoInvoiceJobQueues` PRIMARY KEY (`Id`)
+);"
+2018-07-10 05:43:15.244 +00:00 [Information] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""INSERT INTO `__EFMigrationsHistory` (`MigrationId`, `ProductVersion`)
+VALUES (N'20180710054301_Added zoho invoice job queue', N'2.1.1-rtm-30846');"
+2018-07-10 11:32:57.705 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-10 11:33:20.023 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-10 11:33:20.482 +00:00 [Information] Executed DbCommand ("26"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA=N'dev-tribechimpcore' AND TABLE_NAME=N'__EFMigrationsHistory';"
+2018-07-10 11:33:20.511 +00:00 [Information] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA=N'dev-tribechimpcore' AND TABLE_NAME=N'__EFMigrationsHistory';"
+2018-07-10 11:33:20.529 +00:00 [Information] Executed DbCommand ("10"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT `MigrationId`, `ProductVersion`
+FROM `__EFMigrationsHistory`
+ORDER BY `MigrationId`;"
+2018-07-10 11:33:20.538 +00:00 [Information] Applying migration '"20180710113257_LastErrorMessage"'.
+2018-07-10 11:33:21.244 +00:00 [Information] Executed DbCommand ("666"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE `ZohoInvoiceJobQueues` ADD `LastErrorMessage` text NULL;"
+2018-07-10 11:33:21.323 +00:00 [Information] Executed DbCommand ("79"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""INSERT INTO `__EFMigrationsHistory` (`MigrationId`, `ProductVersion`)
+VALUES (N'20180710113257_LastErrorMessage', N'2.1.1-rtm-30846');"
+2018-07-10 11:34:15.848 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-10 11:36:05.695 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-10 11:36:06.525 +00:00 [Information] Executed DbCommand ("29"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA=N'dev-tribechimpcore' AND TABLE_NAME=N'__EFMigrationsHistory';"
+2018-07-10 11:36:06.569 +00:00 [Information] Executed DbCommand ("5"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT `MigrationId`, `ProductVersion`
+FROM `__EFMigrationsHistory`
+ORDER BY `MigrationId`;"
+2018-07-10 11:36:23.803 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-10 11:36:37.615 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-10 11:36:38.121 +00:00 [Information] Executed DbCommand ("24"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA=N'dev-tribechimpcore' AND TABLE_NAME=N'__EFMigrationsHistory';"
+2018-07-10 11:36:38.148 +00:00 [Information] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA=N'dev-tribechimpcore' AND TABLE_NAME=N'__EFMigrationsHistory';"
+2018-07-10 11:36:38.156 +00:00 [Information] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT `MigrationId`, `ProductVersion`
+FROM `__EFMigrationsHistory`
+ORDER BY `MigrationId`;"
+2018-07-10 11:36:38.166 +00:00 [Information] Applying migration '"20180710113624_LastErrorMessageAlternative"'.
+2018-07-10 11:36:38.307 +00:00 [Information] Executed DbCommand ("91"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE `ZohoInvoiceJobQueues` MODIFY COLUMN `LastErrorMessage` longtext NULL;"
+2018-07-10 11:36:38.310 +00:00 [Information] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""INSERT INTO `__EFMigrationsHistory` (`MigrationId`, `ProductVersion`)
+VALUES (N'20180710113624_LastErrorMessageAlternative', N'2.1.1-rtm-30846');"
+2018-07-10 11:38:17.277 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-10 11:38:29.097 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-10 11:38:29.666 +00:00 [Information] Executed DbCommand ("21"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA=N'dev-tribechimpcore' AND TABLE_NAME=N'__EFMigrationsHistory';"
+2018-07-10 11:38:29.699 +00:00 [Information] Executed DbCommand ("6"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT `MigrationId`, `ProductVersion`
+FROM `__EFMigrationsHistory`
+ORDER BY `MigrationId`;"

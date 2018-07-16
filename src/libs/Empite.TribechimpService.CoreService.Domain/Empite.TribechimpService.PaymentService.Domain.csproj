@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Type\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Empite.TribechimpService.Core\Empite.TribechimpService.Core.csproj" />
+    <ProjectReference Include="..\Empite.TribechimpService.Shared\Empite.TribechimpService.Shared.csproj" />
+  </ItemGroup>
+
+</Project>

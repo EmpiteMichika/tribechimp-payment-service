@@ -1,0 +1,104 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Empite.TribechimpService.PaymentService.Domain.Dto;
+using Empite.TribechimpService.PaymentService.Domain.Entity.InvoiceRelated;
+using Empite.TribechimpService.PaymentService.Domain.Interface.Service;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+
+namespace Empite.TribechimpService.PaymentService.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class InvoiceController : ControllerBase
+    {
+        private readonly IZohoInvoceService _zohoInvoceService;
+        public InvoiceController(IZohoInvoceService zohoService)
+        {
+            _zohoInvoceService = zohoService;
+        }
+        [HttpPost("createContact")]
+        public async Task<IActionResult> CreateContact([FromBody]CreateContact createContact)
+        {
+            try
+            {
+                await _zohoInvoceService.AddJob(createContact, ZohoInvoiceJobQueueType.CreateContact);
+                await _zohoInvoceService.AddJob(createContact.UserId, ZohoInvoiceJobQueueType.EnablePaymentReminders);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                //Todo Logging
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    $"Exception is => {e.Message}, stacktrace => {e.StackTrace}");
+            }
+        }
+
+        [HttpPost("enableClientPortle/{userId}")]
+        public async Task<IActionResult> EnableClientPortle(string userId = null)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(userId))
+                {
+                    return BadRequest();
+                }
+                else
+                {
+                    await _zohoInvoceService.AddJob(userId, ZohoInvoiceJobQueueType.EnableClientPortle);
+                }
+
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                //Todo Logging
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    $"Exception is => {e.Message}, stacktrace => {e.StackTrace}");
+            }
+        }
+
+        [HttpGet("runjobs")]
+        public async Task<IActionResult> RunJobs()
+        {
+            _zohoInvoceService.RunJobs();
+            return Ok();
+        }
+
+        [HttpPost("createItem")]
+        public async Task<IActionResult> CreateItem([FromBody] CreateZohoItemDto itemDto)
+        {
+            try
+            {
+                await _zohoInvoceService.AddJob(itemDto, ZohoInvoiceJobQueueType.CreateItem);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                //Todo Logging
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    $"Exception is => {e.Message}, stacktrace => {e.StackTrace}");
+            }
+        }
+
+        [HttpPost("createRecurringInvoice")]
+        public async Task<IActionResult> CreateRecurringInvoice([FromBody]CreateRecurringInvoiceDto model)
+        {
+            try
+            {
+
+            }
+            catch (Exception e)
+            {
+
+            }
+
+            return Ok();
+        }
+    }
+
+    
+    
+}

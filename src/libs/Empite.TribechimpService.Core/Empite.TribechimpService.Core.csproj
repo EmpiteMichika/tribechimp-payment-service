@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="7.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="4.0.1" />
+    <PackageReference Include="Empite.Core" Version="1.0.2" />
+    <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="2.6.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="2.5.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="2.5.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="2.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Utils\" />
+  </ItemGroup>
+
+</Project>

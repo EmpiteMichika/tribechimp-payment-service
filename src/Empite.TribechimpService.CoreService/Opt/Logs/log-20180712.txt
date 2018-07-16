@@ -1,0 +1,363 @@
+2018-07-12 03:26:42.116 +00:00 [Information] User profile is available. Using '"C:\Users\MichikaP\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+2018-07-12 03:26:52.079 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-12 03:26:52.564 +00:00 [Information] Executed DbCommand ("25"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA=N'dev-tribechimpcore' AND TABLE_NAME=N'__EFMigrationsHistory';"
+2018-07-12 03:26:52.612 +00:00 [Information] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA=N'dev-tribechimpcore' AND TABLE_NAME=N'__EFMigrationsHistory';"
+2018-07-12 03:26:52.637 +00:00 [Information] Executed DbCommand ("9"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT `MigrationId`, `ProductVersion`
+FROM `__EFMigrationsHistory`
+ORDER BY `MigrationId`;"
+2018-07-12 03:26:52.712 +00:00 [Information] No migrations were applied. The database is already up to date.
+2018-07-12 03:26:52.924 +00:00 [Information] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM `Organizations` AS `o`)
+    THEN TRUE ELSE FALSE
+END"
+2018-07-12 03:26:58.691 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/swagger/index.html  
+2018-07-12 03:26:58.843 +00:00 [Information] Request finished in 146.3808ms 200 text/html
+2018-07-12 03:27:00.370 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/swagger/v1/swagger.json  
+2018-07-12 03:27:01.225 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/swagger/favicon-32x32.png  
+2018-07-12 03:27:02.571 +00:00 [Information] Sending file. Request path: '"/favicon-32x32.png"'. Physical path: '"N/A"'
+2018-07-12 03:27:02.577 +00:00 [Information] Request finished in 1443.4291ms 200 image/png
+2018-07-12 03:27:02.587 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/swagger/favicon-16x16.png  
+2018-07-12 03:27:02.596 +00:00 [Information] Sending file. Request path: '"/favicon-16x16.png"'. Physical path: '"N/A"'
+2018-07-12 03:27:02.603 +00:00 [Information] Request finished in 18.6348ms 200 image/png
+2018-07-12 03:27:03.372 +00:00 [Information] Request finished in 2669.9532ms 200 application/json;charset=utf-8
+2018-07-12 03:28:02.711 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/api/invoice/runjobs  
+2018-07-12 03:28:02.897 +00:00 [Information] Route matched with "{action = \"RunJobs\", controller = \"Invoice\"}". Executing action "Empite.TribechimpService.CoreService.Controllers.InvoiceController.RunJobs (Empite.TribechimpService.CoreService)"
+2018-07-12 03:28:02.961 +00:00 [Information] Executed action "Empite.TribechimpService.CoreService.Controllers.InvoiceController.RunJobs (Empite.TribechimpService.CoreService)" in 29.6725ms
+2018-07-12 03:28:03.739 +00:00 [Error] An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: Cannot consume scoped service 'Empite.TribechimpService.CoreService.Data.ApplicationDbContext' from singleton 'Empite.TribechimpService.CoreService.Service.ZohoServiceContext'.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.VisitScoped(ScopedCallSite scopedCallSite, CallSiteValidatorState state)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(IServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.VisitConstructor(ConstructorCallSite constructorCallSite, CallSiteValidatorState state)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(IServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.VisitTransient(TransientCallSite transientCallSite, CallSiteValidatorState state)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(IServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.VisitConstructor(ConstructorCallSite constructorCallSite, CallSiteValidatorState state)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(IServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.VisitSingleton(SingletonCallSite singletonCallSite, CallSiteValidatorState state)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(IServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.ValidateCallSite(IServiceCallSite callSite)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.Microsoft.Extensions.DependencyInjection.ServiceLookup.IServiceProviderEngineCallback.OnCreate(IServiceCallSite callSite)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngine.CreateServiceAccessor(Type serviceType)
+   at System.Collections.Concurrent.ConcurrentDictionary`2.GetOrAdd(TKey key, Func`2 valueFactory)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngine.GetService(Type serviceType, ServiceProviderEngineScope serviceProviderEngineScope)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngineScope.GetService(Type serviceType)
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.GetService(IServiceProvider sp, Type type, Type requiredBy, Boolean isDefaultParameterRequired)
+   at lambda_method(Closure , IServiceProvider , Object[] )
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerActivatorProvider.<>c__DisplayClass4_0.<CreateActivator>b__0(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerFactoryProvider.<>c__DisplayClass5_0.<CreateControllerFactory>g__CreateController|0(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIIndexMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext)
+   at Empite.TribechimpService.CoreService.Infrastructure.ApplicationBuilderExtension.<>c__DisplayClass11_0.<<ConfigureApplicationPipeline>b__2>d.MoveNext() in D:\Empite\TribChimp\Repos\tribechimp-coreservice\src\Empite.TribechimpService.CoreService\Infrastructure\ApplicationBuilderExtension.cs:line 192
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2018-07-12 03:28:03.974 +00:00 [Information] Request finished in 1209.7412ms 500 text/html; charset=utf-8
+2018-07-12 03:28:32.590 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/api/invoice/runjobs  
+2018-07-12 03:28:32.628 +00:00 [Information] Route matched with "{action = \"RunJobs\", controller = \"Invoice\"}". Executing action "Empite.TribechimpService.CoreService.Controllers.InvoiceController.RunJobs (Empite.TribechimpService.CoreService)"
+2018-07-12 03:28:32.693 +00:00 [Information] Executed action "Empite.TribechimpService.CoreService.Controllers.InvoiceController.RunJobs (Empite.TribechimpService.CoreService)" in 4.8772ms
+2018-07-12 03:28:32.752 +00:00 [Error] An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: Cannot consume scoped service 'Empite.TribechimpService.CoreService.Data.ApplicationDbContext' from singleton 'Empite.TribechimpService.CoreService.Service.ZohoServiceContext'.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.VisitScoped(ScopedCallSite scopedCallSite, CallSiteValidatorState state)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(IServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.VisitConstructor(ConstructorCallSite constructorCallSite, CallSiteValidatorState state)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(IServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.VisitTransient(TransientCallSite transientCallSite, CallSiteValidatorState state)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(IServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.VisitConstructor(ConstructorCallSite constructorCallSite, CallSiteValidatorState state)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(IServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.VisitSingleton(SingletonCallSite singletonCallSite, CallSiteValidatorState state)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(IServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.ValidateCallSite(IServiceCallSite callSite)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.Microsoft.Extensions.DependencyInjection.ServiceLookup.IServiceProviderEngineCallback.OnCreate(IServiceCallSite callSite)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngine.CreateServiceAccessor(Type serviceType)
+   at System.Collections.Concurrent.ConcurrentDictionary`2.GetOrAdd(TKey key, Func`2 valueFactory)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngine.GetService(Type serviceType, ServiceProviderEngineScope serviceProviderEngineScope)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngineScope.GetService(Type serviceType)
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.GetService(IServiceProvider sp, Type type, Type requiredBy, Boolean isDefaultParameterRequired)
+   at lambda_method(Closure , IServiceProvider , Object[] )
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerActivatorProvider.<>c__DisplayClass4_0.<CreateActivator>b__0(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerFactoryProvider.<>c__DisplayClass5_0.<CreateControllerFactory>g__CreateController|0(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIIndexMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext)
+   at Empite.TribechimpService.CoreService.Infrastructure.ApplicationBuilderExtension.<>c__DisplayClass11_0.<<ConfigureApplicationPipeline>b__2>d.MoveNext() in D:\Empite\TribChimp\Repos\tribechimp-coreservice\src\Empite.TribechimpService.CoreService\Infrastructure\ApplicationBuilderExtension.cs:line 192
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2018-07-12 03:28:32.810 +00:00 [Information] Request finished in 224.7762ms 500 text/html; charset=utf-8
+2018-07-12 03:28:33.292 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/favicon.ico  
+2018-07-12 03:28:33.306 +00:00 [Information] Request finished in 5.4553ms 404 
+2018-07-12 03:29:28.819 +00:00 [Information] User profile is available. Using '"C:\Users\MichikaP\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+2018-07-12 03:29:30.610 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-12 03:29:30.960 +00:00 [Information] Executed DbCommand ("36"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA=N'dev-tribechimpcore' AND TABLE_NAME=N'__EFMigrationsHistory';"
+2018-07-12 03:29:31.035 +00:00 [Information] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA=N'dev-tribechimpcore' AND TABLE_NAME=N'__EFMigrationsHistory';"
+2018-07-12 03:29:31.052 +00:00 [Information] Executed DbCommand ("8"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT `MigrationId`, `ProductVersion`
+FROM `__EFMigrationsHistory`
+ORDER BY `MigrationId`;"
+2018-07-12 03:29:31.072 +00:00 [Information] No migrations were applied. The database is already up to date.
+2018-07-12 03:29:31.178 +00:00 [Information] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM `Organizations` AS `o`)
+    THEN TRUE ELSE FALSE
+END"
+2018-07-12 03:29:33.786 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/swagger/index.html  
+2018-07-12 03:29:33.988 +00:00 [Information] Request finished in 125.3683ms 200 text/html
+2018-07-12 03:29:34.454 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/swagger/v1/swagger.json  
+2018-07-12 03:29:34.974 +00:00 [Information] Request finished in 524.2715ms 200 application/json;charset=utf-8
+2018-07-12 03:29:38.812 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/api/invoice/runjobs  
+2018-07-12 03:29:38.921 +00:00 [Information] Route matched with "{action = \"RunJobs\", controller = \"Invoice\"}". Executing action "Empite.TribechimpService.CoreService.Controllers.InvoiceController.RunJobs (Empite.TribechimpService.CoreService)"
+2018-07-12 03:29:38.951 +00:00 [Information] Executing action method "Empite.TribechimpService.CoreService.Controllers.InvoiceController.RunJobs (Empite.TribechimpService.CoreService)" - Validation state: Valid
+2018-07-12 03:29:48.358 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-12 03:29:48.639 +00:00 [Information] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT COUNT(*)
+FROM `ZohoInvoiceJobQueues` AS `x`
+WHERE `x`.`IsSuccess` = FALSE"
+2018-07-12 03:29:56.135 +00:00 [Information] Executed DbCommand ("11"ms) [Parameters=["@__p_1='?' (DbType = Int32), @__p_0='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SELECT `x`.`Id`, `x`.`CreatedAt`, `x`.`CreatedBy`, `x`.`DeletedAt`, `x`.`DeletedBy`, `x`.`IsSuccess`, `x`.`JobType`, `x`.`JsonData`, `x`.`LastErrorMessage`, `x`.`ReTryCount`, `x`.`UpdatedAt`, `x`.`UpdatedBy`
+FROM `ZohoInvoiceJobQueues` AS `x`
+WHERE `x`.`IsSuccess` = FALSE
+ORDER BY `x`.`CreatedAt`
+LIMIT @__p_1 OFFSET @__p_0"
+2018-07-12 03:30:06.740 +00:00 [Information] Executed action method "Empite.TribechimpService.CoreService.Controllers.InvoiceController.RunJobs (Empite.TribechimpService.CoreService)", returned result "Microsoft.AspNetCore.Mvc.OkResult" in 25255.8828ms.
+2018-07-12 03:30:20.604 +00:00 [Information] Executing HttpStatusCodeResult, setting HTTP status code 200
+2018-07-12 03:30:20.619 +00:00 [Information] Executed action "Empite.TribechimpService.CoreService.Controllers.InvoiceController.RunJobs (Empite.TribechimpService.CoreService)" in 41682.1727ms
+2018-07-12 03:30:24.787 +00:00 [Information] Request finished in 43980.9561ms 200 
+2018-07-12 03:56:28.927 +00:00 [Information] User profile is available. Using '"C:\Users\MichikaP\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+2018-07-12 03:56:31.307 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-12 03:56:31.772 +00:00 [Information] Executed DbCommand ("35"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA=N'dev-tribechimpcore' AND TABLE_NAME=N'__EFMigrationsHistory';"
+2018-07-12 03:56:31.843 +00:00 [Information] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA=N'dev-tribechimpcore' AND TABLE_NAME=N'__EFMigrationsHistory';"
+2018-07-12 03:56:31.877 +00:00 [Information] Executed DbCommand ("5"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT `MigrationId`, `ProductVersion`
+FROM `__EFMigrationsHistory`
+ORDER BY `MigrationId`;"
+2018-07-12 03:56:31.911 +00:00 [Information] No migrations were applied. The database is already up to date.
+2018-07-12 03:56:32.139 +00:00 [Information] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM `Organizations` AS `o`)
+    THEN TRUE ELSE FALSE
+END"
+2018-07-12 03:56:34.469 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/swagger/index.html  
+2018-07-12 03:56:35.198 +00:00 [Information] Request finished in 686.8347ms 200 text/html
+2018-07-12 03:56:35.715 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/swagger/v1/swagger.json  
+2018-07-12 03:56:36.243 +00:00 [Information] Request finished in 529.2022ms 200 application/json;charset=utf-8
+2018-07-12 03:56:45.548 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/api/invoice/runjobs  
+2018-07-12 03:56:45.677 +00:00 [Information] Route matched with "{action = \"RunJobs\", controller = \"Invoice\"}". Executing action "Empite.TribechimpService.CoreService.Controllers.InvoiceController.RunJobs (Empite.TribechimpService.CoreService)"
+2018-07-12 03:56:45.708 +00:00 [Information] Executing action method "Empite.TribechimpService.CoreService.Controllers.InvoiceController.RunJobs (Empite.TribechimpService.CoreService)" - Validation state: Valid
+2018-07-12 03:56:59.958 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-12 03:57:00.143 +00:00 [Information] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT COUNT(*)
+FROM `ZohoInvoiceJobQueues` AS `x`
+WHERE `x`.`IsSuccess` = FALSE"
+2018-07-12 03:57:08.507 +00:00 [Information] Executed DbCommand ("12"ms) [Parameters=["@__p_1='?' (DbType = Int32), @__p_0='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SELECT `x`.`Id`, `x`.`CreatedAt`, `x`.`CreatedBy`, `x`.`DeletedAt`, `x`.`DeletedBy`, `x`.`IsSuccess`, `x`.`JobType`, `x`.`JsonData`, `x`.`LastErrorMessage`, `x`.`ReTryCount`, `x`.`UpdatedAt`, `x`.`UpdatedBy`
+FROM `ZohoInvoiceJobQueues` AS `x`
+WHERE `x`.`IsSuccess` = FALSE
+ORDER BY `x`.`CreatedAt`
+LIMIT @__p_1 OFFSET @__p_0"
+2018-07-12 03:57:21.044 +00:00 [Information] Executed action method "Empite.TribechimpService.CoreService.Controllers.InvoiceController.RunJobs (Empite.TribechimpService.CoreService)", returned result "Microsoft.AspNetCore.Mvc.OkResult" in 33420.3686ms.
+2018-07-12 03:57:27.972 +00:00 [Information] Executing HttpStatusCodeResult, setting HTTP status code 200
+2018-07-12 03:57:30.978 +00:00 [Information] Executed action "Empite.TribechimpService.CoreService.Controllers.InvoiceController.RunJobs (Empite.TribechimpService.CoreService)" in 42298.231ms
+2018-07-12 03:57:30.990 +00:00 [Information] Request finished in 45438.5665ms 200 
+2018-07-12 03:58:16.797 +00:00 [Information] Executed DbCommand ("471"ms) [Parameters=["@p1='?' (Size = 255), @p0='?' (Size = 8000) (DbType = AnsiString)"], CommandType='Text', CommandTimeout='30']"
+""UPDATE `ZohoInvoiceJobQueues` SET `LastErrorMessage` = @p0
+WHERE `Id` = @p1;
+SELECT ROW_COUNT();"
+2018-07-12 03:59:42.911 +00:00 [Information] User profile is available. Using '"C:\Users\MichikaP\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+2018-07-12 03:59:44.818 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-12 03:59:45.141 +00:00 [Information] Executed DbCommand ("23"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA=N'dev-tribechimpcore' AND TABLE_NAME=N'__EFMigrationsHistory';"
+2018-07-12 03:59:45.203 +00:00 [Information] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA=N'dev-tribechimpcore' AND TABLE_NAME=N'__EFMigrationsHistory';"
+2018-07-12 03:59:45.338 +00:00 [Information] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT `MigrationId`, `ProductVersion`
+FROM `__EFMigrationsHistory`
+ORDER BY `MigrationId`;"
+2018-07-12 03:59:45.410 +00:00 [Information] No migrations were applied. The database is already up to date.
+2018-07-12 03:59:45.773 +00:00 [Information] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM `Organizations` AS `o`)
+    THEN TRUE ELSE FALSE
+END"
+2018-07-12 03:59:48.166 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/swagger/index.html  
+2018-07-12 03:59:48.354 +00:00 [Information] Request finished in 119.9372ms 200 text/html
+2018-07-12 03:59:49.023 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/swagger/v1/swagger.json  
+2018-07-12 03:59:49.898 +00:00 [Information] Request finished in 874.6475ms 200 application/json;charset=utf-8
+2018-07-12 03:59:53.534 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/api/invoice/runjobs  
+2018-07-12 03:59:53.641 +00:00 [Information] Route matched with "{action = \"RunJobs\", controller = \"Invoice\"}". Executing action "Empite.TribechimpService.CoreService.Controllers.InvoiceController.RunJobs (Empite.TribechimpService.CoreService)"
+2018-07-12 03:59:53.663 +00:00 [Information] Executing action method "Empite.TribechimpService.CoreService.Controllers.InvoiceController.RunJobs (Empite.TribechimpService.CoreService)" - Validation state: Valid
+2018-07-12 04:00:04.826 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-12 04:00:04.938 +00:00 [Information] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT COUNT(*)
+FROM `ZohoInvoiceJobQueues` AS `x`
+WHERE `x`.`IsSuccess` = FALSE"
+2018-07-12 04:00:11.624 +00:00 [Information] Executed DbCommand ("15"ms) [Parameters=["@__p_1='?' (DbType = Int32), @__p_0='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SELECT `x`.`Id`, `x`.`CreatedAt`, `x`.`CreatedBy`, `x`.`DeletedAt`, `x`.`DeletedBy`, `x`.`IsSuccess`, `x`.`JobType`, `x`.`JsonData`, `x`.`LastErrorMessage`, `x`.`ReTryCount`, `x`.`UpdatedAt`, `x`.`UpdatedBy`
+FROM `ZohoInvoiceJobQueues` AS `x`
+WHERE `x`.`IsSuccess` = FALSE
+ORDER BY `x`.`CreatedAt`
+LIMIT @__p_1 OFFSET @__p_0"
+2018-07-12 04:00:25.911 +00:00 [Information] Executed action method "Empite.TribechimpService.CoreService.Controllers.InvoiceController.RunJobs (Empite.TribechimpService.CoreService)", returned result "Microsoft.AspNetCore.Mvc.OkResult" in 26249.881ms.
+2018-07-12 04:00:26.781 +00:00 [Information] Executing HttpStatusCodeResult, setting HTTP status code 200
+2018-07-12 04:00:28.274 +00:00 [Information] Executed action "Empite.TribechimpService.CoreService.Controllers.InvoiceController.RunJobs (Empite.TribechimpService.CoreService)" in 34620.0622ms
+2018-07-12 04:00:34.020 +00:00 [Information] Request finished in 37703.5435ms 200 
+2018-07-12 04:00:55.957 +00:00 [Information] Start processing HTTP request "POST" https://invoice.zoho.com/api/v3/contacts
+2018-07-12 04:00:55.963 +00:00 [Information] Sending HTTP request "POST" https://invoice.zoho.com/api/v3/contacts
+2018-07-12 04:00:57.387 +00:00 [Information] Received HTTP response after 1421.1523ms - Created
+2018-07-12 04:00:57.392 +00:00 [Information] End processing HTTP request after 1443.2624ms - Created
+2018-07-12 04:01:16.839 +00:00 [Information] Executed DbCommand ("15"ms) [Parameters=["@p0='?' (Size = 255), @p1='?' (DbType = DateTime), @p2='?' (DbType = Guid), @p3='?' (DbType = DateTime), @p4='?' (DbType = Guid), @p5='?' (Size = 4000), @p6='?' (Size = 40), @p7='?' (DbType = DateTime), @p8='?' (DbType = Guid), @p9='?' (Size = 255), @p10='?' (Size = 4000)"], CommandType='Text', CommandTimeout='30']"
+""INSERT INTO `InvoiceContacts` (`UserId`, `CreatedAt`, `CreatedBy`, `DeletedAt`, `DeletedBy`, `Email`, `OrganizationId`, `UpdatedAt`, `UpdatedBy`, `ZohoContactUserId`, `ZohoPrimaryContactId`)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10);"
+2018-07-12 04:01:27.173 +00:00 [Information] Executed DbCommand ("21"ms) [Parameters=["@p2='?' (Size = 255), @p0='?' (DbType = Boolean), @p1='?' (DbType = DateTime)"], CommandType='Text', CommandTimeout='30']"
+""UPDATE `ZohoInvoiceJobQueues` SET `IsSuccess` = @p0, `UpdatedAt` = @p1
+WHERE `Id` = @p2;
+SELECT ROW_COUNT();"
+2018-07-12 04:01:46.634 +00:00 [Information] Executed DbCommand ("1"ms) [Parameters=["@__UserId_0='?' (Size = 255)"], CommandType='Text', CommandTimeout='30']"
+""SELECT `x`.`UserId`, `x`.`CreatedAt`, `x`.`CreatedBy`, `x`.`DeletedAt`, `x`.`DeletedBy`, `x`.`Email`, `x`.`OrganizationId`, `x`.`UpdatedAt`, `x`.`UpdatedBy`, `x`.`ZohoContactUserId`, `x`.`ZohoPrimaryContactId`
+FROM `InvoiceContacts` AS `x`
+WHERE `x`.`UserId` = @__UserId_0
+LIMIT 1"
+2018-07-12 04:02:02.795 +00:00 [Information] Start processing HTTP request "POST" https://invoice.zoho.com/api/v3/contacts/1414691000000086001/paymentreminder/enable
+2018-07-12 04:02:02.801 +00:00 [Information] Sending HTTP request "POST" https://invoice.zoho.com/api/v3/contacts/1414691000000086001/paymentreminder/enable
+2018-07-12 04:02:03.703 +00:00 [Information] Received HTTP response after 902.8978ms - OK
+2018-07-12 04:02:03.709 +00:00 [Information] End processing HTTP request after 911.9048ms - OK
+2018-07-12 04:02:19.033 +00:00 [Information] Executed DbCommand ("8"ms) [Parameters=["@p2='?' (Size = 255), @p0='?' (DbType = Boolean), @p1='?' (DbType = DateTime)"], CommandType='Text', CommandTimeout='30']"
+""UPDATE `ZohoInvoiceJobQueues` SET `IsSuccess` = @p0, `UpdatedAt` = @p1
+WHERE `Id` = @p2;
+SELECT ROW_COUNT();"
+2018-07-12 04:02:35.293 +00:00 [Information] Executed DbCommand ("0"ms) [Parameters=["@__UserId_0='?' (Size = 255)"], CommandType='Text', CommandTimeout='30']"
+""SELECT `x`.`UserId`, `x`.`CreatedAt`, `x`.`CreatedBy`, `x`.`DeletedAt`, `x`.`DeletedBy`, `x`.`Email`, `x`.`OrganizationId`, `x`.`UpdatedAt`, `x`.`UpdatedBy`, `x`.`ZohoContactUserId`, `x`.`ZohoPrimaryContactId`
+FROM `InvoiceContacts` AS `x`
+WHERE `x`.`UserId` = @__UserId_0
+LIMIT 1"
+2018-07-12 04:02:55.846 +00:00 [Information] Start processing HTTP request "POST" https://invoice.zoho.com/api/v3/contacts/1414691000000086001/portal/enable
+2018-07-12 04:02:55.852 +00:00 [Information] Sending HTTP request "POST" https://invoice.zoho.com/api/v3/contacts/1414691000000086001/portal/enable
+2018-07-12 04:02:57.202 +00:00 [Information] Received HTTP response after 1350.6138ms - OK
+2018-07-12 04:02:57.207 +00:00 [Information] End processing HTTP request after 1360.8419ms - OK
+2018-07-12 04:03:13.104 +00:00 [Information] Executed DbCommand ("7"ms) [Parameters=["@p2='?' (Size = 255), @p0='?' (DbType = Boolean), @p1='?' (DbType = DateTime)"], CommandType='Text', CommandTimeout='30']"
+""UPDATE `ZohoInvoiceJobQueues` SET `IsSuccess` = @p0, `UpdatedAt` = @p1
+WHERE `Id` = @p2;
+SELECT ROW_COUNT();"
+2018-07-12 05:28:06.798 +00:00 [Information] User profile is available. Using '"C:\Users\MichikaP\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+2018-07-12 05:28:08.636 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-12 05:28:09.337 +00:00 [Information] Executed DbCommand ("49"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA=N'dev-tribechimpcore' AND TABLE_NAME=N'__EFMigrationsHistory';"
+2018-07-12 05:28:09.384 +00:00 [Information] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA=N'dev-tribechimpcore' AND TABLE_NAME=N'__EFMigrationsHistory';"
+2018-07-12 05:28:09.403 +00:00 [Information] Executed DbCommand ("4"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT `MigrationId`, `ProductVersion`
+FROM `__EFMigrationsHistory`
+ORDER BY `MigrationId`;"
+2018-07-12 05:28:09.422 +00:00 [Information] No migrations were applied. The database is already up to date.
+2018-07-12 05:28:09.567 +00:00 [Information] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM `Organizations` AS `o`)
+    THEN TRUE ELSE FALSE
+END"
+2018-07-12 05:28:11.997 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/swagger/index.html  
+2018-07-12 05:28:12.081 +00:00 [Information] Request finished in 85.0761ms 200 text/html
+2018-07-12 05:28:12.810 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/swagger/v1/swagger.json  
+2018-07-12 05:28:13.283 +00:00 [Information] Request finished in 518.563ms 200 application/json;charset=utf-8
+2018-07-12 05:31:01.774 +00:00 [Information] Request starting HTTP/1.1 POST https://localhost:5011/api/invoice/createItem application/json 114
+2018-07-12 05:31:01.962 +00:00 [Information] Route matched with "{action = \"CreateItem\", controller = \"Invoice\"}". Executing action "Empite.TribechimpService.CoreService.Controllers.InvoiceController.CreateItem (Empite.TribechimpService.CoreService)"
+2018-07-12 05:31:02.066 +00:00 [Information] Executing action method "Empite.TribechimpService.CoreService.Controllers.InvoiceController.CreateItem (Empite.TribechimpService.CoreService)" with arguments (["Empite.TribechimpService.CoreService.Domain.Dto.CreateZohoItemDto"]) - Validation state: Valid
+2018-07-12 05:31:50.650 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-12 05:31:52.834 +00:00 [Information] Executed DbCommand ("27"ms) [Parameters=["@p0='?' (Size = 255), @p1='?' (DbType = DateTime), @p2='?' (DbType = Guid), @p3='?' (DbType = DateTime), @p4='?' (DbType = Guid), @p5='?' (DbType = Boolean), @p6='?' (DbType = Int32), @p7='?' (Size = 8000) (DbType = AnsiString), @p8='?' (Size = 8000) (DbType = AnsiString), @p9='?' (DbType = Int32), @p10='?' (DbType = DateTime), @p11='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""INSERT INTO `ZohoInvoiceJobQueues` (`Id`, `CreatedAt`, `CreatedBy`, `DeletedAt`, `DeletedBy`, `IsSuccess`, `JobType`, `JsonData`, `LastErrorMessage`, `ReTryCount`, `UpdatedAt`, `UpdatedBy`)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11);"
+2018-07-12 05:31:55.251 +00:00 [Information] Executed action method "Empite.TribechimpService.CoreService.Controllers.InvoiceController.CreateItem (Empite.TribechimpService.CoreService)", returned result "Microsoft.AspNetCore.Mvc.OkResult" in 53157.8585ms.
+2018-07-12 05:31:55.274 +00:00 [Information] Executing HttpStatusCodeResult, setting HTTP status code 200
+2018-07-12 05:31:55.292 +00:00 [Information] Executed action "Empite.TribechimpService.CoreService.Controllers.InvoiceController.CreateItem (Empite.TribechimpService.CoreService)" in 53314.8944ms
+2018-07-12 05:31:55.324 +00:00 [Information] Request finished in 53547.101ms 200 
+2018-07-12 05:32:11.331 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/api/invoice/runjobs  
+2018-07-12 05:32:11.348 +00:00 [Information] Route matched with "{action = \"RunJobs\", controller = \"Invoice\"}". Executing action "Empite.TribechimpService.CoreService.Controllers.InvoiceController.RunJobs (Empite.TribechimpService.CoreService)"
+2018-07-12 05:32:11.376 +00:00 [Information] Executing action method "Empite.TribechimpService.CoreService.Controllers.InvoiceController.RunJobs (Empite.TribechimpService.CoreService)" - Validation state: Valid
+2018-07-12 05:32:52.592 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-12 05:32:52.652 +00:00 [Information] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT COUNT(*)
+FROM `ZohoInvoiceJobQueues` AS `x`
+WHERE `x`.`IsSuccess` = FALSE"
+2018-07-12 05:33:00.964 +00:00 [Information] Executed DbCommand ("1"ms) [Parameters=["@__p_1='?' (DbType = Int32), @__p_0='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SELECT `x`.`Id`, `x`.`CreatedAt`, `x`.`CreatedBy`, `x`.`DeletedAt`, `x`.`DeletedBy`, `x`.`IsSuccess`, `x`.`JobType`, `x`.`JsonData`, `x`.`LastErrorMessage`, `x`.`ReTryCount`, `x`.`UpdatedAt`, `x`.`UpdatedBy`
+FROM `ZohoInvoiceJobQueues` AS `x`
+WHERE `x`.`IsSuccess` = FALSE
+ORDER BY `x`.`CreatedAt`
+LIMIT @__p_1 OFFSET @__p_0"
+2018-07-12 05:33:09.549 +00:00 [Information] Executed action method "Empite.TribechimpService.CoreService.Controllers.InvoiceController.RunJobs (Empite.TribechimpService.CoreService)", returned result "Microsoft.AspNetCore.Mvc.OkResult" in 58142.3452ms.
+2018-07-12 05:33:15.291 +00:00 [Information] Executing HttpStatusCodeResult, setting HTTP status code 200
+2018-07-12 05:33:18.687 +00:00 [Information] Executed action "Empite.TribechimpService.CoreService.Controllers.InvoiceController.RunJobs (Empite.TribechimpService.CoreService)" in 66314.3315ms
+2018-07-12 05:33:22.468 +00:00 [Information] Request finished in 69484.324ms 200 
+2018-07-12 05:33:45.711 +00:00 [Information] Start processing HTTP request "POST" https://invoice.zoho.com/api/v3/items
+2018-07-12 05:33:45.716 +00:00 [Information] Sending HTTP request "POST" https://invoice.zoho.com/api/v3/items
+2018-07-12 05:33:47.408 +00:00 [Information] Received HTTP response after 1687.7661ms - Created
+2018-07-12 05:33:47.412 +00:00 [Information] End processing HTTP request after 1706.1864ms - Created
+2018-07-12 05:34:00.715 +00:00 [Information] Executed DbCommand ("16"ms) [Parameters=["@p0='?' (Size = 255), @p1='?' (DbType = DateTime), @p2='?' (DbType = Guid), @p3='?' (DbType = DateTime), @p4='?' (DbType = Guid), @p5='?' (Size = 4000), @p6='?' (Size = 4000), @p7='?' (DbType = Double), @p8='?' (Size = 255), @p9='?' (DbType = DateTime), @p10='?' (DbType = Guid), @p11='?' (Size = 255)"], CommandType='Text', CommandTimeout='30']"
+""INSERT INTO `ZohoItems` (`Id`, `CreatedAt`, `CreatedBy`, `DeletedAt`, `DeletedBy`, `Description`, `Name`, `Rate`, `RecurringInvoiceId`, `UpdatedAt`, `UpdatedBy`, `ZohoItemId`)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11);"
+2018-07-12 05:34:10.691 +00:00 [Information] Executed DbCommand ("1"ms) [Parameters=["@p2='?' (Size = 255), @p0='?' (DbType = Boolean), @p1='?' (DbType = DateTime)"], CommandType='Text', CommandTimeout='30']"
+""UPDATE `ZohoInvoiceJobQueues` SET `IsSuccess` = @p0, `UpdatedAt` = @p1
+WHERE `Id` = @p2;
+SELECT ROW_COUNT();"
+2018-07-12 09:20:20.658 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-12 09:20:37.057 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-12 09:20:37.758 +00:00 [Information] Executed DbCommand ("43"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA=N'dev-tribechimpcore' AND TABLE_NAME=N'__EFMigrationsHistory';"
+2018-07-12 09:20:37.795 +00:00 [Information] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA=N'dev-tribechimpcore' AND TABLE_NAME=N'__EFMigrationsHistory';"
+2018-07-12 09:20:37.806 +00:00 [Information] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT `MigrationId`, `ProductVersion`
+FROM `__EFMigrationsHistory`
+ORDER BY `MigrationId`;"
+2018-07-12 09:20:37.816 +00:00 [Information] Applying migration '"20180712092020_change table structure for the items and invoices"'.
+2018-07-12 09:20:37.921 +00:00 [Information] Executed DbCommand ("40"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE `ZohoItems` DROP FOREIGN KEY `FK_ZohoItems_RecurringInvoices_RecurringInvoiceId`;"
+2018-07-12 09:20:37.951 +00:00 [Information] Executed DbCommand ("30"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE `ZohoItems` DROP INDEX `IX_ZohoItems_RecurringInvoiceId`;"
+2018-07-12 09:20:38.058 +00:00 [Information] Executed DbCommand ("106"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE `ZohoItems` DROP COLUMN `RecurringInvoiceId`;"
+2018-07-12 09:20:38.101 +00:00 [Information] Executed DbCommand ("43"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE `ZohoItemRecurringInvoice` (
+    `RecurringInvoiceId` varchar(255) NOT NULL,
+    `ZohoItemId` varchar(255) NOT NULL,
+    CONSTRAINT `PK_ZohoItemRecurringInvoice` PRIMARY KEY (`RecurringInvoiceId`, `ZohoItemId`),
+    CONSTRAINT `FK_ZohoItemRecurringInvoice_RecurringInvoices_RecurringInvoiceId` FOREIGN KEY (`RecurringInvoiceId`) REFERENCES `RecurringInvoices` (`Id`) ON DELETE CASCADE,
+    CONSTRAINT `FK_ZohoItemRecurringInvoice_ZohoItems_ZohoItemId` FOREIGN KEY (`ZohoItemId`) REFERENCES `ZohoItems` (`Id`) ON DELETE CASCADE
+);"
+2018-07-12 09:20:38.146 +00:00 [Information] Executed DbCommand ("44"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE INDEX `IX_ZohoItemRecurringInvoice_ZohoItemId` ON `ZohoItemRecurringInvoice` (`ZohoItemId`);"
+2018-07-12 09:20:38.150 +00:00 [Information] Executed DbCommand ("4"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""INSERT INTO `__EFMigrationsHistory` (`MigrationId`, `ProductVersion`)
+VALUES (N'20180712092020_change table structure for the items and invoices', N'2.1.1-rtm-30846');"

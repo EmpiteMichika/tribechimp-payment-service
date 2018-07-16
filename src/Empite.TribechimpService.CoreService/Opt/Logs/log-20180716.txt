@@ -1,0 +1,37 @@
+2018-07-16 03:04:39.682 +00:00 [Information] User profile is available. Using '"C:\Users\MichikaP\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+2018-07-16 03:04:42.964 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-16 03:04:43.246 +00:00 [Information] Executed DbCommand ("22"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA=N'dev-tribechimpcore' AND TABLE_NAME=N'__EFMigrationsHistory';"
+2018-07-16 03:04:43.274 +00:00 [Information] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA=N'dev-tribechimpcore' AND TABLE_NAME=N'__EFMigrationsHistory';"
+2018-07-16 03:04:43.321 +00:00 [Information] Executed DbCommand ("36"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT `MigrationId`, `ProductVersion`
+FROM `__EFMigrationsHistory`
+ORDER BY `MigrationId`;"
+2018-07-16 03:04:43.341 +00:00 [Information] No migrations were applied. The database is already up to date.
+2018-07-16 03:04:43.468 +00:00 [Information] Executed DbCommand ("9"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM `Organizations` AS `o`)
+    THEN TRUE ELSE FALSE
+END"
+2018-07-16 03:04:45.001 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/swagger/index.html  
+2018-07-16 03:04:45.079 +00:00 [Information] Request finished in 77.2122ms 200 text/html
+2018-07-16 03:04:45.131 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/swagger/swagger-ui-standalone-preset.js  
+2018-07-16 03:04:45.131 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/swagger/swagger-ui-bundle.js  
+2018-07-16 03:04:45.132 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/swagger/swagger-ui.css  
+2018-07-16 03:04:45.210 +00:00 [Information] The file "/swagger-ui-bundle.js" was not modified
+2018-07-16 03:04:45.213 +00:00 [Information] The file "/swagger-ui-standalone-preset.js" was not modified
+2018-07-16 03:04:45.215 +00:00 [Information] The file "/swagger-ui.css" was not modified
+2018-07-16 03:04:45.248 +00:00 [Information] Request finished in 105.0273ms 304 application/javascript
+2018-07-16 03:04:45.265 +00:00 [Information] Request finished in 105.0192ms 304 application/javascript
+2018-07-16 03:04:45.273 +00:00 [Information] Request finished in 115.9374ms 304 text/css
+2018-07-16 03:04:45.598 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/swagger/v1/swagger.json  
+2018-07-16 03:04:46.517 +00:00 [Information] Request finished in 918.0396ms 200 application/json;charset=utf-8
+2018-07-16 03:44:11.130 +00:00 [Information] User profile is available. Using '"C:\Users\MichikaP\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+2018-07-16 03:44:13.718 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/swagger/index.html  
+2018-07-16 03:44:13.770 +00:00 [Information] Request finished in 53.3045ms 200 text/html
+2018-07-16 03:44:14.198 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/swagger/v1/swagger.json  
+2018-07-16 03:44:14.622 +00:00 [Information] Request finished in 424.912ms 200 application/json;charset=utf-8
+2018-07-16 03:45:09.981 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"

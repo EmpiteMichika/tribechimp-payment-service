@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <AssemblyName>Empite.TribechimpService.PaymentService</AssemblyName>
+    <RootNamespace>Empite.TribechimpService.PaymentService</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\libs\Empite.TribechimpService.CoreService.Data\Empite.TribechimpService.PaymentService.Data.csproj" />
+    <ProjectReference Include="..\libs\Empite.TribechimpService.CoreService.Domain\Empite.TribechimpService.PaymentService.Domain.csproj" />
+    <ProjectReference Include="..\libs\Empite.TribechimpService.CoreService.Service\Empite.TribechimpService.PaymentService.Service.csproj" />
+    <ProjectReference Include="..\libs\Empite.TribechimpService.Core\Empite.TribechimpService.Core.csproj" />
+    <ProjectReference Include="..\libs\Empite.TribechimpService.Shared\Empite.TribechimpService.Shared.csproj" />
+  </ItemGroup>
+
+</Project>

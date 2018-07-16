@@ -1,0 +1,602 @@
+2018-07-05 03:32:16.981 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/api/organization/getorganization?subDomain=empite  
+2018-07-05 03:32:17.057 +00:00 [Information] Route matched with "{action = \"GetOrganization\", controller = \"Organization\"}". Executing action "Empite.TribechimpService.CoreService.Controllers.OrganizationController.GetOrganization (Empite.TribechimpService.CoreService)"
+2018-07-05 03:32:17.070 +00:00 [Information] Authorization was successful.
+2018-07-05 03:32:17.081 +00:00 [Information] Executing action method "Empite.TribechimpService.CoreService.Controllers.OrganizationController.GetOrganization (Empite.TribechimpService.CoreService)" with arguments (["empite"]) - Validation state: Valid
+2018-07-05 03:32:17.091 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-05 03:32:17.196 +00:00 [Information] Executed DbCommand ("17"ms) [Parameters=["@__subDomain_0='?' (Size = 50)"], CommandType='Text', CommandTimeout='30']"
+""SELECT `o`.`Id`, `o`.`CreatedAt`, `o`.`CreatedBy`, `o`.`DeletedAt`, `o`.`DeletedBy`, `o`.`Description`, `o`.`Name`, `o`.`SubDomain`, `o`.`UpdatedAt`, `o`.`UpdatedBy`
+FROM `Organizations` AS `o`
+WHERE `o`.`SubDomain` = @__subDomain_0
+LIMIT 1"
+2018-07-05 03:32:17.215 +00:00 [Information] Executed action method "Empite.TribechimpService.CoreService.Controllers.OrganizationController.GetOrganization (Empite.TribechimpService.CoreService)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 125.8948ms.
+2018-07-05 03:32:17.228 +00:00 [Information] Executing ObjectResult, writing value of type '"Empite.TribechimpService.CoreService.Domain.Dto.OrganizationDto"'.
+2018-07-05 03:32:17.236 +00:00 [Information] Executed action "Empite.TribechimpService.CoreService.Controllers.OrganizationController.GetOrganization (Empite.TribechimpService.CoreService)" in 173.2773ms
+2018-07-05 03:32:17.252 +00:00 [Information] Request finished in 281.6914ms 200 application/json; charset=utf-8
+2018-07-05 03:32:17.943 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/api/organization/getorganization?subDomain=empite  
+2018-07-05 03:32:18.081 +00:00 [Information] Route matched with "{action = \"GetOrganization\", controller = \"Organization\"}". Executing action "Empite.TribechimpService.CoreService.Controllers.OrganizationController.GetOrganization (Empite.TribechimpService.CoreService)"
+2018-07-05 03:32:18.110 +00:00 [Information] Authorization was successful.
+2018-07-05 03:32:18.115 +00:00 [Information] Executing action method "Empite.TribechimpService.CoreService.Controllers.OrganizationController.GetOrganization (Empite.TribechimpService.CoreService)" with arguments (["empite"]) - Validation state: Valid
+2018-07-05 03:32:18.137 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-05 03:32:18.167 +00:00 [Information] Executed DbCommand ("2"ms) [Parameters=["@__subDomain_0='?' (Size = 50)"], CommandType='Text', CommandTimeout='30']"
+""SELECT `o`.`Id`, `o`.`CreatedAt`, `o`.`CreatedBy`, `o`.`DeletedAt`, `o`.`DeletedBy`, `o`.`Description`, `o`.`Name`, `o`.`SubDomain`, `o`.`UpdatedAt`, `o`.`UpdatedBy`
+FROM `Organizations` AS `o`
+WHERE `o`.`SubDomain` = @__subDomain_0
+LIMIT 1"
+2018-07-05 03:32:18.181 +00:00 [Information] Executed action method "Empite.TribechimpService.CoreService.Controllers.OrganizationController.GetOrganization (Empite.TribechimpService.CoreService)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 55.1713ms.
+2018-07-05 03:32:18.192 +00:00 [Information] Executing ObjectResult, writing value of type '"Empite.TribechimpService.CoreService.Domain.Dto.OrganizationDto"'.
+2018-07-05 03:32:18.201 +00:00 [Information] Executed action "Empite.TribechimpService.CoreService.Controllers.OrganizationController.GetOrganization (Empite.TribechimpService.CoreService)" in 97.4221ms
+2018-07-05 03:32:18.214 +00:00 [Information] Request finished in 339.0065ms 200 application/json; charset=utf-8
+2018-07-05 03:35:46.932 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/api/organization/getorganization?subDomain=empite  
+2018-07-05 03:35:46.948 +00:00 [Information] Route matched with "{action = \"GetOrganization\", controller = \"Organization\"}". Executing action "Empite.TribechimpService.CoreService.Controllers.OrganizationController.GetOrganization (Empite.TribechimpService.CoreService)"
+2018-07-05 03:35:46.960 +00:00 [Information] Authorization was successful.
+2018-07-05 03:35:46.982 +00:00 [Information] Executing action method "Empite.TribechimpService.CoreService.Controllers.OrganizationController.GetOrganization (Empite.TribechimpService.CoreService)" with arguments (["empite"]) - Validation state: Valid
+2018-07-05 03:35:47.065 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-05 03:35:47.167 +00:00 [Information] Executed DbCommand ("9"ms) [Parameters=["@__subDomain_0='?' (Size = 50)"], CommandType='Text', CommandTimeout='30']"
+""SELECT `o`.`Id`, `o`.`CreatedAt`, `o`.`CreatedBy`, `o`.`DeletedAt`, `o`.`DeletedBy`, `o`.`Description`, `o`.`Name`, `o`.`SubDomain`, `o`.`UpdatedAt`, `o`.`UpdatedBy`
+FROM `Organizations` AS `o`
+WHERE `o`.`SubDomain` = @__subDomain_0
+LIMIT 1"
+2018-07-05 03:35:47.185 +00:00 [Information] Executed action method "Empite.TribechimpService.CoreService.Controllers.OrganizationController.GetOrganization (Empite.TribechimpService.CoreService)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 185.5798ms.
+2018-07-05 03:35:47.195 +00:00 [Information] Executing ObjectResult, writing value of type '"Empite.TribechimpService.CoreService.Domain.Dto.OrganizationDto"'.
+2018-07-05 03:35:47.211 +00:00 [Information] Executed action "Empite.TribechimpService.CoreService.Controllers.OrganizationController.GetOrganization (Empite.TribechimpService.CoreService)" in 255.6704ms
+2018-07-05 03:35:47.218 +00:00 [Information] Request finished in 285.4996ms 200 application/json; charset=utf-8
+2018-07-05 03:35:55.143 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/api/values  
+2018-07-05 03:35:55.217 +00:00 [Information] Route matched with "{action = \"Get\", controller = \"Values\"}". Executing action "Empite.TribechimpService.CoreService.Controllers.ValuesController.Get (Empite.TribechimpService.CoreService)"
+2018-07-05 03:35:55.242 +00:00 [Information] Authorization was successful.
+2018-07-05 03:35:55.983 +00:00 [Information] Executing action method "Empite.TribechimpService.CoreService.Controllers.ValuesController.Get (Empite.TribechimpService.CoreService)" - Validation state: Valid
+2018-07-05 03:35:56.184 +00:00 [Information] Executed action method "Empite.TribechimpService.CoreService.Controllers.ValuesController.Get (Empite.TribechimpService.CoreService)", returned result "Microsoft.AspNetCore.Mvc.ObjectResult" in 0.7146ms.
+2018-07-05 03:35:56.335 +00:00 [Information] Executing ObjectResult, writing value of type '"System.String[]"'.
+2018-07-05 03:35:56.524 +00:00 [Information] Executed action "Empite.TribechimpService.CoreService.Controllers.ValuesController.Get (Empite.TribechimpService.CoreService)" in 1117.0899ms
+2018-07-05 03:35:56.618 +00:00 [Information] Request finished in 1469.2072ms 200 application/json; charset=utf-8
+2018-07-05 03:36:50.666 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/api/values  
+2018-07-05 03:36:50.678 +00:00 [Information] Route matched with "{action = \"Get\", controller = \"Values\"}". Executing action "Empite.TribechimpService.CoreService.Controllers.ValuesController.Get (Empite.TribechimpService.CoreService)"
+2018-07-05 03:36:50.689 +00:00 [Information] Authorization was successful.
+2018-07-05 03:36:50.698 +00:00 [Information] Executing action method "Empite.TribechimpService.CoreService.Controllers.ValuesController.Get (Empite.TribechimpService.CoreService)" - Validation state: Valid
+2018-07-05 03:36:50.708 +00:00 [Information] Executed action method "Empite.TribechimpService.CoreService.Controllers.ValuesController.Get (Empite.TribechimpService.CoreService)", returned result "Microsoft.AspNetCore.Mvc.ObjectResult" in 0.7ms.
+2018-07-05 03:36:50.718 +00:00 [Information] Executing ObjectResult, writing value of type '"System.String[]"'.
+2018-07-05 03:36:50.739 +00:00 [Information] Executed action "Empite.TribechimpService.CoreService.Controllers.ValuesController.Get (Empite.TribechimpService.CoreService)" in 42.0633ms
+2018-07-05 03:36:50.759 +00:00 [Information] Request finished in 87.1328ms 200 application/json; charset=utf-8
+2018-07-05 04:15:36.369 +00:00 [Information] User profile is available. Using '"C:\Users\MichikaP\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+2018-07-05 04:15:39.453 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-05 04:15:39.759 +00:00 [Information] Executed DbCommand ("20"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA=N'dev-tribechimpcore' AND TABLE_NAME=N'__EFMigrationsHistory';"
+2018-07-05 04:15:39.789 +00:00 [Information] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA=N'dev-tribechimpcore' AND TABLE_NAME=N'__EFMigrationsHistory';"
+2018-07-05 04:15:39.818 +00:00 [Information] Executed DbCommand ("5"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT `MigrationId`, `ProductVersion`
+FROM `__EFMigrationsHistory`
+ORDER BY `MigrationId`;"
+2018-07-05 04:15:39.845 +00:00 [Information] No migrations were applied. The database is already up to date.
+2018-07-05 04:15:39.993 +00:00 [Information] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM `Organizations` AS `o`)
+    THEN TRUE ELSE FALSE
+END"
+2018-07-05 04:15:42.088 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/swagger  
+2018-07-05 04:15:42.179 +00:00 [Information] Request finished in 68.3639ms 301 
+2018-07-05 04:15:42.196 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/swagger/index.html  
+2018-07-05 04:15:42.324 +00:00 [Information] Request finished in 66.2916ms 200 text/html
+2018-07-05 04:15:42.727 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/swagger/swagger-ui.css  
+2018-07-05 04:15:42.966 +00:00 [Information] Sending file. Request path: '"/swagger-ui.css"'. Physical path: '"N/A"'
+2018-07-05 04:15:42.994 +00:00 [Information] Request finished in 276.0366ms 200 text/css
+2018-07-05 04:15:44.062 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/swagger/v1/swagger.json  
+2018-07-05 04:15:45.070 +00:00 [Information] Request finished in 1086.3537ms 200 application/json;charset=utf-8
+2018-07-05 04:16:07.972 +00:00 [Information] Request starting HTTP/1.1 POST https://localhost:5011/api/user/inviteuser application/json; charset=utf-8 136
+2018-07-05 04:16:08.087 +00:00 [Information] Route matched with "{action = \"InviteUser\", controller = \"User\"}". Executing action "Empite.TribechimpService.CoreService.Controllers.UserController.InviteUser (Empite.TribechimpService.CoreService)"
+2018-07-05 04:16:08.174 +00:00 [Information] Authorization was successful.
+2018-07-05 04:16:08.276 +00:00 [Information] Executing action method "Empite.TribechimpService.CoreService.Controllers.UserController.InviteUser (Empite.TribechimpService.CoreService)" with arguments (["Empite.TribechimpService.CoreService.Domain.Dto.NewUserDto"]) - Validation state: Valid
+2018-07-05 04:16:47.841 +00:00 [Information] Executed action method "Empite.TribechimpService.CoreService.Controllers.UserController.InviteUser (Empite.TribechimpService.CoreService)", returned result "Microsoft.AspNetCore.Mvc.OkResult" in 39498.1756ms.
+2018-07-05 04:16:47.881 +00:00 [Information] Executing HttpStatusCodeResult, setting HTTP status code 200
+2018-07-05 04:16:47.913 +00:00 [Information] Executed action "Empite.TribechimpService.CoreService.Controllers.UserController.InviteUser (Empite.TribechimpService.CoreService)" in 39800.0233ms
+2018-07-05 04:16:47.950 +00:00 [Information] Request finished in 39973.4232ms 200 
+2018-07-05 04:20:35.201 +00:00 [Information] User profile is available. Using '"C:\Users\MichikaP\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+2018-07-05 04:20:37.219 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-05 04:20:37.636 +00:00 [Information] Executed DbCommand ("31"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA=N'dev-tribechimpcore' AND TABLE_NAME=N'__EFMigrationsHistory';"
+2018-07-05 04:20:37.662 +00:00 [Information] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA=N'dev-tribechimpcore' AND TABLE_NAME=N'__EFMigrationsHistory';"
+2018-07-05 04:20:37.685 +00:00 [Information] Executed DbCommand ("7"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT `MigrationId`, `ProductVersion`
+FROM `__EFMigrationsHistory`
+ORDER BY `MigrationId`;"
+2018-07-05 04:20:37.701 +00:00 [Information] No migrations were applied. The database is already up to date.
+2018-07-05 04:20:37.834 +00:00 [Information] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM `Organizations` AS `o`)
+    THEN TRUE ELSE FALSE
+END"
+2018-07-05 04:20:40.641 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/swagger/index.html  
+2018-07-05 04:20:40.922 +00:00 [Information] Request finished in 170.1268ms 200 text/html
+2018-07-05 04:20:41.443 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/swagger/v1/swagger.json  
+2018-07-05 04:20:42.181 +00:00 [Information] Request finished in 738.2018ms 200 application/json;charset=utf-8
+2018-07-05 04:21:10.761 +00:00 [Information] Request starting HTTP/1.1 POST https://localhost:5011/api/user/inviteuser application/json; charset=utf-8 148
+2018-07-05 04:21:10.854 +00:00 [Information] Route matched with "{action = \"InviteUser\", controller = \"User\"}". Executing action "Empite.TribechimpService.CoreService.Controllers.UserController.InviteUser (Empite.TribechimpService.CoreService)"
+2018-07-05 04:21:10.926 +00:00 [Information] Authorization was successful.
+2018-07-05 04:21:11.022 +00:00 [Information] Executing action method "Empite.TribechimpService.CoreService.Controllers.UserController.InviteUser (Empite.TribechimpService.CoreService)" with arguments (["Empite.TribechimpService.CoreService.Domain.Dto.NewUserDto"]) - Validation state: Valid
+2018-07-05 04:21:22.208 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-05 04:21:22.366 +00:00 [Information] Executed DbCommand ("17"ms) [Parameters=["@__obj_OrganizationId_0='?' (Size = 40)"], CommandType='Text', CommandTimeout='30']"
+""SELECT `x`.`Id`, `x`.`CreatedAt`, `x`.`CreatedBy`, `x`.`DeletedAt`, `x`.`DeletedBy`, `x`.`Description`, `x`.`Name`, `x`.`SubDomain`, `x`.`UpdatedAt`, `x`.`UpdatedBy`
+FROM `Organizations` AS `x`
+WHERE `x`.`Id` = @__obj_OrganizationId_0
+LIMIT 1"
+2018-07-05 04:21:25.444 +00:00 [Information] Executed action method "Empite.TribechimpService.CoreService.Controllers.UserController.InviteUser (Empite.TribechimpService.CoreService)", returned result "Microsoft.AspNetCore.Mvc.OkResult" in 14390.5076ms.
+2018-07-05 04:21:25.474 +00:00 [Information] Executing HttpStatusCodeResult, setting HTTP status code 200
+2018-07-05 04:21:25.493 +00:00 [Information] Executed action "Empite.TribechimpService.CoreService.Controllers.UserController.InviteUser (Empite.TribechimpService.CoreService)" in 14628.3869ms
+2018-07-05 04:21:25.511 +00:00 [Information] Request finished in 14749.7581ms 200 
+2018-07-05 04:22:09.021 +00:00 [Information] User profile is available. Using '"C:\Users\MichikaP\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+2018-07-05 04:22:11.567 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-05 04:22:12.013 +00:00 [Information] Executed DbCommand ("21"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA=N'dev-tribechimpcore' AND TABLE_NAME=N'__EFMigrationsHistory';"
+2018-07-05 04:22:12.043 +00:00 [Information] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA=N'dev-tribechimpcore' AND TABLE_NAME=N'__EFMigrationsHistory';"
+2018-07-05 04:22:12.061 +00:00 [Information] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT `MigrationId`, `ProductVersion`
+FROM `__EFMigrationsHistory`
+ORDER BY `MigrationId`;"
+2018-07-05 04:22:12.079 +00:00 [Information] No migrations were applied. The database is already up to date.
+2018-07-05 04:22:12.279 +00:00 [Information] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM `Organizations` AS `o`)
+    THEN TRUE ELSE FALSE
+END"
+2018-07-05 04:22:13.167 +00:00 [Information] Request starting HTTP/1.1 POST https://localhost:5011/api/user/inviteuser application/json; charset=utf-8 148
+2018-07-05 04:22:13.752 +00:00 [Information] Route matched with "{action = \"InviteUser\", controller = \"User\"}". Executing action "Empite.TribechimpService.CoreService.Controllers.UserController.InviteUser (Empite.TribechimpService.CoreService)"
+2018-07-05 04:22:13.911 +00:00 [Information] Authorization was successful.
+2018-07-05 04:22:14.520 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/swagger/index.html  
+2018-07-05 04:22:14.556 +00:00 [Information] Executing action method "Empite.TribechimpService.CoreService.Controllers.UserController.InviteUser (Empite.TribechimpService.CoreService)" with arguments (["Empite.TribechimpService.CoreService.Domain.Dto.NewUserDto"]) - Validation state: Valid
+2018-07-05 04:22:14.671 +00:00 [Information] Request finished in 118.2042ms 200 text/html
+2018-07-05 04:22:15.652 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/swagger/v1/swagger.json  
+2018-07-05 04:22:19.155 +00:00 [Information] Request finished in 3542.2045ms 200 application/json;charset=utf-8
+2018-07-05 04:22:22.170 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-05 04:22:22.346 +00:00 [Information] Executed DbCommand ("33"ms) [Parameters=["@__obj_OrganizationId_0='?' (Size = 40)"], CommandType='Text', CommandTimeout='30']"
+""SELECT `x`.`Id`, `x`.`CreatedAt`, `x`.`CreatedBy`, `x`.`DeletedAt`, `x`.`DeletedBy`, `x`.`Description`, `x`.`Name`, `x`.`SubDomain`, `x`.`UpdatedAt`, `x`.`UpdatedBy`
+FROM `Organizations` AS `x`
+WHERE `x`.`Id` = @__obj_OrganizationId_0
+LIMIT 1"
+2018-07-05 04:22:25.166 +00:00 [Information] Executed DbCommand ("2"ms) [Parameters=["@p0='?' (Size = 255), @p1='?' (DbType = DateTime), @p2='?' (DbType = Guid), @p3='?' (DbType = DateTime), @p4='?' (DbType = Guid), @p5='?' (Size = 4000), @p6='?' (Size = 4000), @p7='?' (Size = 40), @p8='?' (DbType = DateTime), @p9='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""INSERT INTO `UserDetails` (`Id`, `CreatedAt`, `CreatedBy`, `DeletedAt`, `DeletedBy`, `FristName`, `LastName`, `OrganizationId`, `UpdatedAt`, `UpdatedBy`)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9);"
+2018-07-05 04:22:27.292 +00:00 [Information] Executed action method "Empite.TribechimpService.CoreService.Controllers.UserController.InviteUser (Empite.TribechimpService.CoreService)", returned result "Microsoft.AspNetCore.Mvc.OkResult" in 12571.7737ms.
+2018-07-05 04:22:27.326 +00:00 [Information] Executing HttpStatusCodeResult, setting HTTP status code 200
+2018-07-05 04:22:27.343 +00:00 [Information] Executed action "Empite.TribechimpService.CoreService.Controllers.UserController.InviteUser (Empite.TribechimpService.CoreService)" in 13560.9317ms
+2018-07-05 04:22:27.363 +00:00 [Information] Request finished in 14199.674ms 200 
+2018-07-05 05:32:22.223 +00:00 [Information] User profile is available. Using '"C:\Users\MichikaP\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+2018-07-05 05:32:25.344 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-05 05:32:26.072 +00:00 [Information] Executed DbCommand ("47"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA=N'dev-tribechimpcore' AND TABLE_NAME=N'__EFMigrationsHistory';"
+2018-07-05 05:32:26.119 +00:00 [Information] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA=N'dev-tribechimpcore' AND TABLE_NAME=N'__EFMigrationsHistory';"
+2018-07-05 05:32:26.171 +00:00 [Information] Executed DbCommand ("13"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT `MigrationId`, `ProductVersion`
+FROM `__EFMigrationsHistory`
+ORDER BY `MigrationId`;"
+2018-07-05 05:32:26.195 +00:00 [Information] No migrations were applied. The database is already up to date.
+2018-07-05 05:32:26.379 +00:00 [Information] Executed DbCommand ("6"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM `Organizations` AS `o`)
+    THEN TRUE ELSE FALSE
+END"
+2018-07-05 05:32:30.150 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/swagger/index.html  
+2018-07-05 05:32:30.450 +00:00 [Information] Request finished in 213.4624ms 200 text/html
+2018-07-05 05:32:31.616 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/swagger/v1/swagger.json  
+2018-07-05 05:32:32.633 +00:00 [Information] Request finished in 1115.2556ms 200 application/json;charset=utf-8
+2018-07-05 06:20:04.080 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/api/organization/getorganization?subDomain=empite  
+2018-07-05 06:20:04.279 +00:00 [Information] Route matched with "{action = \"GetOrganization\", controller = \"Organization\"}". Executing action "Empite.TribechimpService.CoreService.Controllers.OrganizationController.GetOrganization (Empite.TribechimpService.CoreService)"
+2018-07-05 06:20:04.348 +00:00 [Information] Authorization was successful.
+2018-07-05 06:20:04.458 +00:00 [Information] Executing action method "Empite.TribechimpService.CoreService.Controllers.OrganizationController.GetOrganization (Empite.TribechimpService.CoreService)" with arguments (["empite"]) - Validation state: Valid
+2018-07-05 06:20:04.509 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-05 06:20:04.839 +00:00 [Information] Executed DbCommand ("32"ms) [Parameters=["@__subDomain_0='?' (Size = 50)"], CommandType='Text', CommandTimeout='30']"
+""SELECT `o`.`Id`, `o`.`CreatedAt`, `o`.`CreatedBy`, `o`.`DeletedAt`, `o`.`DeletedBy`, `o`.`Description`, `o`.`Name`, `o`.`SubDomain`, `o`.`UpdatedAt`, `o`.`UpdatedBy`
+FROM `Organizations` AS `o`
+WHERE `o`.`SubDomain` = @__subDomain_0
+LIMIT 1"
+2018-07-05 06:20:04.978 +00:00 [Information] Executed action method "Empite.TribechimpService.CoreService.Controllers.OrganizationController.GetOrganization (Empite.TribechimpService.CoreService)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 498.0919ms.
+2018-07-05 06:20:04.995 +00:00 [Information] Executing ObjectResult, writing value of type '"Empite.TribechimpService.CoreService.Domain.Dto.OrganizationDto"'.
+2018-07-05 06:20:05.025 +00:00 [Information] Executed action "Empite.TribechimpService.CoreService.Controllers.OrganizationController.GetOrganization (Empite.TribechimpService.CoreService)" in 725.6614ms
+2018-07-05 06:20:05.043 +00:00 [Information] Request finished in 964.1835ms 200 application/json; charset=utf-8
+2018-07-05 06:21:44.319 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/api/organization/getorganization?subDomain=empite  
+2018-07-05 06:21:44.337 +00:00 [Information] Route matched with "{action = \"GetOrganization\", controller = \"Organization\"}". Executing action "Empite.TribechimpService.CoreService.Controllers.OrganizationController.GetOrganization (Empite.TribechimpService.CoreService)"
+2018-07-05 06:21:44.353 +00:00 [Information] Authorization was successful.
+2018-07-05 06:21:44.360 +00:00 [Information] Executing action method "Empite.TribechimpService.CoreService.Controllers.OrganizationController.GetOrganization (Empite.TribechimpService.CoreService)" with arguments (["empite"]) - Validation state: Valid
+2018-07-05 06:21:44.371 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-05 06:21:44.462 +00:00 [Information] Executed DbCommand ("35"ms) [Parameters=["@__subDomain_0='?' (Size = 50)"], CommandType='Text', CommandTimeout='30']"
+""SELECT `o`.`Id`, `o`.`CreatedAt`, `o`.`CreatedBy`, `o`.`DeletedAt`, `o`.`DeletedBy`, `o`.`Description`, `o`.`Name`, `o`.`SubDomain`, `o`.`UpdatedAt`, `o`.`UpdatedBy`
+FROM `Organizations` AS `o`
+WHERE `o`.`SubDomain` = @__subDomain_0
+LIMIT 1"
+2018-07-05 06:21:44.487 +00:00 [Information] Executed action method "Empite.TribechimpService.CoreService.Controllers.OrganizationController.GetOrganization (Empite.TribechimpService.CoreService)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 115.5485ms.
+2018-07-05 06:21:44.510 +00:00 [Information] Executing ObjectResult, writing value of type '"Empite.TribechimpService.CoreService.Domain.Dto.OrganizationDto"'.
+2018-07-05 06:21:44.590 +00:00 [Information] Executed action "Empite.TribechimpService.CoreService.Controllers.OrganizationController.GetOrganization (Empite.TribechimpService.CoreService)" in 239.8943ms
+2018-07-05 06:21:44.625 +00:00 [Information] Request finished in 300.919ms 200 application/json; charset=utf-8
+2018-07-05 06:22:18.100 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/api/organization/getorganization?subDomain=empite  
+2018-07-05 06:22:18.105 +00:00 [Information] Route matched with "{action = \"GetOrganization\", controller = \"Organization\"}". Executing action "Empite.TribechimpService.CoreService.Controllers.OrganizationController.GetOrganization (Empite.TribechimpService.CoreService)"
+2018-07-05 06:22:18.110 +00:00 [Information] Authorization was successful.
+2018-07-05 06:22:18.119 +00:00 [Information] Executing action method "Empite.TribechimpService.CoreService.Controllers.OrganizationController.GetOrganization (Empite.TribechimpService.CoreService)" with arguments (["empite"]) - Validation state: Valid
+2018-07-05 06:22:18.135 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-05 06:22:18.245 +00:00 [Information] Executed DbCommand ("1"ms) [Parameters=["@__subDomain_0='?' (Size = 50)"], CommandType='Text', CommandTimeout='30']"
+""SELECT `o`.`Id`, `o`.`CreatedAt`, `o`.`CreatedBy`, `o`.`DeletedAt`, `o`.`DeletedBy`, `o`.`Description`, `o`.`Name`, `o`.`SubDomain`, `o`.`UpdatedAt`, `o`.`UpdatedBy`
+FROM `Organizations` AS `o`
+WHERE `o`.`SubDomain` = @__subDomain_0
+LIMIT 1"
+2018-07-05 06:22:18.262 +00:00 [Information] Executed action method "Empite.TribechimpService.CoreService.Controllers.OrganizationController.GetOrganization (Empite.TribechimpService.CoreService)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 129.347ms.
+2018-07-05 06:22:18.269 +00:00 [Information] Executing ObjectResult, writing value of type '"Empite.TribechimpService.CoreService.Domain.Dto.OrganizationDto"'.
+2018-07-05 06:22:18.277 +00:00 [Information] Executed action "Empite.TribechimpService.CoreService.Controllers.OrganizationController.GetOrganization (Empite.TribechimpService.CoreService)" in 165.7052ms
+2018-07-05 06:22:18.287 +00:00 [Information] Request finished in 202.2332ms 200 application/json; charset=utf-8
+2018-07-05 06:22:22.880 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/api/values  
+2018-07-05 06:22:22.935 +00:00 [Information] Route matched with "{action = \"Get\", controller = \"Values\"}". Executing action "Empite.TribechimpService.CoreService.Controllers.ValuesController.Get (Empite.TribechimpService.CoreService)"
+2018-07-05 06:22:22.966 +00:00 [Information] Authorization was successful.
+2018-07-05 06:22:23.195 +00:00 [Information] Request starting HTTP/1.1 POST https://localhost:5011/api/user/getUser application/json; charset=utf-8 172
+2018-07-05 06:22:23.320 +00:00 [Information] Executing action method "Empite.TribechimpService.CoreService.Controllers.ValuesController.Get (Empite.TribechimpService.CoreService)" - Validation state: Valid
+2018-07-05 06:22:23.370 +00:00 [Information] Executed action method "Empite.TribechimpService.CoreService.Controllers.ValuesController.Get (Empite.TribechimpService.CoreService)", returned result "Microsoft.AspNetCore.Mvc.ObjectResult" in 0.6512ms.
+2018-07-05 06:22:23.385 +00:00 [Information] Route matched with "{action = \"GetUser\", controller = \"User\"}". Executing action "Empite.TribechimpService.CoreService.Controllers.UserController.GetUser (Empite.TribechimpService.CoreService)"
+2018-07-05 06:22:23.409 +00:00 [Information] Executing ObjectResult, writing value of type '"System.String[]"'.
+2018-07-05 06:22:23.424 +00:00 [Information] Executed action "Empite.TribechimpService.CoreService.Controllers.ValuesController.Get (Empite.TribechimpService.CoreService)" in 463.2191ms
+2018-07-05 06:22:23.433 +00:00 [Information] Authorization was successful.
+2018-07-05 06:22:23.443 +00:00 [Information] Request finished in 576.8463ms 200 application/json; charset=utf-8
+2018-07-05 06:22:23.483 +00:00 [Information] Executing action method "Empite.TribechimpService.CoreService.Controllers.UserController.GetUser (Empite.TribechimpService.CoreService)" with arguments (["Empite.TribechimpService.CoreService.Domain.Dto.UserDetailDto"]) - Validation state: Valid
+2018-07-05 06:22:50.175 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-05 06:22:50.589 +00:00 [Information] Executed DbCommand ("4"ms) [Parameters=["@__obj_Id_0='?' (Size = 255)"], CommandType='Text', CommandTimeout='30']"
+""SELECT `x`.`Id`, `x`.`CreatedAt`, `x`.`CreatedBy`, `x`.`DeletedAt`, `x`.`DeletedBy`, `x`.`FristName`, `x`.`LastName`, `x`.`OrganizationId`, `x`.`UpdatedAt`, `x`.`UpdatedBy`
+FROM `UserDetails` AS `x`
+WHERE `x`.`Id` = @__obj_Id_0
+LIMIT 1"
+2018-07-05 06:22:54.540 +00:00 [Information] Executed DbCommand ("8"ms) [Parameters=["@__obj_OrganizationId_0='?' (Size = 40)"], CommandType='Text', CommandTimeout='30']"
+""SELECT `x`.`Id`, `x`.`CreatedAt`, `x`.`CreatedBy`, `x`.`DeletedAt`, `x`.`DeletedBy`, `x`.`Description`, `x`.`Name`, `x`.`SubDomain`, `x`.`UpdatedAt`, `x`.`UpdatedBy`
+FROM `Organizations` AS `x`
+WHERE `x`.`Id` = @__obj_OrganizationId_0
+LIMIT 1"
+2018-07-05 06:22:59.747 +00:00 [Information] Executed DbCommand ("7"ms) [Parameters=["@p0='?' (Size = 255), @p1='?' (DbType = DateTime), @p2='?' (DbType = Guid), @p3='?' (DbType = DateTime), @p4='?' (DbType = Guid), @p5='?' (Size = 4000), @p6='?' (Size = 4000), @p7='?' (Size = 40), @p8='?' (DbType = DateTime), @p9='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""INSERT INTO `UserDetails` (`Id`, `CreatedAt`, `CreatedBy`, `DeletedAt`, `DeletedBy`, `FristName`, `LastName`, `OrganizationId`, `UpdatedAt`, `UpdatedBy`)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9);"
+2018-07-05 06:23:13.268 +00:00 [Information] Executed action "Empite.TribechimpService.CoreService.Controllers.UserController.GetUser (Empite.TribechimpService.CoreService)" in 49863.5069ms
+2018-07-05 06:23:13.704 +00:00 [Error] An unhandled exception has occurred while executing the request.
+Newtonsoft.Json.JsonSerializationException: Self referencing loop detected with type 'Empite.TribechimpService.CoreService.Domain.Entity.UserDetails'. Path 'Organization.UserDetails'.
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalWriter.CheckForCircularReference(JsonWriter writer, Object value, JsonProperty property, JsonContract contract, JsonContainerContract containerContract, JsonProperty containerProperty)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalWriter.SerializeList(JsonWriter writer, IEnumerable values, JsonArrayContract contract, JsonProperty member, JsonContainerContract collectionContract, JsonProperty containerProperty)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalWriter.SerializeValue(JsonWriter writer, Object value, JsonContract valueContract, JsonProperty member, JsonContainerContract containerContract, JsonProperty containerProperty)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalWriter.SerializeObject(JsonWriter writer, Object value, JsonObjectContract contract, JsonProperty member, JsonContainerContract collectionContract, JsonProperty containerProperty)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalWriter.SerializeValue(JsonWriter writer, Object value, JsonContract valueContract, JsonProperty member, JsonContainerContract containerContract, JsonProperty containerProperty)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalWriter.SerializeObject(JsonWriter writer, Object value, JsonObjectContract contract, JsonProperty member, JsonContainerContract collectionContract, JsonProperty containerProperty)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalWriter.SerializeValue(JsonWriter writer, Object value, JsonContract valueContract, JsonProperty member, JsonContainerContract containerContract, JsonProperty containerProperty)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalWriter.Serialize(JsonWriter jsonWriter, Object value, Type objectType)
+   at Newtonsoft.Json.JsonSerializer.SerializeInternal(JsonWriter jsonWriter, Object value, Type objectType)
+   at Newtonsoft.Json.JsonConvert.SerializeObjectInternal(Object value, Type type, JsonSerializer jsonSerializer)
+   at Newtonsoft.Json.JsonConvert.SerializeObject(Object value)
+   at System.Dynamic.UpdateDelegates.UpdateAndExecute2[T0,T1,TRet](CallSite site, T0 arg0, T1 arg1)
+   at Empite.TribechimpService.CoreService.Controllers.UserController.GetUser(UserDetailDto obj) in D:\Empite\TribChimp\Repos\tribechimp-coreservice\src\Empite.TribechimpService.CoreService\Controllers\UserController.cs:line 60
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at System.Threading.Tasks.ValueTask`1.get_Result()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIIndexMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext)
+   at Empite.TribechimpService.CoreService.Infrastructure.ApplicationBuilderExtension.<>c__DisplayClass11_0.<<ConfigureApplicationPipeline>b__2>d.MoveNext() in D:\Empite\TribChimp\Repos\tribechimp-coreservice\src\Empite.TribechimpService.CoreService\Infrastructure\ApplicationBuilderExtension.cs:line 191
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2018-07-05 06:23:13.832 +00:00 [Information] Request finished in 50638.5254ms 500 text/html; charset=utf-8
+2018-07-05 06:23:15.919 +00:00 [Information] Request starting HTTP/1.1 POST https://localhost:5011/api/user/getUser application/json; charset=utf-8 172
+2018-07-05 06:23:15.923 +00:00 [Information] Route matched with "{action = \"GetUser\", controller = \"User\"}". Executing action "Empite.TribechimpService.CoreService.Controllers.UserController.GetUser (Empite.TribechimpService.CoreService)"
+2018-07-05 06:23:15.933 +00:00 [Information] Authorization was successful.
+2018-07-05 06:23:15.940 +00:00 [Information] Executing action method "Empite.TribechimpService.CoreService.Controllers.UserController.GetUser (Empite.TribechimpService.CoreService)" with arguments (["Empite.TribechimpService.CoreService.Domain.Dto.UserDetailDto"]) - Validation state: Valid
+2018-07-05 06:23:27.871 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-05 06:23:28.856 +00:00 [Information] Executed DbCommand ("1"ms) [Parameters=["@__obj_Id_0='?' (Size = 255)"], CommandType='Text', CommandTimeout='30']"
+""SELECT `x`.`Id`, `x`.`CreatedAt`, `x`.`CreatedBy`, `x`.`DeletedAt`, `x`.`DeletedBy`, `x`.`FristName`, `x`.`LastName`, `x`.`OrganizationId`, `x`.`UpdatedAt`, `x`.`UpdatedBy`
+FROM `UserDetails` AS `x`
+WHERE `x`.`Id` = @__obj_Id_0
+LIMIT 1"
+2018-07-05 06:23:44.233 +00:00 [Information] Executed action "Empite.TribechimpService.CoreService.Controllers.UserController.GetUser (Empite.TribechimpService.CoreService)" in 28305.3727ms
+2018-07-05 06:23:44.270 +00:00 [Error] An unhandled exception has occurred while executing the request.
+Microsoft.CSharp.RuntimeBinder.RuntimeBinderException: Cannot implicitly convert type 'string' to 'Microsoft.AspNetCore.Mvc.IActionResult'
+   at CallSite.Target(Closure , CallSite , Object )
+   at System.Dynamic.UpdateDelegates.UpdateAndExecute1[T0,TRet](CallSite site, T0 arg0)
+   at Empite.TribechimpService.CoreService.Controllers.UserController.GetUser(UserDetailDto obj) in D:\Empite\TribChimp\Repos\tribechimp-coreservice\src\Empite.TribechimpService.CoreService\Controllers\UserController.cs:line 60
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at System.Threading.Tasks.ValueTask`1.get_Result()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIIndexMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext)
+   at Empite.TribechimpService.CoreService.Infrastructure.ApplicationBuilderExtension.<>c__DisplayClass11_0.<<ConfigureApplicationPipeline>b__2>d.MoveNext() in D:\Empite\TribChimp\Repos\tribechimp-coreservice\src\Empite.TribechimpService.CoreService\Infrastructure\ApplicationBuilderExtension.cs:line 191
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2018-07-05 06:23:44.319 +00:00 [Information] Request finished in 28399.5252ms 500 text/html; charset=utf-8
+2018-07-05 06:25:00.753 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/api/organization/getorganization?subDomain=empite  
+2018-07-05 06:25:00.759 +00:00 [Information] Route matched with "{action = \"GetOrganization\", controller = \"Organization\"}". Executing action "Empite.TribechimpService.CoreService.Controllers.OrganizationController.GetOrganization (Empite.TribechimpService.CoreService)"
+2018-07-05 06:25:00.766 +00:00 [Information] Authorization was successful.
+2018-07-05 06:25:00.772 +00:00 [Information] Executing action method "Empite.TribechimpService.CoreService.Controllers.OrganizationController.GetOrganization (Empite.TribechimpService.CoreService)" with arguments (["empite"]) - Validation state: Valid
+2018-07-05 06:25:00.784 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-05 06:25:00.802 +00:00 [Information] Executed DbCommand ("3"ms) [Parameters=["@__subDomain_0='?' (Size = 50)"], CommandType='Text', CommandTimeout='30']"
+""SELECT `o`.`Id`, `o`.`CreatedAt`, `o`.`CreatedBy`, `o`.`DeletedAt`, `o`.`DeletedBy`, `o`.`Description`, `o`.`Name`, `o`.`SubDomain`, `o`.`UpdatedAt`, `o`.`UpdatedBy`
+FROM `Organizations` AS `o`
+WHERE `o`.`SubDomain` = @__subDomain_0
+LIMIT 1"
+2018-07-05 06:25:00.811 +00:00 [Information] Executed action method "Empite.TribechimpService.CoreService.Controllers.OrganizationController.GetOrganization (Empite.TribechimpService.CoreService)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 30.3063ms.
+2018-07-05 06:25:00.826 +00:00 [Information] Executing ObjectResult, writing value of type '"Empite.TribechimpService.CoreService.Domain.Dto.OrganizationDto"'.
+2018-07-05 06:25:00.836 +00:00 [Information] Executed action "Empite.TribechimpService.CoreService.Controllers.OrganizationController.GetOrganization (Empite.TribechimpService.CoreService)" in 70.9891ms
+2018-07-05 06:25:00.855 +00:00 [Information] Request finished in 91.1706ms 200 application/json; charset=utf-8
+2018-07-05 06:25:15.698 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/api/organization/getorganization?subDomain=empite  
+2018-07-05 06:25:15.703 +00:00 [Information] Route matched with "{action = \"GetOrganization\", controller = \"Organization\"}". Executing action "Empite.TribechimpService.CoreService.Controllers.OrganizationController.GetOrganization (Empite.TribechimpService.CoreService)"
+2018-07-05 06:25:15.710 +00:00 [Information] Authorization was successful.
+2018-07-05 06:25:15.719 +00:00 [Information] Executing action method "Empite.TribechimpService.CoreService.Controllers.OrganizationController.GetOrganization (Empite.TribechimpService.CoreService)" with arguments (["empite"]) - Validation state: Valid
+2018-07-05 06:25:15.727 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-05 06:25:15.742 +00:00 [Information] Executed DbCommand ("2"ms) [Parameters=["@__subDomain_0='?' (Size = 50)"], CommandType='Text', CommandTimeout='30']"
+""SELECT `o`.`Id`, `o`.`CreatedAt`, `o`.`CreatedBy`, `o`.`DeletedAt`, `o`.`DeletedBy`, `o`.`Description`, `o`.`Name`, `o`.`SubDomain`, `o`.`UpdatedAt`, `o`.`UpdatedBy`
+FROM `Organizations` AS `o`
+WHERE `o`.`SubDomain` = @__subDomain_0
+LIMIT 1"
+2018-07-05 06:25:15.754 +00:00 [Information] Executed action method "Empite.TribechimpService.CoreService.Controllers.OrganizationController.GetOrganization (Empite.TribechimpService.CoreService)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 28.3286ms.
+2018-07-05 06:25:15.760 +00:00 [Information] Executing ObjectResult, writing value of type '"Empite.TribechimpService.CoreService.Domain.Dto.OrganizationDto"'.
+2018-07-05 06:25:15.776 +00:00 [Information] Executed action "Empite.TribechimpService.CoreService.Controllers.OrganizationController.GetOrganization (Empite.TribechimpService.CoreService)" in 60.1595ms
+2018-07-05 06:25:15.817 +00:00 [Information] Request finished in 107.9833ms 200 application/json; charset=utf-8
+2018-07-05 06:25:18.695 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/api/values  
+2018-07-05 06:25:18.706 +00:00 [Information] Route matched with "{action = \"Get\", controller = \"Values\"}". Executing action "Empite.TribechimpService.CoreService.Controllers.ValuesController.Get (Empite.TribechimpService.CoreService)"
+2018-07-05 06:25:18.719 +00:00 [Information] Authorization was successful.
+2018-07-05 06:25:18.732 +00:00 [Information] Executing action method "Empite.TribechimpService.CoreService.Controllers.ValuesController.Get (Empite.TribechimpService.CoreService)" - Validation state: Valid
+2018-07-05 06:25:18.756 +00:00 [Information] Executed action method "Empite.TribechimpService.CoreService.Controllers.ValuesController.Get (Empite.TribechimpService.CoreService)", returned result "Microsoft.AspNetCore.Mvc.ObjectResult" in 0.1794ms.
+2018-07-05 06:25:18.781 +00:00 [Information] Executing ObjectResult, writing value of type '"System.String[]"'.
+2018-07-05 06:25:18.887 +00:00 [Information] Executed action "Empite.TribechimpService.CoreService.Controllers.ValuesController.Get (Empite.TribechimpService.CoreService)" in 153.6347ms
+2018-07-05 06:25:19.005 +00:00 [Information] Request finished in 294.0554ms 200 application/json; charset=utf-8
+2018-07-05 06:25:21.519 +00:00 [Information] Request starting HTTP/1.1 POST https://localhost:5011/api/user/getUser application/json; charset=utf-8 172
+2018-07-05 06:25:21.524 +00:00 [Information] Route matched with "{action = \"GetUser\", controller = \"User\"}". Executing action "Empite.TribechimpService.CoreService.Controllers.UserController.GetUser (Empite.TribechimpService.CoreService)"
+2018-07-05 06:25:21.532 +00:00 [Information] Authorization was successful.
+2018-07-05 06:25:21.536 +00:00 [Information] Executing action method "Empite.TribechimpService.CoreService.Controllers.UserController.GetUser (Empite.TribechimpService.CoreService)" with arguments (["Empite.TribechimpService.CoreService.Domain.Dto.UserDetailDto"]) - Validation state: Valid
+2018-07-05 06:25:32.118 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-05 06:25:32.487 +00:00 [Information] Executed DbCommand ("0"ms) [Parameters=["@__obj_Id_0='?' (Size = 255)"], CommandType='Text', CommandTimeout='30']"
+""SELECT `x`.`Id`, `x`.`CreatedAt`, `x`.`CreatedBy`, `x`.`DeletedAt`, `x`.`DeletedBy`, `x`.`FristName`, `x`.`LastName`, `x`.`OrganizationId`, `x`.`UpdatedAt`, `x`.`UpdatedBy`
+FROM `UserDetails` AS `x`
+WHERE `x`.`Id` = @__obj_Id_0
+LIMIT 1"
+2018-07-05 06:25:47.258 +00:00 [Information] Executed action "Empite.TribechimpService.CoreService.Controllers.UserController.GetUser (Empite.TribechimpService.CoreService)" in 25713.1349ms
+2018-07-05 06:26:05.568 +00:00 [Error] An unhandled exception has occurred while executing the request.
+Microsoft.CSharp.RuntimeBinder.RuntimeBinderException: Cannot implicitly convert type 'string' to 'Microsoft.AspNetCore.Mvc.IActionResult'
+   at CallSite.Target(Closure , CallSite , Object )
+   at Empite.TribechimpService.CoreService.Controllers.UserController.GetUser(UserDetailDto obj) in D:\Empite\TribChimp\Repos\tribechimp-coreservice\src\Empite.TribechimpService.CoreService\Controllers\UserController.cs:line 60
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at System.Threading.Tasks.ValueTask`1.get_Result()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIIndexMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext)
+   at Empite.TribechimpService.CoreService.Infrastructure.ApplicationBuilderExtension.<>c__DisplayClass11_0.<<ConfigureApplicationPipeline>b__2>d.MoveNext() in D:\Empite\TribChimp\Repos\tribechimp-coreservice\src\Empite.TribechimpService.CoreService\Infrastructure\ApplicationBuilderExtension.cs:line 191
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2018-07-05 06:26:05.667 +00:00 [Information] Request finished in 44147.692ms 500 text/html; charset=utf-8
+2018-07-05 06:26:07.721 +00:00 [Information] Request starting HTTP/1.1 POST https://localhost:5011/api/user/getUser application/json; charset=utf-8 172
+2018-07-05 06:26:07.726 +00:00 [Information] Route matched with "{action = \"GetUser\", controller = \"User\"}". Executing action "Empite.TribechimpService.CoreService.Controllers.UserController.GetUser (Empite.TribechimpService.CoreService)"
+2018-07-05 06:26:07.741 +00:00 [Information] Authorization was successful.
+2018-07-05 06:26:07.749 +00:00 [Information] Executing action method "Empite.TribechimpService.CoreService.Controllers.UserController.GetUser (Empite.TribechimpService.CoreService)" with arguments (["Empite.TribechimpService.CoreService.Domain.Dto.UserDetailDto"]) - Validation state: Valid
+2018-07-05 06:26:18.620 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-05 06:26:18.626 +00:00 [Information] Executed DbCommand ("0"ms) [Parameters=["@__obj_Id_0='?' (Size = 255)"], CommandType='Text', CommandTimeout='30']"
+""SELECT `x`.`Id`, `x`.`CreatedAt`, `x`.`CreatedBy`, `x`.`DeletedAt`, `x`.`DeletedBy`, `x`.`FristName`, `x`.`LastName`, `x`.`OrganizationId`, `x`.`UpdatedAt`, `x`.`UpdatedBy`
+FROM `UserDetails` AS `x`
+WHERE `x`.`Id` = @__obj_Id_0
+LIMIT 1"
+2018-07-05 06:26:18.703 +00:00 [Information] Executed action "Empite.TribechimpService.CoreService.Controllers.UserController.GetUser (Empite.TribechimpService.CoreService)" in 10960.9447ms
+2018-07-05 06:26:18.746 +00:00 [Error] An unhandled exception has occurred while executing the request.
+Microsoft.CSharp.RuntimeBinder.RuntimeBinderException: Cannot implicitly convert type 'string' to 'Microsoft.AspNetCore.Mvc.IActionResult'
+   at CallSite.Target(Closure , CallSite , Object )
+   at Empite.TribechimpService.CoreService.Controllers.UserController.GetUser(UserDetailDto obj) in D:\Empite\TribChimp\Repos\tribechimp-coreservice\src\Empite.TribechimpService.CoreService\Controllers\UserController.cs:line 60
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at System.Threading.Tasks.ValueTask`1.get_Result()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIIndexMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext)
+   at Empite.TribechimpService.CoreService.Infrastructure.ApplicationBuilderExtension.<>c__DisplayClass11_0.<<ConfigureApplicationPipeline>b__2>d.MoveNext() in D:\Empite\TribChimp\Repos\tribechimp-coreservice\src\Empite.TribechimpService.CoreService\Infrastructure\ApplicationBuilderExtension.cs:line 191
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2018-07-05 06:26:18.807 +00:00 [Information] Request finished in 11085.3868ms 500 text/html; charset=utf-8
+2018-07-05 06:38:42.304 +00:00 [Information] User profile is available. Using '"C:\Users\MichikaP\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+2018-07-05 06:38:45.373 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-05 06:38:45.964 +00:00 [Information] Executed DbCommand ("39"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA=N'dev-tribechimpcore' AND TABLE_NAME=N'__EFMigrationsHistory';"
+2018-07-05 06:38:46.097 +00:00 [Information] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA=N'dev-tribechimpcore' AND TABLE_NAME=N'__EFMigrationsHistory';"
+2018-07-05 06:38:46.136 +00:00 [Information] Executed DbCommand ("8"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT `MigrationId`, `ProductVersion`
+FROM `__EFMigrationsHistory`
+ORDER BY `MigrationId`;"
+2018-07-05 06:38:46.230 +00:00 [Information] No migrations were applied. The database is already up to date.
+2018-07-05 06:38:46.512 +00:00 [Information] Executed DbCommand ("4"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM `Organizations` AS `o`)
+    THEN TRUE ELSE FALSE
+END"
+2018-07-05 06:38:50.484 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/swagger/index.html  
+2018-07-05 06:38:50.781 +00:00 [Information] Request finished in 229.1872ms 200 text/html
+2018-07-05 06:38:51.738 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/swagger/v1/swagger.json  
+2018-07-05 06:38:53.132 +00:00 [Information] Request finished in 1383.4779ms 200 application/json;charset=utf-8
+2018-07-05 06:38:54.087 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/api/organization/getorganization?subDomain=empite  
+2018-07-05 06:38:54.568 +00:00 [Information] Route matched with "{action = \"GetOrganization\", controller = \"Organization\"}". Executing action "Empite.TribechimpService.CoreService.Controllers.OrganizationController.GetOrganization (Empite.TribechimpService.CoreService)"
+2018-07-05 06:38:54.666 +00:00 [Information] Authorization was successful.
+2018-07-05 06:38:54.895 +00:00 [Information] Executing action method "Empite.TribechimpService.CoreService.Controllers.OrganizationController.GetOrganization (Empite.TribechimpService.CoreService)" with arguments (["empite"]) - Validation state: Valid
+2018-07-05 06:38:55.014 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-05 06:38:55.328 +00:00 [Information] Executed DbCommand ("35"ms) [Parameters=["@__subDomain_0='?' (Size = 50)"], CommandType='Text', CommandTimeout='30']"
+""SELECT `o`.`Id`, `o`.`CreatedAt`, `o`.`CreatedBy`, `o`.`DeletedAt`, `o`.`DeletedBy`, `o`.`Description`, `o`.`Name`, `o`.`SubDomain`, `o`.`UpdatedAt`, `o`.`UpdatedBy`
+FROM `Organizations` AS `o`
+WHERE `o`.`SubDomain` = @__subDomain_0
+LIMIT 1"
+2018-07-05 06:38:55.497 +00:00 [Information] Executed action method "Empite.TribechimpService.CoreService.Controllers.OrganizationController.GetOrganization (Empite.TribechimpService.CoreService)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 513.8077ms.
+2018-07-05 06:38:55.527 +00:00 [Information] Executing ObjectResult, writing value of type '"Empite.TribechimpService.CoreService.Domain.Dto.OrganizationDto"'.
+2018-07-05 06:38:55.563 +00:00 [Information] Executed action "Empite.TribechimpService.CoreService.Controllers.OrganizationController.GetOrganization (Empite.TribechimpService.CoreService)" in 966.3584ms
+2018-07-05 06:38:55.577 +00:00 [Information] Request finished in 1482.341ms 200 application/json; charset=utf-8
+2018-07-05 06:38:58.853 +00:00 [Information] Request starting HTTP/1.1 POST https://localhost:5011/api/user/getUser application/json; charset=utf-8 172
+2018-07-05 06:38:59.130 +00:00 [Information] Route matched with "{action = \"GetUser\", controller = \"User\"}". Executing action "Empite.TribechimpService.CoreService.Controllers.UserController.GetUser (Empite.TribechimpService.CoreService)"
+2018-07-05 06:38:59.334 +00:00 [Information] Authorization was successful.
+2018-07-05 06:38:59.402 +00:00 [Information] Executing action method "Empite.TribechimpService.CoreService.Controllers.UserController.GetUser (Empite.TribechimpService.CoreService)" with arguments (["Empite.TribechimpService.CoreService.Domain.Dto.UserDetailDto"]) - Validation state: Valid
+2018-07-05 06:39:03.515 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-05 06:39:03.554 +00:00 [Information] Executed DbCommand ("3"ms) [Parameters=["@__obj_Id_0='?' (Size = 255)"], CommandType='Text', CommandTimeout='30']"
+""SELECT `x`.`Id`, `x`.`CreatedAt`, `x`.`CreatedBy`, `x`.`DeletedAt`, `x`.`DeletedBy`, `x`.`FristName`, `x`.`LastName`, `x`.`OrganizationId`, `x`.`UpdatedAt`, `x`.`UpdatedBy`
+FROM `UserDetails` AS `x`
+WHERE `x`.`Id` = @__obj_Id_0
+LIMIT 1"
+2018-07-05 06:39:03.783 +00:00 [Information] Executed action method "Empite.TribechimpService.CoreService.Controllers.UserController.GetUser (Empite.TribechimpService.CoreService)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 4309.4758ms.
+2018-07-05 06:39:03.800 +00:00 [Information] Executing ObjectResult, writing value of type '"System.String"'.
+2018-07-05 06:39:03.813 +00:00 [Information] Executed action "Empite.TribechimpService.CoreService.Controllers.UserController.GetUser (Empite.TribechimpService.CoreService)" in 4514.1141ms
+2018-07-05 06:39:03.820 +00:00 [Information] Request finished in 5053.5976ms 200 text/plain; charset=utf-8
+2018-07-05 06:43:13.213 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/api/organization/getorganization?subDomain=empite  
+2018-07-05 06:43:13.235 +00:00 [Information] Route matched with "{action = \"GetOrganization\", controller = \"Organization\"}". Executing action "Empite.TribechimpService.CoreService.Controllers.OrganizationController.GetOrganization (Empite.TribechimpService.CoreService)"
+2018-07-05 06:43:13.256 +00:00 [Information] Authorization was successful.
+2018-07-05 06:43:13.263 +00:00 [Information] Executing action method "Empite.TribechimpService.CoreService.Controllers.OrganizationController.GetOrganization (Empite.TribechimpService.CoreService)" with arguments (["empite"]) - Validation state: Valid
+2018-07-05 06:43:13.273 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-05 06:43:13.373 +00:00 [Information] Executed DbCommand ("21"ms) [Parameters=["@__subDomain_0='?' (Size = 50)"], CommandType='Text', CommandTimeout='30']"
+""SELECT `o`.`Id`, `o`.`CreatedAt`, `o`.`CreatedBy`, `o`.`DeletedAt`, `o`.`DeletedBy`, `o`.`Description`, `o`.`Name`, `o`.`SubDomain`, `o`.`UpdatedAt`, `o`.`UpdatedBy`
+FROM `Organizations` AS `o`
+WHERE `o`.`SubDomain` = @__subDomain_0
+LIMIT 1"
+2018-07-05 06:43:13.426 +00:00 [Information] Executed action method "Empite.TribechimpService.CoreService.Controllers.OrganizationController.GetOrganization (Empite.TribechimpService.CoreService)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 155.451ms.
+2018-07-05 06:43:13.443 +00:00 [Information] Executing ObjectResult, writing value of type '"Empite.TribechimpService.CoreService.Domain.Dto.OrganizationDto"'.
+2018-07-05 06:43:13.462 +00:00 [Information] Executed action "Empite.TribechimpService.CoreService.Controllers.OrganizationController.GetOrganization (Empite.TribechimpService.CoreService)" in 202.0821ms
+2018-07-05 06:43:13.492 +00:00 [Information] Request finished in 289.8528ms 200 application/json; charset=utf-8
+2018-07-05 06:43:17.766 +00:00 [Information] Request starting HTTP/1.1 POST https://localhost:5011/api/user/getUser application/json; charset=utf-8 172
+2018-07-05 06:43:17.811 +00:00 [Information] Route matched with "{action = \"GetUser\", controller = \"User\"}". Executing action "Empite.TribechimpService.CoreService.Controllers.UserController.GetUser (Empite.TribechimpService.CoreService)"
+2018-07-05 06:43:17.822 +00:00 [Information] Authorization was successful.
+2018-07-05 06:43:17.828 +00:00 [Information] Executing action method "Empite.TribechimpService.CoreService.Controllers.UserController.GetUser (Empite.TribechimpService.CoreService)" with arguments (["Empite.TribechimpService.CoreService.Domain.Dto.UserDetailDto"]) - Validation state: Valid
+2018-07-05 06:43:20.914 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-05 06:43:20.926 +00:00 [Information] Executed DbCommand ("4"ms) [Parameters=["@__obj_Id_0='?' (Size = 255)"], CommandType='Text', CommandTimeout='30']"
+""SELECT `x`.`Id`, `x`.`CreatedAt`, `x`.`CreatedBy`, `x`.`DeletedAt`, `x`.`DeletedBy`, `x`.`FristName`, `x`.`LastName`, `x`.`OrganizationId`, `x`.`UpdatedAt`, `x`.`UpdatedBy`
+FROM `UserDetails` AS `x`
+WHERE `x`.`Id` = @__obj_Id_0
+LIMIT 1"
+2018-07-05 06:43:20.938 +00:00 [Information] Executed action method "Empite.TribechimpService.CoreService.Controllers.UserController.GetUser (Empite.TribechimpService.CoreService)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 3089.7303ms.
+2018-07-05 06:43:20.946 +00:00 [Information] Executing ObjectResult, writing value of type '"System.String"'.
+2018-07-05 06:43:20.959 +00:00 [Information] Executed action "Empite.TribechimpService.CoreService.Controllers.UserController.GetUser (Empite.TribechimpService.CoreService)" in 3135.5575ms
+2018-07-05 06:43:20.968 +00:00 [Information] Request finished in 3199.4544ms 200 text/plain; charset=utf-8
+2018-07-05 06:43:54.693 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/api/organization/getorganization?subDomain=empite  
+2018-07-05 06:43:54.750 +00:00 [Information] Route matched with "{action = \"GetOrganization\", controller = \"Organization\"}". Executing action "Empite.TribechimpService.CoreService.Controllers.OrganizationController.GetOrganization (Empite.TribechimpService.CoreService)"
+2018-07-05 06:43:54.772 +00:00 [Information] Authorization was successful.
+2018-07-05 06:43:54.793 +00:00 [Information] Executing action method "Empite.TribechimpService.CoreService.Controllers.OrganizationController.GetOrganization (Empite.TribechimpService.CoreService)" with arguments (["empite"]) - Validation state: Valid
+2018-07-05 06:43:54.800 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-05 06:43:54.847 +00:00 [Information] Executed DbCommand ("26"ms) [Parameters=["@__subDomain_0='?' (Size = 50)"], CommandType='Text', CommandTimeout='30']"
+""SELECT `o`.`Id`, `o`.`CreatedAt`, `o`.`CreatedBy`, `o`.`DeletedAt`, `o`.`DeletedBy`, `o`.`Description`, `o`.`Name`, `o`.`SubDomain`, `o`.`UpdatedAt`, `o`.`UpdatedBy`
+FROM `Organizations` AS `o`
+WHERE `o`.`SubDomain` = @__subDomain_0
+LIMIT 1"
+2018-07-05 06:43:54.852 +00:00 [Information] Executed action method "Empite.TribechimpService.CoreService.Controllers.OrganizationController.GetOrganization (Empite.TribechimpService.CoreService)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 54.4553ms.
+2018-07-05 06:43:54.863 +00:00 [Information] Executing ObjectResult, writing value of type '"Empite.TribechimpService.CoreService.Domain.Dto.OrganizationDto"'.
+2018-07-05 06:43:54.868 +00:00 [Information] Executed action "Empite.TribechimpService.CoreService.Controllers.OrganizationController.GetOrganization (Empite.TribechimpService.CoreService)" in 100.0287ms
+2018-07-05 06:43:54.879 +00:00 [Information] Request finished in 207.4588ms 200 application/json; charset=utf-8
+2018-07-05 06:43:59.067 +00:00 [Information] Request starting HTTP/1.1 POST https://localhost:5011/api/user/getUser application/json; charset=utf-8 172
+2018-07-05 06:43:59.079 +00:00 [Information] Route matched with "{action = \"GetUser\", controller = \"User\"}". Executing action "Empite.TribechimpService.CoreService.Controllers.UserController.GetUser (Empite.TribechimpService.CoreService)"
+2018-07-05 06:43:59.086 +00:00 [Information] Authorization was successful.
+2018-07-05 06:43:59.095 +00:00 [Information] Executing action method "Empite.TribechimpService.CoreService.Controllers.UserController.GetUser (Empite.TribechimpService.CoreService)" with arguments (["Empite.TribechimpService.CoreService.Domain.Dto.UserDetailDto"]) - Validation state: Valid
+2018-07-05 06:44:02.230 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-05 06:44:02.250 +00:00 [Information] Executed DbCommand ("0"ms) [Parameters=["@__obj_Id_0='?' (Size = 255)"], CommandType='Text', CommandTimeout='30']"
+""SELECT `x`.`Id`, `x`.`CreatedAt`, `x`.`CreatedBy`, `x`.`DeletedAt`, `x`.`DeletedBy`, `x`.`FristName`, `x`.`LastName`, `x`.`OrganizationId`, `x`.`UpdatedAt`, `x`.`UpdatedBy`
+FROM `UserDetails` AS `x`
+WHERE `x`.`Id` = @__obj_Id_0
+LIMIT 1"
+2018-07-05 06:44:28.222 +00:00 [Information] Executed action method "Empite.TribechimpService.CoreService.Controllers.UserController.GetUser (Empite.TribechimpService.CoreService)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 29112.1943ms.
+2018-07-05 06:44:28.246 +00:00 [Information] Executing ObjectResult, writing value of type '"System.String"'.
+2018-07-05 06:44:28.268 +00:00 [Information] Executed action "Empite.TribechimpService.CoreService.Controllers.UserController.GetUser (Empite.TribechimpService.CoreService)" in 29175.695ms
+2018-07-05 06:44:28.299 +00:00 [Information] Request finished in 29227.2699ms 200 text/plain; charset=utf-8
+2018-07-05 06:53:43.658 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/api/organization/getorganization?subDomain=empite  
+2018-07-05 06:53:43.712 +00:00 [Information] Route matched with "{action = \"GetOrganization\", controller = \"Organization\"}". Executing action "Empite.TribechimpService.CoreService.Controllers.OrganizationController.GetOrganization (Empite.TribechimpService.CoreService)"
+2018-07-05 06:53:43.746 +00:00 [Information] Authorization was successful.
+2018-07-05 06:53:43.760 +00:00 [Information] Executing action method "Empite.TribechimpService.CoreService.Controllers.OrganizationController.GetOrganization (Empite.TribechimpService.CoreService)" with arguments (["empite"]) - Validation state: Valid
+2018-07-05 06:53:43.773 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-05 06:53:43.797 +00:00 [Information] Executed DbCommand ("8"ms) [Parameters=["@__subDomain_0='?' (Size = 50)"], CommandType='Text', CommandTimeout='30']"
+""SELECT `o`.`Id`, `o`.`CreatedAt`, `o`.`CreatedBy`, `o`.`DeletedAt`, `o`.`DeletedBy`, `o`.`Description`, `o`.`Name`, `o`.`SubDomain`, `o`.`UpdatedAt`, `o`.`UpdatedBy`
+FROM `Organizations` AS `o`
+WHERE `o`.`SubDomain` = @__subDomain_0
+LIMIT 1"
+2018-07-05 06:53:43.807 +00:00 [Information] Executed action method "Empite.TribechimpService.CoreService.Controllers.OrganizationController.GetOrganization (Empite.TribechimpService.CoreService)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 34.9484ms.
+2018-07-05 06:53:43.818 +00:00 [Information] Executing ObjectResult, writing value of type '"Empite.TribechimpService.CoreService.Domain.Dto.OrganizationDto"'.
+2018-07-05 06:53:43.829 +00:00 [Information] Executed action "Empite.TribechimpService.CoreService.Controllers.OrganizationController.GetOrganization (Empite.TribechimpService.CoreService)" in 83.6604ms
+2018-07-05 06:53:43.836 +00:00 [Information] Request finished in 206.7049ms 200 application/json; charset=utf-8
+2018-07-05 06:53:48.240 +00:00 [Information] Request starting HTTP/1.1 POST https://localhost:5011/api/user/getUser application/json; charset=utf-8 172
+2018-07-05 06:53:48.247 +00:00 [Information] Route matched with "{action = \"GetUser\", controller = \"User\"}". Executing action "Empite.TribechimpService.CoreService.Controllers.UserController.GetUser (Empite.TribechimpService.CoreService)"
+2018-07-05 06:53:48.287 +00:00 [Information] Authorization was successful.
+2018-07-05 06:53:48.296 +00:00 [Information] Executing action method "Empite.TribechimpService.CoreService.Controllers.UserController.GetUser (Empite.TribechimpService.CoreService)" with arguments (["Empite.TribechimpService.CoreService.Domain.Dto.UserDetailDto"]) - Validation state: Valid
+2018-07-05 06:53:51.030 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-05 06:53:51.043 +00:00 [Information] Executed DbCommand ("4"ms) [Parameters=["@__obj_Id_0='?' (Size = 255)"], CommandType='Text', CommandTimeout='30']"
+""SELECT `x`.`Id`, `x`.`CreatedAt`, `x`.`CreatedBy`, `x`.`DeletedAt`, `x`.`DeletedBy`, `x`.`FristName`, `x`.`LastName`, `x`.`OrganizationId`, `x`.`UpdatedAt`, `x`.`UpdatedBy`
+FROM `UserDetails` AS `x`
+WHERE `x`.`Id` = @__obj_Id_0
+LIMIT 1"
+2018-07-05 06:53:51.060 +00:00 [Information] Executed action method "Empite.TribechimpService.CoreService.Controllers.UserController.GetUser (Empite.TribechimpService.CoreService)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 2749.6117ms.
+2018-07-05 06:53:51.072 +00:00 [Information] Executing ObjectResult, writing value of type '"System.String"'.
+2018-07-05 06:53:51.080 +00:00 [Information] Executed action "Empite.TribechimpService.CoreService.Controllers.UserController.GetUser (Empite.TribechimpService.CoreService)" in 2807.0138ms
+2018-07-05 06:53:51.125 +00:00 [Information] Request finished in 2884.9661ms 200 text/plain; charset=utf-8
+2018-07-05 06:55:31.941 +00:00 [Information] Request starting HTTP/1.1 POST https://localhost:5011/api/user/getUser application/json; charset=utf-8 172
+2018-07-05 06:55:31.954 +00:00 [Information] Route matched with "{action = \"GetUser\", controller = \"User\"}". Executing action "Empite.TribechimpService.CoreService.Controllers.UserController.GetUser (Empite.TribechimpService.CoreService)"
+2018-07-05 06:55:31.967 +00:00 [Information] Authorization was successful.
+2018-07-05 06:55:31.974 +00:00 [Information] Executing action method "Empite.TribechimpService.CoreService.Controllers.UserController.GetUser (Empite.TribechimpService.CoreService)" with arguments (["Empite.TribechimpService.CoreService.Domain.Dto.UserDetailDto"]) - Validation state: Valid
+2018-07-05 06:55:34.740 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-05 06:55:34.761 +00:00 [Information] Executed DbCommand ("4"ms) [Parameters=["@__obj_Id_0='?' (Size = 255)"], CommandType='Text', CommandTimeout='30']"
+""SELECT `x`.`Id`, `x`.`CreatedAt`, `x`.`CreatedBy`, `x`.`DeletedAt`, `x`.`DeletedBy`, `x`.`FristName`, `x`.`LastName`, `x`.`OrganizationId`, `x`.`UpdatedAt`, `x`.`UpdatedBy`
+FROM `UserDetails` AS `x`
+WHERE `x`.`Id` = @__obj_Id_0
+LIMIT 1"
+2018-07-05 06:55:34.769 +00:00 [Information] Executed action method "Empite.TribechimpService.CoreService.Controllers.UserController.GetUser (Empite.TribechimpService.CoreService)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 2788.4561ms.
+2018-07-05 06:55:34.776 +00:00 [Information] Executing ObjectResult, writing value of type '"System.String"'.
+2018-07-05 06:55:34.780 +00:00 [Information] Executed action "Empite.TribechimpService.CoreService.Controllers.UserController.GetUser (Empite.TribechimpService.CoreService)" in 2819.4675ms
+2018-07-05 06:55:34.789 +00:00 [Information] Request finished in 2847.2077ms 200 text/plain; charset=utf-8
+2018-07-05 06:55:45.904 +00:00 [Information] Request starting HTTP/1.1 POST https://localhost:5011/api/user/UpdateUser application/json; charset=utf-8 179
+2018-07-05 06:55:45.920 +00:00 [Information] Route matched with "{action = \"UpdateUser\", controller = \"User\"}". Executing action "Empite.TribechimpService.CoreService.Controllers.UserController.UpdateUser (Empite.TribechimpService.CoreService)"
+2018-07-05 06:55:45.925 +00:00 [Information] Authorization was successful.
+2018-07-05 06:55:45.934 +00:00 [Information] Executing action method "Empite.TribechimpService.CoreService.Controllers.UserController.UpdateUser (Empite.TribechimpService.CoreService)" with arguments (["Empite.TribechimpService.CoreService.Domain.Dto.UserDetailDto"]) - Validation state: Valid
+2018-07-05 06:55:59.178 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-05 06:55:59.208 +00:00 [Information] Executed DbCommand ("0"ms) [Parameters=["@__obj_Id_0='?' (Size = 255)"], CommandType='Text', CommandTimeout='30']"
+""SELECT `x`.`Id`, `x`.`CreatedAt`, `x`.`CreatedBy`, `x`.`DeletedAt`, `x`.`DeletedBy`, `x`.`FristName`, `x`.`LastName`, `x`.`OrganizationId`, `x`.`UpdatedAt`, `x`.`UpdatedBy`
+FROM `UserDetails` AS `x`
+WHERE `x`.`Id` = @__obj_Id_0
+LIMIT 1"
+2018-07-05 06:55:59.421 +00:00 [Information] Executed DbCommand ("13"ms) [Parameters=["@p9='?' (Size = 255), @p0='?' (DbType = DateTime), @p1='?' (DbType = Guid), @p2='?' (DbType = DateTime), @p3='?' (DbType = Guid), @p4='?' (Size = 4000), @p5='?' (Size = 4000), @p6='?' (Size = 40), @p7='?' (DbType = DateTime), @p8='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""UPDATE `UserDetails` SET `CreatedAt` = @p0, `CreatedBy` = @p1, `DeletedAt` = @p2, `DeletedBy` = @p3, `FristName` = @p4, `LastName` = @p5, `OrganizationId` = @p6, `UpdatedAt` = @p7, `UpdatedBy` = @p8
+WHERE `Id` = @p9;
+SELECT ROW_COUNT();"
+2018-07-05 06:56:03.075 +00:00 [Information] Executed action method "Empite.TribechimpService.CoreService.Controllers.UserController.UpdateUser (Empite.TribechimpService.CoreService)", returned result "Microsoft.AspNetCore.Mvc.OkResult" in 17136.1334ms.
+2018-07-05 06:56:03.090 +00:00 [Information] Executing HttpStatusCodeResult, setting HTTP status code 200
+2018-07-05 06:56:03.100 +00:00 [Information] Executed action "Empite.TribechimpService.CoreService.Controllers.UserController.UpdateUser (Empite.TribechimpService.CoreService)" in 17172.8602ms
+2018-07-05 06:56:03.107 +00:00 [Information] Request finished in 17206.4085ms 200 

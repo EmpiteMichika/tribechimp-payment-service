@@ -1,0 +1,64 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2018
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Empite.TribechimpService.PaymentService", "Empite.TribechimpService.CoreService\Empite.TribechimpService.PaymentService.csproj", "{F4F61A92-9DE2-4C96-9377-C5D4AA51A9E5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "libs", "libs", "{B0C33FA0-4B5A-4497-A348-5696300F8CBD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Empite.TribechimpService.Core", "libs\Empite.TribechimpService.Core\Empite.TribechimpService.Core.csproj", "{B03177C3-07B8-459F-8C99-45A12A8DB5DA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Empite.TribechimpService.Shared", "libs\Empite.TribechimpService.Shared\Empite.TribechimpService.Shared.csproj", "{D2B6448B-83BB-44D3-BAC7-C2FA1C8ACF30}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Empite.TribechimpService.PaymentService.Domain", "libs\Empite.TribechimpService.CoreService.Domain\Empite.TribechimpService.PaymentService.Domain.csproj", "{133B6C16-F21A-411F-AE0E-1FD79558F701}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Empite.TribechimpService.PaymentService.Data", "libs\Empite.TribechimpService.CoreService.Data\Empite.TribechimpService.PaymentService.Data.csproj", "{298BB43C-E4C3-48BB-92C0-3C20D692293E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Empite.TribechimpService.PaymentService.Service", "libs\Empite.TribechimpService.CoreService.Service\Empite.TribechimpService.PaymentService.Service.csproj", "{4B8030EB-2425-4C38-9E9D-E29DEC102416}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F4F61A92-9DE2-4C96-9377-C5D4AA51A9E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4F61A92-9DE2-4C96-9377-C5D4AA51A9E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4F61A92-9DE2-4C96-9377-C5D4AA51A9E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4F61A92-9DE2-4C96-9377-C5D4AA51A9E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B03177C3-07B8-459F-8C99-45A12A8DB5DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B03177C3-07B8-459F-8C99-45A12A8DB5DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B03177C3-07B8-459F-8C99-45A12A8DB5DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B03177C3-07B8-459F-8C99-45A12A8DB5DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2B6448B-83BB-44D3-BAC7-C2FA1C8ACF30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2B6448B-83BB-44D3-BAC7-C2FA1C8ACF30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2B6448B-83BB-44D3-BAC7-C2FA1C8ACF30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2B6448B-83BB-44D3-BAC7-C2FA1C8ACF30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{133B6C16-F21A-411F-AE0E-1FD79558F701}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{133B6C16-F21A-411F-AE0E-1FD79558F701}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{133B6C16-F21A-411F-AE0E-1FD79558F701}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{133B6C16-F21A-411F-AE0E-1FD79558F701}.Release|Any CPU.Build.0 = Release|Any CPU
+		{298BB43C-E4C3-48BB-92C0-3C20D692293E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{298BB43C-E4C3-48BB-92C0-3C20D692293E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{298BB43C-E4C3-48BB-92C0-3C20D692293E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{298BB43C-E4C3-48BB-92C0-3C20D692293E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B8030EB-2425-4C38-9E9D-E29DEC102416}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B8030EB-2425-4C38-9E9D-E29DEC102416}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B8030EB-2425-4C38-9E9D-E29DEC102416}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B8030EB-2425-4C38-9E9D-E29DEC102416}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B03177C3-07B8-459F-8C99-45A12A8DB5DA} = {B0C33FA0-4B5A-4497-A348-5696300F8CBD}
+		{D2B6448B-83BB-44D3-BAC7-C2FA1C8ACF30} = {B0C33FA0-4B5A-4497-A348-5696300F8CBD}
+		{133B6C16-F21A-411F-AE0E-1FD79558F701} = {B0C33FA0-4B5A-4497-A348-5696300F8CBD}
+		{298BB43C-E4C3-48BB-92C0-3C20D692293E} = {B0C33FA0-4B5A-4497-A348-5696300F8CBD}
+		{4B8030EB-2425-4C38-9E9D-E29DEC102416} = {B0C33FA0-4B5A-4497-A348-5696300F8CBD}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A8878274-2F95-4CAE-89E4-6273B80B6D7A}
+	EndGlobalSection
+EndGlobal

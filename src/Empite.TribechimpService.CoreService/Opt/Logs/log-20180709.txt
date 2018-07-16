@@ -1,0 +1,71 @@
+2018-07-09 06:19:20.616 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-09 06:20:43.779 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-09 06:20:44.214 +00:00 [Information] Executed DbCommand ("32"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA=N'dev-tribechimpcore' AND TABLE_NAME=N'__EFMigrationsHistory';"
+2018-07-09 06:20:44.237 +00:00 [Information] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA=N'dev-tribechimpcore' AND TABLE_NAME=N'__EFMigrationsHistory';"
+2018-07-09 06:20:44.252 +00:00 [Information] Executed DbCommand ("6"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT `MigrationId`, `ProductVersion`
+FROM `__EFMigrationsHistory`
+ORDER BY `MigrationId`;"
+2018-07-09 06:20:44.259 +00:00 [Information] Applying migration '"20180709061920_initial_zohoinvoice"'.
+2018-07-09 06:20:44.387 +00:00 [Information] Executed DbCommand ("75"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE `InvoiceContacts` (
+    `CreatedAt` datetime(6) NOT NULL,
+    `CreatedBy` char(36) NULL,
+    `UpdatedAt` datetime(6) NULL,
+    `UpdatedBy` char(36) NULL,
+    `DeletedAt` datetime(6) NULL,
+    `DeletedBy` char(36) NULL,
+    `OrganizationId` varchar(40) NULL,
+    `UserId` varchar(255) NOT NULL,
+    `ZohoContactUserId` varchar(255) NULL,
+    `Email` longtext NULL,
+    CONSTRAINT `PK_InvoiceContacts` PRIMARY KEY (`UserId`),
+    CONSTRAINT `FK_InvoiceContacts_Organizations_OrganizationId` FOREIGN KEY (`OrganizationId`) REFERENCES `Organizations` (`Id`) ON DELETE NO ACTION
+);"
+2018-07-09 06:20:44.418 +00:00 [Information] Executed DbCommand ("31"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE `RecurringInvoices` (
+    `CreatedAt` datetime(6) NOT NULL,
+    `CreatedBy` char(36) NULL,
+    `UpdatedAt` datetime(6) NULL,
+    `UpdatedBy` char(36) NULL,
+    `DeletedAt` datetime(6) NULL,
+    `DeletedBy` char(36) NULL,
+    `Id` varchar(255) NOT NULL,
+    `RecurringInvoiceId` longtext NULL,
+    `InvoiceContactUserId` varchar(255) NULL,
+    `IsDue` bit NOT NULL,
+    CONSTRAINT `PK_RecurringInvoices` PRIMARY KEY (`Id`),
+    CONSTRAINT `FK_RecurringInvoices_InvoiceContacts_InvoiceContactUserId` FOREIGN KEY (`InvoiceContactUserId`) REFERENCES `InvoiceContacts` (`UserId`) ON DELETE NO ACTION
+);"
+2018-07-09 06:20:44.720 +00:00 [Information] Executed DbCommand ("25"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE `ZohoItems` (
+    `CreatedAt` datetime(6) NOT NULL,
+    `CreatedBy` char(36) NULL,
+    `UpdatedAt` datetime(6) NULL,
+    `UpdatedBy` char(36) NULL,
+    `DeletedAt` datetime(6) NULL,
+    `DeletedBy` char(36) NULL,
+    `Id` varchar(255) NOT NULL,
+    `Name` longtext NULL,
+    `Description` longtext NULL,
+    `Rate` double NOT NULL,
+    `ZohoItemId` varchar(255) NULL,
+    `RecurringInvoiceId` varchar(255) NULL,
+    CONSTRAINT `PK_ZohoItems` PRIMARY KEY (`Id`),
+    CONSTRAINT `FK_ZohoItems_RecurringInvoices_RecurringInvoiceId` FOREIGN KEY (`RecurringInvoiceId`) REFERENCES `RecurringInvoices` (`Id`) ON DELETE NO ACTION
+);"
+2018-07-09 06:20:44.756 +00:00 [Information] Executed DbCommand ("36"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE INDEX `IX_InvoiceContacts_OrganizationId` ON `InvoiceContacts` (`OrganizationId`);"
+2018-07-09 06:20:46.295 +00:00 [Information] Executed DbCommand ("17"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE INDEX `IX_InvoiceContacts_ZohoContactUserId` ON `InvoiceContacts` (`ZohoContactUserId`);"
+2018-07-09 06:20:46.319 +00:00 [Information] Executed DbCommand ("24"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE INDEX `IX_RecurringInvoices_InvoiceContactUserId` ON `RecurringInvoices` (`InvoiceContactUserId`);"
+2018-07-09 06:20:46.346 +00:00 [Information] Executed DbCommand ("26"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE INDEX `IX_ZohoItems_RecurringInvoiceId` ON `ZohoItems` (`RecurringInvoiceId`);"
+2018-07-09 06:20:46.359 +00:00 [Information] Executed DbCommand ("13"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE INDEX `IX_ZohoItems_ZohoItemId` ON `ZohoItems` (`ZohoItemId`);"
+2018-07-09 06:20:46.363 +00:00 [Information] Executed DbCommand ("4"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""INSERT INTO `__EFMigrationsHistory` (`MigrationId`, `ProductVersion`)
+VALUES (N'20180709061920_initial_zohoinvoice', N'2.1.1-rtm-30846');"
