@@ -12,6 +12,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="Microsoft.AspNetCore.Localization">
+      <HintPath>..\..\..\..\..\..\..\.nuget\packages\microsoft.aspnetcore.localization\2.1.1\lib\netstandard2.0\Microsoft.AspNetCore.Localization.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Extensions.Http">
       <HintPath>C:\Users\MichikaP\.nuget\packages\microsoft.extensions.http\2.1.1\lib\netstandard2.0\Microsoft.Extensions.Http.dll</HintPath>
     </Reference>

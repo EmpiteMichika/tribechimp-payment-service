@@ -35,3 +35,241 @@ END"
 2018-07-16 03:44:14.198 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/swagger/v1/swagger.json  
 2018-07-16 03:44:14.622 +00:00 [Information] Request finished in 424.912ms 200 application/json;charset=utf-8
 2018-07-16 03:45:09.981 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-16 04:44:08.569 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-16 05:31:08.145 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-16 05:32:20.833 +00:00 [Information] User profile is available. Using '"C:\Users\MichikaP\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+2018-07-16 05:32:24.010 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/swagger/index.html  
+2018-07-16 05:32:24.095 +00:00 [Information] Request finished in 86.8963ms 200 text/html
+2018-07-16 05:32:24.716 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/swagger/v1/swagger.json  
+2018-07-16 05:32:25.376 +00:00 [Information] Request finished in 673.163ms 200 application/json;charset=utf-8
+2018-07-16 05:34:16.646 +00:00 [Information] User profile is available. Using '"C:\Users\MichikaP\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+2018-07-16 05:34:18.099 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-16 05:34:18.453 +00:00 [Information] Executed DbCommand ("18"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA=N'dev-tribechimppaymentcore' AND TABLE_NAME=N'__EFMigrationsHistory';"
+2018-07-16 05:34:18.692 +00:00 [Information] Executed DbCommand ("45"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE `__EFMigrationsHistory` (
+    `MigrationId` varchar(95) NOT NULL,
+    `ProductVersion` varchar(32) NOT NULL,
+    CONSTRAINT `PK___EFMigrationsHistory` PRIMARY KEY (`MigrationId`)
+);"
+2018-07-16 05:34:18.732 +00:00 [Information] Executed DbCommand ("15"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA=N'dev-tribechimppaymentcore' AND TABLE_NAME=N'__EFMigrationsHistory';"
+2018-07-16 05:34:18.765 +00:00 [Information] Executed DbCommand ("5"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT `MigrationId`, `ProductVersion`
+FROM `__EFMigrationsHistory`
+ORDER BY `MigrationId`;"
+2018-07-16 05:34:18.785 +00:00 [Information] Applying migration '"20180716034510_initial"'.
+2018-07-16 05:34:18.867 +00:00 [Information] Executed DbCommand ("24"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE `InvoiceContacts` (
+    `CreatedAt` datetime(6) NOT NULL,
+    `CreatedBy` char(36) NULL,
+    `UpdatedAt` datetime(6) NULL,
+    `UpdatedBy` char(36) NULL,
+    `DeletedAt` datetime(6) NULL,
+    `DeletedBy` char(36) NULL,
+    `OrganizationId` longtext NULL,
+    `UserId` varchar(255) NOT NULL,
+    `ZohoContactUserId` varchar(255) NULL,
+    `ZohoPrimaryContactId` longtext NULL,
+    `Email` longtext NULL,
+    CONSTRAINT `PK_InvoiceContacts` PRIMARY KEY (`UserId`)
+);"
+2018-07-16 05:34:18.904 +00:00 [Information] Executed DbCommand ("27"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE `ZohoInvoiceJobQueues` (
+    `CreatedAt` datetime(6) NOT NULL,
+    `CreatedBy` char(36) NULL,
+    `UpdatedAt` datetime(6) NULL,
+    `UpdatedBy` char(36) NULL,
+    `DeletedAt` datetime(6) NULL,
+    `DeletedBy` char(36) NULL,
+    `Id` varchar(255) NOT NULL,
+    `JsonData` longtext NULL,
+    `JobType` int NOT NULL,
+    `IsSuccess` bit NOT NULL,
+    `ReTryCount` int NOT NULL,
+    `LastErrorMessage` longtext NULL,
+    CONSTRAINT `PK_ZohoInvoiceJobQueues` PRIMARY KEY (`Id`)
+);"
+2018-07-16 05:34:18.943 +00:00 [Information] Executed DbCommand ("31"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE `ZohoItems` (
+    `CreatedAt` datetime(6) NOT NULL,
+    `CreatedBy` char(36) NULL,
+    `UpdatedAt` datetime(6) NULL,
+    `UpdatedBy` char(36) NULL,
+    `DeletedAt` datetime(6) NULL,
+    `DeletedBy` char(36) NULL,
+    `Id` varchar(255) NOT NULL,
+    `Name` longtext NULL,
+    `Description` longtext NULL,
+    `Rate` double NOT NULL,
+    `ZohoItemId` varchar(255) NULL,
+    CONSTRAINT `PK_ZohoItems` PRIMARY KEY (`Id`)
+);"
+2018-07-16 05:34:18.989 +00:00 [Information] Executed DbCommand ("40"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE `RecurringInvoices` (
+    `CreatedAt` datetime(6) NOT NULL,
+    `CreatedBy` char(36) NULL,
+    `UpdatedAt` datetime(6) NULL,
+    `UpdatedBy` char(36) NULL,
+    `DeletedAt` datetime(6) NULL,
+    `DeletedBy` char(36) NULL,
+    `Id` varchar(255) NOT NULL,
+    `RecurringInvoiceId` longtext NULL,
+    `InvoiceContactUserId` varchar(255) NULL,
+    `IsDue` bit NOT NULL,
+    CONSTRAINT `PK_RecurringInvoices` PRIMARY KEY (`Id`),
+    CONSTRAINT `FK_RecurringInvoices_InvoiceContacts_InvoiceContactUserId` FOREIGN KEY (`InvoiceContactUserId`) REFERENCES `InvoiceContacts` (`UserId`) ON DELETE NO ACTION
+);"
+2018-07-16 05:34:19.022 +00:00 [Information] Executed DbCommand ("25"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE `ZohoItemRecurringInvoice` (
+    `RecurringInvoiceId` varchar(255) NOT NULL,
+    `ZohoItemId` varchar(255) NOT NULL,
+    CONSTRAINT `PK_ZohoItemRecurringInvoice` PRIMARY KEY (`RecurringInvoiceId`, `ZohoItemId`),
+    CONSTRAINT `FK_ZohoItemRecurringInvoice_RecurringInvoices_RecurringInvoiceId` FOREIGN KEY (`RecurringInvoiceId`) REFERENCES `RecurringInvoices` (`Id`) ON DELETE CASCADE,
+    CONSTRAINT `FK_ZohoItemRecurringInvoice_ZohoItems_ZohoItemId` FOREIGN KEY (`ZohoItemId`) REFERENCES `ZohoItems` (`Id`) ON DELETE CASCADE
+);"
+2018-07-16 05:34:19.058 +00:00 [Information] Executed DbCommand ("30"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE INDEX `IX_InvoiceContacts_ZohoContactUserId` ON `InvoiceContacts` (`ZohoContactUserId`);"
+2018-07-16 05:34:19.089 +00:00 [Information] Executed DbCommand ("27"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE INDEX `IX_RecurringInvoices_InvoiceContactUserId` ON `RecurringInvoices` (`InvoiceContactUserId`);"
+2018-07-16 05:34:19.119 +00:00 [Information] Executed DbCommand ("23"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE INDEX `IX_ZohoItemRecurringInvoice_ZohoItemId` ON `ZohoItemRecurringInvoice` (`ZohoItemId`);"
+2018-07-16 05:34:19.147 +00:00 [Information] Executed DbCommand ("23"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE INDEX `IX_ZohoItems_ZohoItemId` ON `ZohoItems` (`ZohoItemId`);"
+2018-07-16 05:34:19.158 +00:00 [Information] Executed DbCommand ("6"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""INSERT INTO `__EFMigrationsHistory` (`MigrationId`, `ProductVersion`)
+VALUES (N'20180716034510_initial', N'2.1.1-rtm-30846');"
+2018-07-16 05:34:19.170 +00:00 [Information] Applying migration '"20180716044408_Added_ConfiguredPaymentGateways"'.
+2018-07-16 05:34:19.207 +00:00 [Information] Executed DbCommand ("22"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE `ConfiguredPaymentGateways` (
+    `Id` varchar(255) NOT NULL,
+    `GatewayName` longtext NULL,
+    `IsEnabled` bit NOT NULL,
+    CONSTRAINT `PK_ConfiguredPaymentGateways` PRIMARY KEY (`Id`)
+);"
+2018-07-16 05:34:19.216 +00:00 [Information] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""INSERT INTO `__EFMigrationsHistory` (`MigrationId`, `ProductVersion`)
+VALUES (N'20180716044408_Added_ConfiguredPaymentGateways', N'2.1.1-rtm-30846');"
+2018-07-16 05:34:19.223 +00:00 [Information] Applying migration '"20180716053108_Added_QTy"'.
+2018-07-16 05:34:19.290 +00:00 [Information] Executed DbCommand ("51"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE `ZohoItemRecurringInvoice` ADD `Qty` int NOT NULL DEFAULT 0;"
+2018-07-16 05:34:19.297 +00:00 [Information] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""INSERT INTO `__EFMigrationsHistory` (`MigrationId`, `ProductVersion`)
+VALUES (N'20180716053108_Added_QTy', N'2.1.1-rtm-30846');"
+2018-07-16 05:34:19.436 +00:00 [Information] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM `ConfiguredPaymentGateways` AS `c`)
+    THEN TRUE ELSE FALSE
+END"
+2018-07-16 05:34:19.585 +00:00 [Information] Executed DbCommand ("14"ms) [Parameters=["@p0='?' (Size = 255), @p1='?' (Size = 4000), @p2='?' (DbType = Boolean)"], CommandType='Text', CommandTimeout='30']"
+""INSERT INTO `ConfiguredPaymentGateways` (`Id`, `GatewayName`, `IsEnabled`)
+VALUES (@p0, @p1, @p2);"
+2018-07-16 05:34:21.114 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/swagger/index.html  
+2018-07-16 05:34:21.171 +00:00 [Information] Request finished in 55.2894ms 200 text/html
+2018-07-16 05:34:21.557 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/swagger/v1/swagger.json  
+2018-07-16 05:34:21.961 +00:00 [Information] Request finished in 401.3089ms 200 application/json;charset=utf-8
+2018-07-16 05:37:10.987 +00:00 [Information] Request starting HTTP/1.1 POST https://localhost:5011/api/invoice/createcontact application/json 143
+2018-07-16 05:37:11.119 +00:00 [Information] Route matched with "{action = \"CreateContact\", controller = \"Invoice\"}". Executing action "Empite.TribechimpService.PaymentService.Controllers.InvoiceController.CreateContact (Empite.TribechimpService.PaymentService)"
+2018-07-16 05:37:11.228 +00:00 [Information] Executing action method "Empite.TribechimpService.PaymentService.Controllers.InvoiceController.CreateContact (Empite.TribechimpService.PaymentService)" with arguments (["Empite.TribechimpService.PaymentService.Domain.Dto.CreateContact"]) - Validation state: Valid
+2018-07-16 05:37:26.819 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-16 05:37:28.120 +00:00 [Information] Executed DbCommand ("14"ms) [Parameters=["@p0='?' (Size = 255), @p1='?' (DbType = DateTime), @p2='?' (DbType = Guid), @p3='?' (DbType = DateTime), @p4='?' (DbType = Guid), @p5='?' (DbType = Boolean), @p6='?' (DbType = Int32), @p7='?' (Size = 8000) (DbType = AnsiString), @p8='?' (Size = 8000) (DbType = AnsiString), @p9='?' (DbType = Int32), @p10='?' (DbType = DateTime), @p11='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""INSERT INTO `ZohoInvoiceJobQueues` (`Id`, `CreatedAt`, `CreatedBy`, `DeletedAt`, `DeletedBy`, `IsSuccess`, `JobType`, `JsonData`, `LastErrorMessage`, `ReTryCount`, `UpdatedAt`, `UpdatedBy`)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11);"
+2018-07-16 05:37:47.309 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-16 05:37:48.277 +00:00 [Information] Executed DbCommand ("6"ms) [Parameters=["@p0='?' (Size = 255), @p1='?' (DbType = DateTime), @p2='?' (DbType = Guid), @p3='?' (DbType = DateTime), @p4='?' (DbType = Guid), @p5='?' (DbType = Boolean), @p6='?' (DbType = Int32), @p7='?' (Size = 8000) (DbType = AnsiString), @p8='?' (Size = 8000) (DbType = AnsiString), @p9='?' (DbType = Int32), @p10='?' (DbType = DateTime), @p11='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""INSERT INTO `ZohoInvoiceJobQueues` (`Id`, `CreatedAt`, `CreatedBy`, `DeletedAt`, `DeletedBy`, `IsSuccess`, `JobType`, `JsonData`, `LastErrorMessage`, `ReTryCount`, `UpdatedAt`, `UpdatedBy`)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11);"
+2018-07-16 05:37:54.363 +00:00 [Information] Executed action method "Empite.TribechimpService.PaymentService.Controllers.InvoiceController.CreateContact (Empite.TribechimpService.PaymentService)", returned result "Microsoft.AspNetCore.Mvc.OkResult" in 43105.315ms.
+2018-07-16 05:37:54.383 +00:00 [Information] Executing HttpStatusCodeResult, setting HTTP status code 200
+2018-07-16 05:37:54.396 +00:00 [Information] Executed action "Empite.TribechimpService.PaymentService.Controllers.InvoiceController.CreateContact (Empite.TribechimpService.PaymentService)" in 43268.3021ms
+2018-07-16 05:37:57.664 +00:00 [Information] Request finished in 46673.4921ms 200 
+2018-07-16 05:38:19.208 +00:00 [Information] Request starting HTTP/1.1 POST https://localhost:5011/api/invoice/enableclientportle/masha123  0
+2018-07-16 05:38:19.223 +00:00 [Information] Route matched with "{action = \"EnableClientPortle\", controller = \"Invoice\"}". Executing action "Empite.TribechimpService.PaymentService.Controllers.InvoiceController.EnableClientPortle (Empite.TribechimpService.PaymentService)"
+2018-07-16 05:38:19.232 +00:00 [Information] Executing action method "Empite.TribechimpService.PaymentService.Controllers.InvoiceController.EnableClientPortle (Empite.TribechimpService.PaymentService)" with arguments (["masha123"]) - Validation state: Valid
+2018-07-16 05:38:22.012 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-16 05:38:22.038 +00:00 [Information] Executed DbCommand ("2"ms) [Parameters=["@p0='?' (Size = 255), @p1='?' (DbType = DateTime), @p2='?' (DbType = Guid), @p3='?' (DbType = DateTime), @p4='?' (DbType = Guid), @p5='?' (DbType = Boolean), @p6='?' (DbType = Int32), @p7='?' (Size = 8000) (DbType = AnsiString), @p8='?' (Size = 8000) (DbType = AnsiString), @p9='?' (DbType = Int32), @p10='?' (DbType = DateTime), @p11='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""INSERT INTO `ZohoInvoiceJobQueues` (`Id`, `CreatedAt`, `CreatedBy`, `DeletedAt`, `DeletedBy`, `IsSuccess`, `JobType`, `JsonData`, `LastErrorMessage`, `ReTryCount`, `UpdatedAt`, `UpdatedBy`)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11);"
+2018-07-16 05:38:22.049 +00:00 [Information] Executed action method "Empite.TribechimpService.PaymentService.Controllers.InvoiceController.EnableClientPortle (Empite.TribechimpService.PaymentService)", returned result "Microsoft.AspNetCore.Mvc.OkResult" in 2812.2593ms.
+2018-07-16 05:38:22.061 +00:00 [Information] Executing HttpStatusCodeResult, setting HTTP status code 200
+2018-07-16 05:38:22.065 +00:00 [Information] Executed action "Empite.TribechimpService.PaymentService.Controllers.InvoiceController.EnableClientPortle (Empite.TribechimpService.PaymentService)" in 2836.8104ms
+2018-07-16 05:38:22.072 +00:00 [Information] Request finished in 2862.9834ms 200 
+2018-07-16 05:38:37.923 +00:00 [Information] Request starting HTTP/1.1 POST https://localhost:5011/api/invoice/createItem application/json 114
+2018-07-16 05:38:37.935 +00:00 [Information] Route matched with "{action = \"CreateItem\", controller = \"Invoice\"}". Executing action "Empite.TribechimpService.PaymentService.Controllers.InvoiceController.CreateItem (Empite.TribechimpService.PaymentService)"
+2018-07-16 05:38:37.953 +00:00 [Information] Executing action method "Empite.TribechimpService.PaymentService.Controllers.InvoiceController.CreateItem (Empite.TribechimpService.PaymentService)" with arguments (["Empite.TribechimpService.PaymentService.Domain.Dto.CreateZohoItemDto"]) - Validation state: Valid
+2018-07-16 05:38:41.216 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-16 05:38:41.234 +00:00 [Information] Executed DbCommand ("1"ms) [Parameters=["@p0='?' (Size = 255), @p1='?' (DbType = DateTime), @p2='?' (DbType = Guid), @p3='?' (DbType = DateTime), @p4='?' (DbType = Guid), @p5='?' (DbType = Boolean), @p6='?' (DbType = Int32), @p7='?' (Size = 8000) (DbType = AnsiString), @p8='?' (Size = 8000) (DbType = AnsiString), @p9='?' (DbType = Int32), @p10='?' (DbType = DateTime), @p11='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""INSERT INTO `ZohoInvoiceJobQueues` (`Id`, `CreatedAt`, `CreatedBy`, `DeletedAt`, `DeletedBy`, `IsSuccess`, `JobType`, `JsonData`, `LastErrorMessage`, `ReTryCount`, `UpdatedAt`, `UpdatedBy`)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11);"
+2018-07-16 05:38:41.246 +00:00 [Information] Executed action method "Empite.TribechimpService.PaymentService.Controllers.InvoiceController.CreateItem (Empite.TribechimpService.PaymentService)", returned result "Microsoft.AspNetCore.Mvc.OkResult" in 3287.2234ms.
+2018-07-16 05:38:41.253 +00:00 [Information] Executing HttpStatusCodeResult, setting HTTP status code 200
+2018-07-16 05:38:41.256 +00:00 [Information] Executed action "Empite.TribechimpService.PaymentService.Controllers.InvoiceController.CreateItem (Empite.TribechimpService.PaymentService)" in 3317.2856ms
+2018-07-16 05:38:41.261 +00:00 [Information] Request finished in 3337.8117ms 200 
+2018-07-16 05:40:14.769 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/api/invoice/runjobs  
+2018-07-16 05:40:14.778 +00:00 [Information] Route matched with "{action = \"RunJobs\", controller = \"Invoice\"}". Executing action "Empite.TribechimpService.PaymentService.Controllers.InvoiceController.RunJobs (Empite.TribechimpService.PaymentService)"
+2018-07-16 05:40:14.790 +00:00 [Information] Executing action method "Empite.TribechimpService.PaymentService.Controllers.InvoiceController.RunJobs (Empite.TribechimpService.PaymentService)" - Validation state: Valid
+2018-07-16 05:40:24.376 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-16 05:40:24.435 +00:00 [Information] Executed DbCommand ("5"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT COUNT(*)
+FROM `ZohoInvoiceJobQueues` AS `x`
+WHERE `x`.`IsSuccess` = FALSE"
+2018-07-16 05:40:30.511 +00:00 [Information] Executed DbCommand ("1"ms) [Parameters=["@__p_1='?' (DbType = Int32), @__p_0='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SELECT `x`.`Id`, `x`.`CreatedAt`, `x`.`CreatedBy`, `x`.`DeletedAt`, `x`.`DeletedBy`, `x`.`IsSuccess`, `x`.`JobType`, `x`.`JsonData`, `x`.`LastErrorMessage`, `x`.`ReTryCount`, `x`.`UpdatedAt`, `x`.`UpdatedBy`
+FROM `ZohoInvoiceJobQueues` AS `x`
+WHERE `x`.`IsSuccess` = FALSE
+ORDER BY `x`.`CreatedAt`
+LIMIT @__p_1 OFFSET @__p_0"
+2018-07-16 05:40:38.178 +00:00 [Information] Executed action method "Empite.TribechimpService.PaymentService.Controllers.InvoiceController.RunJobs (Empite.TribechimpService.PaymentService)", returned result "Microsoft.AspNetCore.Mvc.OkResult" in 23382.1266ms.
+2018-07-16 05:40:39.923 +00:00 [Information] Executing HttpStatusCodeResult, setting HTTP status code 200
+2018-07-16 05:40:39.933 +00:00 [Information] Executed action "Empite.TribechimpService.PaymentService.Controllers.InvoiceController.RunJobs (Empite.TribechimpService.PaymentService)" in 25142.2246ms
+2018-07-16 05:40:39.941 +00:00 [Information] Request finished in 25169.3779ms 200 
+2018-07-16 05:40:41.313 +00:00 [Information] Start processing HTTP request "POST" https://invoice.zoho.com/api/v3/contacts
+2018-07-16 05:40:41.317 +00:00 [Information] Sending HTTP request "POST" https://invoice.zoho.com/api/v3/contacts
+2018-07-16 05:40:42.638 +00:00 [Information] Received HTTP response after 1312.511ms - Created
+2018-07-16 05:40:42.647 +00:00 [Information] End processing HTTP request after 1339.7766ms - Created
+2018-07-16 05:40:42.705 +00:00 [Information] Executed DbCommand ("1"ms) [Parameters=["@p0='?' (Size = 255), @p1='?' (DbType = DateTime), @p2='?' (DbType = Guid), @p3='?' (DbType = DateTime), @p4='?' (DbType = Guid), @p5='?' (Size = 4000), @p6='?' (Size = 4000), @p7='?' (DbType = DateTime), @p8='?' (DbType = Guid), @p9='?' (Size = 255), @p10='?' (Size = 4000)"], CommandType='Text', CommandTimeout='30']"
+""INSERT INTO `InvoiceContacts` (`UserId`, `CreatedAt`, `CreatedBy`, `DeletedAt`, `DeletedBy`, `Email`, `OrganizationId`, `UpdatedAt`, `UpdatedBy`, `ZohoContactUserId`, `ZohoPrimaryContactId`)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10);"
+2018-07-16 05:40:42.726 +00:00 [Information] Executed DbCommand ("6"ms) [Parameters=["@p2='?' (Size = 255), @p0='?' (DbType = Boolean), @p1='?' (DbType = DateTime)"], CommandType='Text', CommandTimeout='30']"
+""UPDATE `ZohoInvoiceJobQueues` SET `IsSuccess` = @p0, `UpdatedAt` = @p1
+WHERE `Id` = @p2;
+SELECT ROW_COUNT();"
+2018-07-16 05:40:57.779 +00:00 [Information] Executed DbCommand ("0"ms) [Parameters=["@__UserId_0='?' (Size = 255)"], CommandType='Text', CommandTimeout='30']"
+""SELECT `x`.`UserId`, `x`.`CreatedAt`, `x`.`CreatedBy`, `x`.`DeletedAt`, `x`.`DeletedBy`, `x`.`Email`, `x`.`OrganizationId`, `x`.`UpdatedAt`, `x`.`UpdatedBy`, `x`.`ZohoContactUserId`, `x`.`ZohoPrimaryContactId`
+FROM `InvoiceContacts` AS `x`
+WHERE `x`.`UserId` = @__UserId_0
+LIMIT 1"
+2018-07-16 05:40:57.804 +00:00 [Information] Start processing HTTP request "POST" https://invoice.zoho.com/api/v3/contacts/1414691000000092001/paymentreminder/enable
+2018-07-16 05:40:57.808 +00:00 [Information] Sending HTTP request "POST" https://invoice.zoho.com/api/v3/contacts/1414691000000092001/paymentreminder/enable
+2018-07-16 05:40:58.126 +00:00 [Information] Received HTTP response after 316.8667ms - OK
+2018-07-16 05:40:58.133 +00:00 [Information] End processing HTTP request after 326.408ms - OK
+2018-07-16 05:40:58.169 +00:00 [Information] Executed DbCommand ("2"ms) [Parameters=["@p2='?' (Size = 255), @p0='?' (DbType = Boolean), @p1='?' (DbType = DateTime)"], CommandType='Text', CommandTimeout='30']"
+""UPDATE `ZohoInvoiceJobQueues` SET `IsSuccess` = @p0, `UpdatedAt` = @p1
+WHERE `Id` = @p2;
+SELECT ROW_COUNT();"
+2018-07-16 05:41:13.460 +00:00 [Information] Executed DbCommand ("0"ms) [Parameters=["@__UserId_0='?' (Size = 255)"], CommandType='Text', CommandTimeout='30']"
+""SELECT `x`.`UserId`, `x`.`CreatedAt`, `x`.`CreatedBy`, `x`.`DeletedAt`, `x`.`DeletedBy`, `x`.`Email`, `x`.`OrganizationId`, `x`.`UpdatedAt`, `x`.`UpdatedBy`, `x`.`ZohoContactUserId`, `x`.`ZohoPrimaryContactId`
+FROM `InvoiceContacts` AS `x`
+WHERE `x`.`UserId` = @__UserId_0
+LIMIT 1"
+2018-07-16 05:41:13.474 +00:00 [Information] Start processing HTTP request "POST" https://invoice.zoho.com/api/v3/contacts/1414691000000092001/portal/enable
+2018-07-16 05:41:13.478 +00:00 [Information] Sending HTTP request "POST" https://invoice.zoho.com/api/v3/contacts/1414691000000092001/portal/enable
+2018-07-16 05:41:14.262 +00:00 [Information] Received HTTP response after 783.3777ms - OK
+2018-07-16 05:41:14.269 +00:00 [Information] End processing HTTP request after 793.8754ms - OK
+2018-07-16 05:41:14.295 +00:00 [Information] Executed DbCommand ("2"ms) [Parameters=["@p2='?' (Size = 255), @p0='?' (DbType = Boolean), @p1='?' (DbType = DateTime)"], CommandType='Text', CommandTimeout='30']"
+""UPDATE `ZohoInvoiceJobQueues` SET `IsSuccess` = @p0, `UpdatedAt` = @p1
+WHERE `Id` = @p2;
+SELECT ROW_COUNT();"
+2018-07-16 05:41:24.324 +00:00 [Information] Start processing HTTP request "POST" https://invoice.zoho.com/api/v3/items
+2018-07-16 05:41:24.328 +00:00 [Information] Sending HTTP request "POST" https://invoice.zoho.com/api/v3/items
+2018-07-16 05:41:24.721 +00:00 [Information] Received HTTP response after 393.121ms - Created
+2018-07-16 05:41:24.725 +00:00 [Information] End processing HTTP request after 399.8493ms - Created
+2018-07-16 05:41:24.794 +00:00 [Information] Executed DbCommand ("1"ms) [Parameters=["@p0='?' (Size = 255), @p1='?' (DbType = DateTime), @p2='?' (DbType = Guid), @p3='?' (DbType = DateTime), @p4='?' (DbType = Guid), @p5='?' (Size = 4000), @p6='?' (Size = 4000), @p7='?' (DbType = Double), @p8='?' (DbType = DateTime), @p9='?' (DbType = Guid), @p10='?' (Size = 255)"], CommandType='Text', CommandTimeout='30']"
+""INSERT INTO `ZohoItems` (`Id`, `CreatedAt`, `CreatedBy`, `DeletedAt`, `DeletedBy`, `Description`, `Name`, `Rate`, `UpdatedAt`, `UpdatedBy`, `ZohoItemId`)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10);"
+2018-07-16 05:41:24.809 +00:00 [Information] Executed DbCommand ("2"ms) [Parameters=["@p2='?' (Size = 255), @p0='?' (DbType = Boolean), @p1='?' (DbType = DateTime)"], CommandType='Text', CommandTimeout='30']"
+""UPDATE `ZohoInvoiceJobQueues` SET `IsSuccess` = @p0, `UpdatedAt` = @p1
+WHERE `Id` = @p2;
+SELECT ROW_COUNT();"

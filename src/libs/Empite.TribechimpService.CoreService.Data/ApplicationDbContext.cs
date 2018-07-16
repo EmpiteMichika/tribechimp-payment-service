@@ -28,7 +28,7 @@ namespace Empite.TribechimpService.PaymentService.Data
                 .HasForeignKey(p => p.RecurringInvoiceId);
 
         }
-        
+        public DbSet<ConfiguredPaymentGateway> ConfiguredPaymentGateways { get; set; }
         public DbSet<InvoiceContact> InvoiceContacts { get; set; }
         public DbSet<RecurringInvoice> RecurringInvoices { get; set; }
         public DbSet<ZohoItem> ZohoItems { get; set; }

@@ -14,6 +14,9 @@ using Empite.TribechimpService.PaymentService.Data;
 using Empite.TribechimpService.PaymentService.Domain.Dto;
 using Empite.TribechimpService.PaymentService.Domain.Entity.InvoiceRelated;
 using Empite.TribechimpService.PaymentService.Domain.Interface.Service;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
@@ -28,6 +31,7 @@ namespace Empite.TribechimpService.PaymentService.Service
         private const int RowsPerPage = 100;
         private readonly Settings _settings;
         private const int ZohoSuccessResponseCode = 0;
+        private const int ZohoPaymentTermDaysGap = 10;
         private readonly IHttpClientFactory _httpClientFactory;
         private IServiceProvider _services { get; }
         public ZohoInvoceService(IZohoInvoiceSingleton zohoTokenService, IOptions<Settings> options, IHttpClientFactory httpClientFactory, IServiceProvider services)
@@ -347,9 +351,83 @@ namespace Empite.TribechimpService.PaymentService.Service
             }
         }
 
-        private async Task CreateRecurringInvoice(ZohoInvoiceJobQueue job, ApplicationDbContext dbContext)
+        private async Task<RecurringInvoice> CreateRecurringInvoice(CreateRecurringInvoiceDto recurringInfo, ApplicationDbContext dbContext)
         {
+            HttpClient httpClient = _httpClientFactory.CreateClient();
+            httpClient.AddZohoAuthorizationHeader(await _zohoTokenService.GetOAuthToken());
+            Uri url = new Uri(_settings.ZohoAccount.ApiBasePath).Append("recurringinvoices");
+            
+            InvoiceContact contact = dbContext.InvoiceContacts.Include(x=> x.RecurringInvoices).FirstOrDefault(x => x.UserId == recurringInfo.UserId);
+            List<ZohoItemRecurringInvoice> items = new List<ZohoItemRecurringInvoice>();
+            //double totalPrice = 0; 
+            foreach (var itemId in recurringInfo.Items)
+            {
+                ZohoItem zohoItem = await dbContext.ZohoItems.FirstOrDefaultAsync(y => y.Id == itemId.ItemId);
+                if(zohoItem == null)
+                      throw new Exception($"Item id is not found in the database. Item id is => {itemId.ItemId}");
+                //totalPrice = totalPrice + zohoItem.Rate * itemId.Qty;
+                items.Add(new ZohoItemRecurringInvoice{Qty = itemId.Qty,ZohoItem = zohoItem});
+            }
+            
+                
+                
+            if(contact == null)
+                  throw new Exception($"User is not found in the database UserId is => {recurringInfo.UserId}");
+            RootRecurringInvoiceCreateRequest recurringInvoiceCreateRequest = new RootRecurringInvoiceCreateRequest
+            {
+                customer_id = contact.ZohoContactUserId,
+                line_items = items.Select(x=> new LineItemRecurringInvoiceCreateRequest{item_id = x.ZohoItem.ZohoItemId,quantity = x.Qty}).ToList(),
+                PaymentOptionsRecurringInvoiceCreateRequest = new PaymentOptionsRecurringInvoiceCreateRequest { payment_gateways = dbContext.ConfiguredPaymentGateways.Select(x => new PaymentGatewayRecurringInvoiceCreateRequest{configured = x.IsEnabled,gateway_name = x.GatewayName} ).ToList() },
+                payment_terms = ZohoPaymentTermDaysGap,
+                recurrence_frequency = "months",
+                recurrence_name = Guid.NewGuid().ToString(),
+                repeat_every = 1,
+                start_date = DateTime.UtcNow.AddDays(-1*ZohoPaymentTermDaysGap).ToString("yyyy-MM-dd")
+            };
 
+
+            string jsonString = JsonConvert.SerializeObject(recurringInvoiceCreateRequest);
+            MultipartFormDataContent form = new MultipartFormDataContent();
+            StringContent content = new StringContent(jsonString);
+            form.Add(content, "JSONString");
+            HttpResponseMessage response = await httpClient.PostAsync(url, form);
+            if (response.StatusCode == HttpStatusCode.Created)
+            {
+                var byteArray = await response.Content.ReadAsByteArrayAsync();
+                var responseString = Encoding.UTF8.GetString(byteArray, 0, byteArray.Length);
+                RootRecurringInvoice itemCreateResponse =
+                    JsonConvert.DeserializeObject<RootRecurringInvoice>(responseString);
+                if (itemCreateResponse.code == ZohoSuccessResponseCode)
+                {
+                    if (!string.IsNullOrWhiteSpace(itemCreateResponse.recurring_invoice.recurring_invoice_id))
+                    {
+                        RecurringInvoice dbRecurringInvoice = new RecurringInvoice();
+                        dbRecurringInvoice.InvoiceContact = contact;
+                        dbRecurringInvoice.ZohoItems = items;
+
+                        dbContext.RecurringInvoices.Add(dbRecurringInvoice);
+                        await dbContext.SaveChangesAsync();
+                        return dbRecurringInvoice;
+                    }
+                    else
+                    {
+                        StringBuilder builder = new StringBuilder();
+                        builder.Append((string.IsNullOrWhiteSpace(itemCreateResponse.recurring_invoice.recurring_invoice_id) ? "Recurring Invoice id is empty. " : ""));
+
+                        throw new Exception($"Response Filed came empty. Fields => {builder.ToString()}");
+                    }
+
+                }
+                else
+                {
+                    throw new Exception($"Zoho returns a erro code. Erro code is => {itemCreateResponse.code}. Message is => {itemCreateResponse.message}.");
+
+                }
+            }
+            else
+            {
+                throw new Exception($"Zoho Api call failed Erro code is => {response.StatusCode}. Reason sent by server is => {response.ReasonPhrase}.");
+            }
         }
         private async Task<bool> JobRunner(ZohoInvoiceJobQueue job, ApplicationDbContext _dbContext)
         {
@@ -418,6 +496,22 @@ namespace Empite.TribechimpService.PaymentService.Service
                     await _dbContext.SaveChangesAsync();
                 }
             }
+            else if (job.JobType == ZohoInvoiceJobQueueType.CreateRecurringInvoice)
+            {
+                CreateRecurringInvoiceDto model = JsonConvert.DeserializeObject<CreateRecurringInvoiceDto>(job.JsonData);
+                RecurringInvoice recurringInvoice = await CreateRecurringInvoice(model, _dbContext);
+                job.UpdatedAt = DateTime.UtcNow;
+                if (recurringInvoice == null)
+                {
+                    throw new Exception($"Item creating failed for job ID {job.Id}");
+                }
+                else
+                {
+
+                    job.IsSuccess = true;
+                    await _dbContext.SaveChangesAsync();
+                }
+            }
             else
             {
                 throw new Exception($"Job Queue type is not found for job ID {job.Id}");
@@ -469,6 +563,20 @@ namespace Empite.TribechimpService.PaymentService.Service
         {
             
             public ItemResponse item { get; set; }
+        }
+
+
+        #endregion
+
+        #region RecurringInvoiceResponse
+
+        internal class RootRecurringInvoice:RootZohoBasicResponse
+        {
+            public RecurringInvoiceData recurring_invoice { get; set; }
+        }
+        internal class RecurringInvoiceData
+        {
+            public string recurring_invoice_id { get; set; }
         }
 
 
@@ -529,6 +637,41 @@ namespace Empite.TribechimpService.PaymentService.Service
             public string product_type { get; set; }
         }
 
+
+        #endregion
+
+        #region Create Recurring Invoice
+
+        internal class LineItemRecurringInvoiceCreateRequest
+        {
+        
+            public string item_id { get; set; }
+            public int quantity { get; set; }
+        }
+
+        internal class PaymentGatewayRecurringInvoiceCreateRequest
+        {
+        
+            public bool configured { get; set; }
+            public string gateway_name { get; set; }
+        }
+
+        internal class PaymentOptionsRecurringInvoiceCreateRequest
+        {
+            public List<PaymentGatewayRecurringInvoiceCreateRequest> payment_gateways { get; set; }
+        }
+
+        internal class RootRecurringInvoiceCreateRequest
+        {
+            public string recurrence_name { get; set; }
+            public string customer_id { get; set; }
+            public string recurrence_frequency { get; set; }
+            public int repeat_every { get; set; }
+            public List<LineItemRecurringInvoiceCreateRequest> line_items { get; set; }
+            public PaymentOptionsRecurringInvoiceCreateRequest PaymentOptionsRecurringInvoiceCreateRequest { get; set; }
+            public int payment_terms { get; set; }
+            public string start_date { get; set; }
+        }
 
         #endregion
         #endregion

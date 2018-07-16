@@ -200,7 +200,7 @@ namespace Empite.TribechimpService.PaymentService.Infrastructure
                 //option.InjectStylesheet("/themes/theme-material.css");
             });
 
-            //dbInitializer.Initialize().Wait();
+            dbInitializer.Initialize().Wait();
 
             app.UseMvc();
         }

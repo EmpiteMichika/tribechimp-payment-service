@@ -11,5 +11,7 @@ namespace Empite.TribechimpService.PaymentService.Domain.Entity.InvoiceRelated
 
         public string ZohoItemId { get; set; }
         public ZohoItem ZohoItem { get; set; }
+
+        public int Qty { get; set; }
     }
 }
