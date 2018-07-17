@@ -35,6 +35,7 @@ namespace Empite.TribechimpService.PaymentService.Service
         private const int ZohoPaymentTermDaysGap = 10;
         private readonly IHttpClientFactory _httpClientFactory;
         private IServiceProvider _services { get; }
+
         public ZohoInvoceService(IZohoInvoiceSingleton zohoTokenService, IOptions<Settings> options, IHttpClientFactory httpClientFactory, IServiceProvider services)
         {
             
@@ -420,6 +421,7 @@ namespace Empite.TribechimpService.PaymentService.Service
                             dbRecurringInvoice.RecurringInvoiceId =
                                 itemCreateResponse.recurring_invoice.recurring_invoice_id;
                             dbRecurringInvoice.RecurringInvoiceName = recurringInvoiceName;
+                            dbRecurringInvoice.UpdatedAt = DateTime.UtcNow;
                             dbContext.RecurringInvoices.Add(dbRecurringInvoice);
                             await dbContext.SaveChangesAsync();
                             return dbRecurringInvoice;

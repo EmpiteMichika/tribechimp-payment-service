@@ -55,7 +55,7 @@ namespace Empite.TribechimpService.PaymentService.Infrastructure
             services.AddAutoMapper();
             services.InjectServices();
             services.ConfigureRabbitMq();
-            services.AddIdentity();
+            services.AddEntitiyFramwork();
             services.AddHangfire(x => { });
             services.ConfigureAuthentication();
             services.AddSwaggerDocumentation();
@@ -74,8 +74,8 @@ namespace Empite.TribechimpService.PaymentService.Infrastructure
             services.AddTransient<IAuthenticationService, AuthenticationService>();
             
             services.AddSingleton<IZohoInvoiceSingleton, ZohoInvoiceSingletonTokenService>();
-            services.AddTransient<IZohoInvoceService, ZohoInvoceService>();
-
+            services.AddSingleton<IZohoInvoceService, ZohoInvoceService>();
+            services.AddSingleton<IZohoInvoiceDueCheckerSingleton, ZohoInvoiceDueCheckerSingleton>();
             /*====== INJECT APPLICATION REPOSITORIES =======*/
             //services.AddTransient<IUserRepository, UserRepository>();
 
@@ -123,7 +123,7 @@ namespace Empite.TribechimpService.PaymentService.Infrastructure
                  });
         }
 
-        public static IServiceCollection AddIdentity(this IServiceCollection services)
+        public static IServiceCollection AddEntitiyFramwork(this IServiceCollection services)
         {
             var config = Configuration.GetSection(nameof(Settings)).Get<Settings>();
             services.AddDbContext<ApplicationDbContext>(options =>

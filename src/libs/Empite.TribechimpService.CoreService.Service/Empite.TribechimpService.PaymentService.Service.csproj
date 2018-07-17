@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Hangfire.AspNetCore" Version="1.6.19" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Empite.TribechimpService.CoreService.Data\Empite.TribechimpService.PaymentService.Data.csproj" />
     <ProjectReference Include="..\Empite.TribechimpService.CoreService.Domain\Empite.TribechimpService.PaymentService.Domain.csproj" />
     <ProjectReference Include="..\Empite.TribechimpService.Core\Empite.TribechimpService.Core.csproj" />

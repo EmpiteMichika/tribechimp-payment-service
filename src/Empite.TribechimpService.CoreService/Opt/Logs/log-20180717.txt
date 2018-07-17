@@ -1472,3 +1472,67 @@ END"
 2018-07-17 09:54:11.354 +00:00 [Information] Request finished in 265.1681ms 200 text/html
 2018-07-17 09:54:11.881 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/swagger/v1/swagger.json  
 2018-07-17 09:54:12.520 +00:00 [Information] Request finished in 641.6718ms 200 application/json;charset=utf-8
+2018-07-17 10:40:28.680 +00:00 [Information] User profile is available. Using '"C:\Users\MichikaP\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+2018-07-17 10:40:29.618 +00:00 [Information] DB tables already exist. Exit install
+2018-07-17 10:40:30.575 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-17 10:40:30.640 +00:00 [Information] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='dev-tribechimppaymentcore' AND TABLE_NAME='__EFMigrationsHistory';"
+2018-07-17 10:40:30.653 +00:00 [Information] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='dev-tribechimppaymentcore' AND TABLE_NAME='__EFMigrationsHistory';"
+2018-07-17 10:40:30.672 +00:00 [Information] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT `MigrationId`, `ProductVersion`
+FROM `__EFMigrationsHistory`
+ORDER BY `MigrationId`;"
+2018-07-17 10:40:30.693 +00:00 [Information] No migrations were applied. The database is already up to date.
+2018-07-17 10:40:30.807 +00:00 [Information] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM `ConfiguredPaymentGateways` AS `c`)
+    THEN TRUE ELSE FALSE
+END"
+2018-07-17 10:40:33.255 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/swagger/index.html  
+2018-07-17 10:40:33.467 +00:00 [Information] Request finished in 176.3252ms 200 text/html
+2018-07-17 10:40:34.063 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/swagger/v1/swagger.json  
+2018-07-17 10:40:34.566 +00:00 [Information] Request finished in 500.3472ms 200 application/json;charset=utf-8
+2018-07-17 11:03:06.659 +00:00 [Information] User profile is available. Using '"C:\Users\MichikaP\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+2018-07-17 11:03:07.601 +00:00 [Information] DB tables already exist. Exit install
+2018-07-17 11:03:08.573 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-17 11:03:08.622 +00:00 [Information] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='dev-tribechimppaymentcore' AND TABLE_NAME='__EFMigrationsHistory';"
+2018-07-17 11:03:08.639 +00:00 [Information] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='dev-tribechimppaymentcore' AND TABLE_NAME='__EFMigrationsHistory';"
+2018-07-17 11:03:08.657 +00:00 [Information] Executed DbCommand ("4"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT `MigrationId`, `ProductVersion`
+FROM `__EFMigrationsHistory`
+ORDER BY `MigrationId`;"
+2018-07-17 11:03:08.679 +00:00 [Information] No migrations were applied. The database is already up to date.
+2018-07-17 11:03:08.835 +00:00 [Information] Executed DbCommand ("4"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM `ConfiguredPaymentGateways` AS `c`)
+    THEN TRUE ELSE FALSE
+END"
+2018-07-17 11:03:10.941 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/swagger/index.html  
+2018-07-17 11:03:11.128 +00:00 [Information] Request finished in 179.1388ms 200 text/html
+2018-07-17 11:03:12.103 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/swagger/v1/swagger.json  
+2018-07-17 11:03:12.680 +00:00 [Information] Request finished in 583.9994ms 200 application/json;charset=utf-8
+2018-07-17 11:03:22.188 +00:00 [Information] Request starting HTTP/1.1 GET https://localhost:5011/api/invoice/runjobs  
+2018-07-17 11:03:22.397 +00:00 [Information] Route matched with "{action = \"RunJobs\", controller = \"Invoice\"}". Executing action "Empite.TribechimpService.PaymentService.Controllers.InvoiceController.RunJobs (Empite.TribechimpService.PaymentService)"
+2018-07-17 11:03:22.475 +00:00 [Information] Executing action method "Empite.TribechimpService.PaymentService.Controllers.InvoiceController.RunJobs (Empite.TribechimpService.PaymentService)" - Validation state: Valid
+2018-07-17 11:03:41.319 +00:00 [Information] Entity Framework Core "2.1.1-rtm-30846" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-17 11:03:41.456 +00:00 [Information] Executed DbCommand ("5"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT COUNT(*)
+FROM `ZohoInvoiceJobQueues` AS `x`
+WHERE `x`.`IsSuccess` = FALSE"
+2018-07-17 11:03:41.559 +00:00 [Information] Executed DbCommand ("2"ms) [Parameters=["@__p_1='?' (DbType = Int32), @__p_0='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SELECT `x`.`Id`, `x`.`CreatedAt`, `x`.`CreatedBy`, `x`.`DeletedAt`, `x`.`DeletedBy`, `x`.`IsSuccess`, `x`.`JobType`, `x`.`JsonData`, `x`.`LastErrorMessage`, `x`.`ReTryCount`, `x`.`UpdatedAt`, `x`.`UpdatedBy`
+FROM `ZohoInvoiceJobQueues` AS `x`
+WHERE `x`.`IsSuccess` = FALSE
+ORDER BY `x`.`CreatedAt`
+LIMIT @__p_1 OFFSET @__p_0"
+2018-07-17 11:03:41.611 +00:00 [Information] Executed action method "Empite.TribechimpService.PaymentService.Controllers.InvoiceController.RunJobs (Empite.TribechimpService.PaymentService)", returned result "Microsoft.AspNetCore.Mvc.OkResult" in 19118.5144ms.
+2018-07-17 11:03:41.643 +00:00 [Information] Executing HttpStatusCodeResult, setting HTTP status code 200
+2018-07-17 11:03:41.659 +00:00 [Information] Executed action "Empite.TribechimpService.PaymentService.Controllers.InvoiceController.RunJobs (Empite.TribechimpService.PaymentService)" in 19238.5581ms
+2018-07-17 11:03:41.672 +00:00 [Information] Request finished in 19481.7845ms 200 
