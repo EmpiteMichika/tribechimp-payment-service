@@ -10,6 +10,8 @@ using Empite.TribechimpService.PaymentService.Domain.Entity.InvoiceRelated;
 using Empite.TribechimpService.PaymentService.Domain.Interface.Service;
 using Hangfire;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 
 namespace Empite.TribechimpService.PaymentService.Service
 {
@@ -22,8 +24,12 @@ namespace Empite.TribechimpService.PaymentService.Service
         private const int ResultPerPage = 10;
         private IServiceProvider _services { get; }
         private static bool isRunningCheckInvoicesDue = false;
-        public ZohoInvoiceDueCheckerSingleton(IServiceProvider services)
+        private const int ZohoSuccessResponseCode = 0;
+        public ZohoInvoiceDueCheckerSingleton(IServiceProvider services, IZohoInvoiceSingleton zohoTokenService, IOptions<Settings> options, IHttpClientFactory httpClientFactory)
         {
+            _zohoTokenService = zohoTokenService;
+            _settings = options.Value;
+            _httpClientFactory = httpClientFactory;
             _services = services;
         }
         [AutomaticRetry(Attempts = 0, LogEvents = true, OnAttemptsExceeded = AttemptsExceededAction.Delete)]
@@ -61,6 +67,49 @@ namespace Empite.TribechimpService.PaymentService.Service
                 //Todo Logger
             }
             isRunningCheckInvoicesDue = false;
+        }
+
+        private async Task<bool> ProcessRecurringInvoice(RecurringInvoice recurringInvoice, ApplicationDbContext dbContext)
+        {
+            try
+            {
+                HttpClient httpClient = _httpClientFactory.CreateClient();
+                httpClient.AddZohoAuthorizationHeader(_zohoTokenService.GetOAuthToken().Result);
+                Uri url = new Uri(_settings.ZohoAccount.ApiBasePath).Append("recurringinvoices", recurringInvoice.RecurringInvoiceId);
+                HttpResponseMessage response = await httpClient.GetAsync(url);
+                if (response.IsSuccessStatusCode)
+                {
+                    var byteArray = await response.Content.ReadAsByteArrayAsync();
+                    var responseString = Encoding.UTF8.GetString(byteArray, 0, byteArray.Length);
+                    ZohoInvoceService.RootRecurringPaymentCheckInvoiceClass enablePortalResponse =
+                        JsonConvert.DeserializeObject<ZohoInvoceService.RootRecurringPaymentCheckInvoiceClass>(responseString);
+                    if (enablePortalResponse.code == ZohoSuccessResponseCode)
+                    {
+                        if (enablePortalResponse.recurring_invoice.unpaid_child_invoices_count == 0)
+                        {
+                            recurringInvoice.IsDue = false;
+                            await dbContext.SaveChangesAsync();
+                        }
+                    }
+                    else
+                    {
+
+                        throw new Exception($"Zoho Portle Enable failed. Respond with code {enablePortalResponse.code}, Message is => {enablePortalResponse.message}");
+                    }
+                }
+                else
+                {
+                    throw new Exception($"Zoho Api call failed Erro code is => {response.StatusCode}. Reason sent by server is => {response.ReasonPhrase}.");
+                }
+            }
+            catch (Exception ex)
+            {
+                //Todo Logging
+                return false;
+            }
+
+            return true;
+
         }
     }
 }

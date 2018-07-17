@@ -899,6 +899,18 @@ namespace Empite.TribechimpService.PaymentService.Service
         }
 
         #endregion
+        #region RecurringInvoicePaymentCheckResponse
+
+        internal class RootRecurringPaymentCheckInvoiceClass : RootZohoBasicResponse
+        {
+            public RecurringPaymentCheckInvoiceClass recurring_invoice { get; set; }
+        }
+        internal class RecurringPaymentCheckInvoiceClass
+        {
+            public double unpaid_invoices_balance { get; set; }
+            public int unpaid_child_invoices_count { get; set; }
+        }
+        #endregion
         #endregion
 
         #region InternalJobSturctures
@@ -909,8 +921,8 @@ namespace Empite.TribechimpService.PaymentService.Service
             public string userEmail { get; set; }
             public string recurringInvoiceId { get; set; }
         }
-        
 
+       
         #endregion
 
         /// <summary>
