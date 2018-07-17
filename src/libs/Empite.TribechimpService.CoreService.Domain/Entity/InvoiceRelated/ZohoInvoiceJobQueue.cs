@@ -24,6 +24,8 @@ namespace Empite.TribechimpService.PaymentService.Domain.Entity.InvoiceRelated
         EnableClientPortle = 2,
         EnablePaymentReminders = 3,
         CreateItem = 4,
-        CreateRecurringInvoice = 5
+        CreateRecurringInvoice = 5,
+        CreateFirstInvoice = 6,
+        SendFirstInvoiceMail=7
     }
 }

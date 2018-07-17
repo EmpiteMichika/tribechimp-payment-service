@@ -3,14 +3,16 @@ using System;
 using Empite.TribechimpService.PaymentService.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Empite.TribechimpService.PaymentService.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180717062739_Added_all_completed_RecurringInvoice")]
+    partial class Added_all_completed_RecurringInvoice
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -83,8 +85,6 @@ namespace Empite.TribechimpService.PaymentService.Data.Migrations
                     b.Property<bool>("IsDue");
 
                     b.Property<string>("RecurringInvoiceId");
-
-                    b.Property<string>("RecurringInvoiceName");
 
                     b.Property<DateTime?>("UpdatedAt");
 

@@ -88,14 +88,15 @@ namespace Empite.TribechimpService.PaymentService.Controllers
         {
             try
             {
-
+                await _zohoInvoceService.AddJob(model, ZohoInvoiceJobQueueType.CreateRecurringInvoice);
+                return Ok();
             }
             catch (Exception e)
             {
-
+                //Todo Logging
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    $"Exception is => {e.Message}, stacktrace => {e.StackTrace}");
             }
-
-            return Ok();
         }
     }
 
