@@ -1,39 +1,42 @@
 ﻿{
+  "ConnectionStrings": {
+    "DefaultConnection": "server=127.0.0.1;database=dev-tribechimppaymentcore;user=root;password=tranjan;persistsecurityinfo=True;port=3306;SslMode=none;CharSet=utf8;"
+  },
   "Logging": {
     "LogLevel": {
       "Default": "Warning"
     }
   },
-    "Settings": {
-        "AppId": "q6y201YwGcMqs3xRc5s6o6zBUSX5Q95eiE0DrPymqbZmrdvQWVo21uDjFnACap33",
-        "SecretKey": "VzbIvbsbulQPL32b3SvqKbIaNMh4Od8eXKaCzQXwWy06oCHiE7ZMu2jKaIWDn3bY",
-        "IdentityUrl": "http://localhost:5050/",
-        "IdentityAppId": "9424A2BB99C4EEEACAB2DB5A6FDA2",
-        "IdentityApiKey": "Cj4XaGAbPrjfaF9IokdYaVAwN3GNqFpr",
-        "ApiSettings": {
-            "Version": "v1",
-            "Description": "Tribechimp",
-            "Title": "Tribechimp API Documentation",
-            "Contact": "support@empite.com",
-            "Toc": ""
-        },
-      "CoreConnection": {
-        "Server": "localhost",
-        "User": "root",
-        "Database": "dev-tribechimppaymentcore",
-        "Password": "tranjan",
-        "Port": "3306"
-      },
-      "ZohoAccount": {
-        "RefreshToken": "1000.06e131cdd547c164e2ef55d4b8a5f71d.bfa2622677ee1d91f3489049392754c8",
-        "ClientId": "1000.Y5PZX2EEXYCQ69969HQ972O19CZGRX",
-        "ClientSecret": "43ba1d8a23ce755c742c750be5fc7ab759570a7220",
-        "AuthTokenUrl": "https://accounts.zoho.com/oauth/v2/token",
-        "Redirecturi": "https://www.getpostman.com/oauth2/callback",
-        "Granttype": "refresh_token",
-        "OAuthTokenExpireInSec": 3600,
-        "ApiBasePath": "https://invoice.zoho.com/api/v3",
-        "PaymentTerm": 10 
-      } 
+  "Settings": {
+    "AppId": "q6y201YwGcMqs3xRc5s6o6zBUSX5Q95eiE0DrPymqbZmrdvQWVo21uDjFnACap33",
+    "SecretKey": "VzbIvbsbulQPL32b3SvqKbIaNMh4Od8eXKaCzQXwWy06oCHiE7ZMu2jKaIWDn3bY",
+    "IdentityUrl": "http://localhost:5050/",
+    "IdentityAppId": "9424A2BB99C4EEEACAB2DB5A6FDA2",
+    "IdentityApiKey": "Cj4XaGAbPrjfaF9IokdYaVAwN3GNqFpr",
+    "ApiSettings": {
+      "Version": "v1",
+      "Description": "Tribechimp",
+      "Title": "Tribechimp API Documentation",
+      "Contact": "support@empite.com",
+      "Toc": ""
+    },
+    "ZohoAccount": {
+      "RefreshToken": "1000.06e131cdd547c164e2ef55d4b8a5f71d.bfa2622677ee1d91f3489049392754c8",
+      "ClientId": "1000.Y5PZX2EEXYCQ69969HQ972O19CZGRX",
+      "ClientSecret": "43ba1d8a23ce755c742c750be5fc7ab759570a7220",
+      "AuthTokenUrl": "https://accounts.zoho.com/oauth/v2/token",
+      "Redirecturi": "https://www.getpostman.com/oauth2/callback",
+      "Granttype": "refresh_token",
+      "OAuthTokenExpireInSec": 3600,
+      "ApiBasePath": "https://invoice.zoho.com/api/v3",
+      "PaymentTerm": 10
+    },
+    "HangFireConnectionSettings": {
+      "Server": "localhost",
+      "User": "root",
+      "Database": "tribechimp-paymentservice-hangfire",
+      "Password": "tranjan",
+      "Port": "3306"
     }
+  }
 }

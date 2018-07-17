@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Empite.TribechimpService.PaymentService.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180716034510_initial")]
+    [Migration("20180717094456_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -18,6 +18,20 @@ namespace Empite.TribechimpService.PaymentService.Data.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.1.1-rtm-30846")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
+
+            modelBuilder.Entity("Empite.TribechimpService.PaymentService.Domain.Entity.InvoiceRelated.ConfiguredPaymentGateway", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("GatewayName");
+
+                    b.Property<bool>("IsEnabled");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ConfiguredPaymentGateways");
+                });
 
             modelBuilder.Entity("Empite.TribechimpService.PaymentService.Domain.Entity.InvoiceRelated.InvoiceContact", b =>
                 {
@@ -56,6 +70,8 @@ namespace Empite.TribechimpService.PaymentService.Data.Migrations
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<bool>("AllTaskCompleted");
+
                     b.Property<DateTime>("CreatedAt");
 
                     b.Property<Guid?>("CreatedBy");
@@ -69,6 +85,8 @@ namespace Empite.TribechimpService.PaymentService.Data.Migrations
                     b.Property<bool>("IsDue");
 
                     b.Property<string>("RecurringInvoiceId");
+
+                    b.Property<string>("RecurringInvoiceName");
 
                     b.Property<DateTime?>("UpdatedAt");
 
@@ -152,6 +170,8 @@ namespace Empite.TribechimpService.PaymentService.Data.Migrations
                     b.Property<string>("RecurringInvoiceId");
 
                     b.Property<string>("ZohoItemId");
+
+                    b.Property<int>("Qty");
 
                     b.HasKey("RecurringInvoiceId", "ZohoItemId");
 

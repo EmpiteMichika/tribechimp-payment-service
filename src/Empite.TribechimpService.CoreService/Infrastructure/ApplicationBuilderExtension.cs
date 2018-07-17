@@ -25,6 +25,7 @@ using RawRabbit.Enrichers.Polly.Services;
 using RawRabbit.Instantiation;
 using RawRabbit.Pipe;
 using System;
+using System.Data;
 using System.IO;
 using System.Reflection;
 using Empite.Core.Infrastructure.Constant;
@@ -36,25 +37,30 @@ using Empite.TribechimpService.PaymentService.Data;
 using Empite.TribechimpService.PaymentService.Domain.Interface.Service;
 using Empite.TribechimpService.PaymentService.Infrastructure.Filter;
 using Empite.TribechimpService.PaymentService.Service;
+using Hangfire;
+using Hangfire.MySql.Core;
 
 namespace Empite.TribechimpService.PaymentService.Infrastructure
 {
     public static class ApplicationBuilderExtension
     {
         private static IConfiguration Configuration { get; set; }
+        private static Settings _settings;
         public static void ConfigureApplicationServices(this IServiceCollection services, IConfiguration configuration)
         {
             Configuration = configuration;
+            _settings = Configuration.GetSection("Settings").Get<Settings>();
             services.Configure<Settings>(configuration.GetSection("Settings"));
             services.AddHttpClient();
             services.AddAutoMapper();
             services.InjectServices();
             services.ConfigureRabbitMq();
             services.AddIdentity();
+            services.AddHangfire(x => { });
             services.ConfigureAuthentication();
             services.AddSwaggerDocumentation();
             services.AddMvc();
-
+            
         }
 
         public static void InjectServices(this IServiceCollection services)
@@ -120,7 +126,14 @@ namespace Empite.TribechimpService.PaymentService.Infrastructure
         public static IServiceCollection AddIdentity(this IServiceCollection services)
         {
             var config = Configuration.GetSection(nameof(Settings)).Get<Settings>();
-            services.AddDbContext<ApplicationDbContext>(options => options.UseMySql(config.CoreConnection.ToString()));
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddSingleton<Func<ApplicationDbContext>>(() =>
+            {
+                var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
+                optionsBuilder.UseMySql(Configuration.GetConnectionString("DefaultConnection"));
+                return new ApplicationDbContext(optionsBuilder.Options);
+            });
             return services;
         }
 
@@ -178,7 +191,7 @@ namespace Empite.TribechimpService.PaymentService.Infrastructure
 
             //Configuration = app.ApplicationServices.GetService<IConfiguration>();
             var config = Configuration.GetSection(nameof(Settings)).Get<Settings>();
-            app.UseMigration(config.CoreConnection.ToString());
+            
 
             app.UseHttpsRedirection();
 
@@ -192,7 +205,27 @@ namespace Empite.TribechimpService.PaymentService.Infrastructure
                 }
                 finally { context.Request.Body = body; }
             });
-
+            GlobalConfiguration.Configuration.UseStorage(new MySqlStorage(_settings.HangFireConnectionSettings.ToString(),
+                new MySqlStorageOptions
+                {
+                    TransactionIsolationLevel = IsolationLevel.ReadCommitted,
+                    QueuePollInterval = TimeSpan.FromSeconds(15),
+                    JobExpirationCheckInterval = TimeSpan.FromHours(1),
+                    CountersAggregateInterval = TimeSpan.FromMinutes(5),
+                    PrepareSchemaIfNecessary = true,
+                    DashboardJobListLimit = 50000,
+                    TransactionTimeout = TimeSpan.FromMinutes(1),
+                    
+                }));
+            app.UseHangfireServer();
+            app.UseHangfireDashboard("/schedules", new DashboardOptions { Authorization = new[] { new HangfireAuthorizationFilter() } });
+            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                
+                //EmailSender sender = serviceScope.ServiceProvider.GetRequiredService<EmailSender>();
+                //if (_settings.HangfireServiceConfig.SendPortalEmails)
+                //    RecurringJob.AddOrUpdate(() => sender.SendMessagesAsync(), Cron.Minutely);
+            }
             app.UseSwagger();
             app.UseSwaggerUI(option =>
             {
@@ -205,17 +238,7 @@ namespace Empite.TribechimpService.PaymentService.Infrastructure
             app.UseMvc();
         }
 
-        public static void UseMigration(this IApplicationBuilder app, string connectionString)
-        {
-            EnsureDatabase.For.MySqlDatabase(connectionString);
-            var upgrader =
-                DeployChanges.To
-                    .MySqlDatabase(connectionString)
-                    .WithScriptsEmbeddedInAssembly(Assembly.GetExecutingAssembly())
-                    .LogToConsole()
-                    .Build();
-            upgrader.PerformUpgrade();
-        }
+        
         public static IServiceCollection AddSwaggerDocumentation(this IServiceCollection services)
         {
             var config = Configuration.GetSection(nameof(Settings)).Get<Settings>();

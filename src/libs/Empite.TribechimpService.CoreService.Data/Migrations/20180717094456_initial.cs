@@ -8,6 +8,19 @@ namespace Empite.TribechimpService.PaymentService.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "ConfiguredPaymentGateways",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    GatewayName = table.Column<string>(nullable: true),
+                    IsEnabled = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ConfiguredPaymentGateways", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "InvoiceContacts",
                 columns: table => new
                 {
@@ -83,8 +96,10 @@ namespace Empite.TribechimpService.PaymentService.Data.Migrations
                     DeletedBy = table.Column<Guid>(nullable: true),
                     Id = table.Column<string>(nullable: false),
                     RecurringInvoiceId = table.Column<string>(nullable: true),
+                    RecurringInvoiceName = table.Column<string>(nullable: true),
                     InvoiceContactUserId = table.Column<string>(nullable: true),
-                    IsDue = table.Column<bool>(nullable: false)
+                    IsDue = table.Column<bool>(nullable: false),
+                    AllTaskCompleted = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -102,7 +117,8 @@ namespace Empite.TribechimpService.PaymentService.Data.Migrations
                 columns: table => new
                 {
                     RecurringInvoiceId = table.Column<string>(nullable: false),
-                    ZohoItemId = table.Column<string>(nullable: false)
+                    ZohoItemId = table.Column<string>(nullable: false),
+                    Qty = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -144,6 +160,9 @@ namespace Empite.TribechimpService.PaymentService.Data.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "ConfiguredPaymentGateways");
+
             migrationBuilder.DropTable(
                 name: "ZohoInvoiceJobQueues");
 
