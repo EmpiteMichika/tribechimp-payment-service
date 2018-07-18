@@ -10,6 +10,7 @@
         public ApiSettings ApiSettings { get; set; }
         public ZohoAccount ZohoAccount { get; set; }
         public HangFireConnectionSettings HangFireConnectionSettings { get; set; }
+        public HangfireServiceConfig HangfireServiceConfig { get; set; }
     }
 
     public class ApiSettings
@@ -76,5 +77,9 @@
         }
 
         #endregion
+    }
+    public class HangfireServiceConfig
+    {
+        public bool CheckRecurringPayment { get; set; }
     }
 }

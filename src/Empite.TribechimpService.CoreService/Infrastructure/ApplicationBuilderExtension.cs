@@ -221,10 +221,10 @@ namespace Empite.TribechimpService.PaymentService.Infrastructure
             app.UseHangfireDashboard("/schedules", new DashboardOptions { Authorization = new[] { new HangfireAuthorizationFilter() } });
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
-                
-                //EmailSender sender = serviceScope.ServiceProvider.GetRequiredService<EmailSender>();
-                //if (_settings.HangfireServiceConfig.SendPortalEmails)
-                //    RecurringJob.AddOrUpdate(() => sender.SendMessagesAsync(), Cron.Minutely);
+
+                IZohoInvoiceDueCheckerSingleton sender = serviceScope.ServiceProvider.GetRequiredService<IZohoInvoiceDueCheckerSingleton>();
+                if (_settings.HangfireServiceConfig.CheckRecurringPayment)
+                    RecurringJob.AddOrUpdate(() => sender.CheckInvoicesDueAsync(), Cron.Minutely);
             }
             app.UseSwagger();
             app.UseSwaggerUI(option =>

@@ -21,7 +21,7 @@ namespace Empite.TribechimpService.PaymentService.Service
         private readonly Settings _settings;
         private readonly IZohoInvoiceSingleton _zohoTokenService;
         private readonly IHttpClientFactory _httpClientFactory;
-        private const int ResultPerPage = 10;
+        private const int ResultPerPage = 100;
         private IServiceProvider _services { get; }
         private static bool isRunningCheckInvoicesDue = false;
         private const int ZohoSuccessResponseCode = 0;
@@ -44,17 +44,32 @@ namespace Empite.TribechimpService.PaymentService.Service
                 using (ApplicationDbContext dbContext = _services.CreateScope().ServiceProvider.GetRequiredService<ApplicationDbContext>())
                 {
                     int currentPage = 0;
+                    int successCount = 0;
+                    List<RecurringInvoice> recurringInvoices;
                     while (true)
                     {
                         await Task.Delay(10);
-                        List<RecurringInvoice> recurringInvoices = dbContext.RecurringInvoices
-                            .Where(x => x.IsDue || x.UpdatedAt < DateTime.UtcNow.AddMonths(-1))
-                            .Skip(currentPage * ResultPerPage).Take(ResultPerPage).ToList();
+                        recurringInvoices = dbContext.RecurringInvoices
+                            .Where(x =>( x.IsDue || x.UpdatedAt < DateTime.UtcNow.AddMonths(-1) ) && x.DeletedAt != null )
+                            .Skip((currentPage * ResultPerPage )- successCount).Take(ResultPerPage).ToList();
                         if(!recurringInvoices.Any())
                             break;
                         foreach (RecurringInvoice recurringInvoice in recurringInvoices)
                         {
-                            
+                            //usin try catch to contine the flow
+                            try
+                            {
+                                bool res = await ProcessRecurringInvoice(recurringInvoice, dbContext);
+                                if (res)
+                                    successCount++;
+                            }
+                            catch (Exception ex)
+                            {
+                                //Todo Logging
+
+                            }
+                           
+
                         }
                     }
                     
@@ -68,7 +83,7 @@ namespace Empite.TribechimpService.PaymentService.Service
             }
             isRunningCheckInvoicesDue = false;
         }
-
+        //Retrn True If the recurring invoice is changes to paid, so we can get the skkippin elements
         private async Task<bool> ProcessRecurringInvoice(RecurringInvoice recurringInvoice, ApplicationDbContext dbContext)
         {
             try
@@ -88,7 +103,20 @@ namespace Empite.TribechimpService.PaymentService.Service
                         if (enablePortalResponse.recurring_invoice.unpaid_child_invoices_count == 0)
                         {
                             recurringInvoice.IsDue = false;
+                            recurringInvoice.UpdatedAt = DateTime.UtcNow;
+                           
                             await dbContext.SaveChangesAsync();
+                            return true;
+                        }
+                        else
+                        {
+                            if (!recurringInvoice.IsDue)
+                            {
+                                recurringInvoice.IsDue = true;
+                                recurringInvoice.UpdatedAt = DateTime.UtcNow;
+                                await dbContext.SaveChangesAsync();
+                                return false;
+                            }
                         }
                     }
                     else
@@ -108,7 +136,7 @@ namespace Empite.TribechimpService.PaymentService.Service
                 return false;
             }
 
-            return true;
+            return false;
 
         }
     }

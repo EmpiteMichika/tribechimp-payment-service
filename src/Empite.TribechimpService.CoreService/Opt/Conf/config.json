@@ -37,6 +37,9 @@
       "Database": "tribechimp-paymentservice-hangfire",
       "Password": "tranjan",
       "Port": "3306"
+    },
+    "HangfireServiceConfig": {
+      "CheckRecurringPayment": true
     }
   }
 }
