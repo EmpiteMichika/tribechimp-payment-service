@@ -45,12 +45,11 @@ namespace Empite.TribechimpService.PaymentService.Service
                 {
                     int currentPage = 0;
                     int successCount = 0;
-                    List<RecurringInvoice> recurringInvoices;
                     while (true)
                     {
                         await Task.Delay(10);
-                        recurringInvoices = dbContext.RecurringInvoices
-                            .Where(x =>( x.IsDue || x.UpdatedAt < DateTime.UtcNow.AddMonths(-1) ) && x.DeletedAt != null )
+                        List<RecurringInvoice> recurringInvoices = dbContext.RecurringInvoices
+                            .Where(x =>( x.IsDue || x.UpdatedAt < DateTime.UtcNow.AddMonths(-1) ) && x.DeletedAt == null )
                             .Skip((currentPage * ResultPerPage )- successCount).Take(ResultPerPage).ToList();
                         if(!recurringInvoices.Any())
                             break;
