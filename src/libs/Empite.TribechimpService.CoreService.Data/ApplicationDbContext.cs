@@ -18,6 +18,7 @@ namespace Empite.TribechimpService.PaymentService.Data
             // Add your customizations after calling base.OnModelCreating(builder);
             builder.Entity<InvoiceContact>().HasIndex(x => x.ZohoContactUserId);
             builder.Entity<ZohoItem>().HasIndex(x => x.ZohoItemId);
+            builder.Entity<RecurringInvoice>().HasIndex(x => x.ReferenceGuid);
             builder.Entity<ZohoInvoiceJobQueue>().Property(x=> x.LastErrorMessage).HasColumnType("longtext");
             builder.Entity<ZohoInvoiceJobQueue>().Property(x => x.JsonData).HasColumnType("longtext");
 

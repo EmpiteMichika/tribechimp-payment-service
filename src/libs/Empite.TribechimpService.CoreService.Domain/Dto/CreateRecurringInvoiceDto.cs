@@ -8,6 +8,7 @@ namespace Empite.TribechimpService.PaymentService.Domain.Dto
     {
         public string UserId { get; set; }
         public List<RecurringInvoiceItemDto> Items { get; set; }
+        public Guid? ReferenceGuid { get; set; }
     }
 
     public class RecurringInvoiceItemDto

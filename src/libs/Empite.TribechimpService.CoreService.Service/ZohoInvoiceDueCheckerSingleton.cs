@@ -70,6 +70,8 @@ namespace Empite.TribechimpService.PaymentService.Service
                            
 
                         }
+
+                        currentPage++;
                     }
                     
 

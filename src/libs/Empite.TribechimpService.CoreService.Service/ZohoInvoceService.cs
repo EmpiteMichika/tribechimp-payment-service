@@ -422,6 +422,7 @@ namespace Empite.TribechimpService.PaymentService.Service
                                 itemCreateResponse.recurring_invoice.recurring_invoice_id;
                             dbRecurringInvoice.RecurringInvoiceName = recurringInvoiceName;
                             dbRecurringInvoice.UpdatedAt = DateTime.UtcNow;
+                            dbRecurringInvoice.ReferenceGuid = recurringInfo.ReferenceGuid;
                             dbContext.RecurringInvoices.Add(dbRecurringInvoice);
                             await dbContext.SaveChangesAsync();
                             return dbRecurringInvoice;
@@ -1021,7 +1022,7 @@ namespace Empite.TribechimpService.PaymentService.Service
         {
            
             public string customer_id { get; set; }
-            
+            public List<string> contact_persons { get; set; }
             
             public List<LineItemRecurringInvoiceCreateRequest> line_items { get; set; }
             public PaymentOptionsRecurringInvoiceCreateRequest payment_options { get; set; }

@@ -223,6 +223,7 @@ namespace Empite.TribechimpService.PaymentService.Infrastructure
             {
 
                 IZohoInvoiceDueCheckerSingleton sender = serviceScope.ServiceProvider.GetRequiredService<IZohoInvoiceDueCheckerSingleton>();
+               
                 if (_settings.HangfireServiceConfig.CheckRecurringPayment)
                     RecurringJob.AddOrUpdate(() => sender.CheckInvoicesDueAsync(), Cron.Minutely);
             }

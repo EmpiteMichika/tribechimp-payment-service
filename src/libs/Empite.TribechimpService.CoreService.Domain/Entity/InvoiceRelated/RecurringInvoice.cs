@@ -17,5 +17,6 @@ namespace Empite.TribechimpService.PaymentService.Domain.Entity.InvoiceRelated
         public List<ZohoItemRecurringInvoice> ZohoItems { get; set; }
         public bool IsDue { get; set; }
         public bool AllTaskCompleted { get; set; }
+        public Guid? ReferenceGuid { get; set; }
     }
 }
