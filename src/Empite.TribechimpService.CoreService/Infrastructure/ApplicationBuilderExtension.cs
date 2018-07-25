@@ -10,18 +10,6 @@ using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Polly;
-using RabbitMQ.Client;
-using RabbitMQ.Client.Exceptions;
-using RawRabbit;
-using RawRabbit.Configuration;
-using RawRabbit.Configuration.Queue;
-using RawRabbit.DependencyInjection.ServiceCollection;
-using RawRabbit.Enrichers.GlobalExecutionId;
-using RawRabbit.Enrichers.HttpContext;
-using RawRabbit.Enrichers.MessageContext;
-using RawRabbit.Enrichers.Polly;
-using RawRabbit.Enrichers.Polly.Services;
 using RawRabbit.Instantiation;
 using RawRabbit.Pipe;
 using System;
@@ -38,7 +26,20 @@ using Empite.TribechimpService.PaymentService.Domain.Interface.Service;
 using Empite.TribechimpService.PaymentService.Infrastructure.Filter;
 using Empite.TribechimpService.PaymentService.Service;
 using Hangfire;
+using Hangfire.MySql;
 using Hangfire.MySql.Core;
+using Polly;
+using RabbitMQ.Client;
+using RabbitMQ.Client.Exceptions;
+using RawRabbit.DependencyInjection.ServiceCollection;
+using RawRabbit.Configuration;
+using RawRabbit;
+using RawRabbit.Configuration.Queue;
+using RawRabbit.Enrichers.GlobalExecutionId;
+using RawRabbit.Enrichers.HttpContext;
+using RawRabbit.Enrichers.MessageContext;
+using RawRabbit.Enrichers.Polly;
+using RawRabbit.Enrichers.Polly.Services;
 
 namespace Empite.TribechimpService.PaymentService.Infrastructure
 {
@@ -83,6 +84,7 @@ namespace Empite.TribechimpService.PaymentService.Infrastructure
 
 
             services.Configure<Settings>(Configuration.GetSection("Settings"));
+            
         }
 
         public static void ConfigureRabbitMq(this IServiceCollection services)
