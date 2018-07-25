@@ -74,6 +74,13 @@ namespace Empite.TribechimpService.PaymentService.Service
                         throw new Exception("Invalid data type for the DataObject parameter, it should be created from CreateZohoItemDto class");
                     }
                     job.JsonData = JsonConvert.SerializeObject(DataObject);
+                }else if (JobType == ZohoInvoiceJobQueueType.CreateInvoice)
+                {
+                    if (DataObject?.GetType() != typeof(Domain.Dto.CreateRecurringInvoiceDto))
+                    {
+                        throw new Exception("Invalid data type for the DataObject parameter, it should be created from CreateRecurringInvoiceDto class");
+                    }
+                    job.JsonData = JsonConvert.SerializeObject(DataObject);
                 }
                 else
                 {
