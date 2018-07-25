@@ -82,20 +82,6 @@ namespace Empite.TribechimpService.PaymentService.Service
                         throw new Exception("Invalid data type for the DataObject parameter, it should be created from CreateZohoItemDto class");
                     }
                     job.JsonData = JsonConvert.SerializeObject(DataObject);
-                }else if (JobType == ZohoInvoiceJobQueueType.CreateRecurringInvoice)
-                {
-                    if (DataObject?.GetType() != typeof(Domain.Dto.CreateRecurringInvoiceDto))
-                    {
-                        throw new Exception("Invalid data type for the DataObject parameter, it should be created from CreateZohoItemDto class");
-                    }
-                    job.JsonData = JsonConvert.SerializeObject(DataObject);
-                }else if (JobType == ZohoInvoiceJobQueueType.CreateFirstInvoice)
-                {
-                    if (DataObject?.GetType() != typeof(string))
-                    {
-                        throw new Exception("Invalid data type for the DataObject parameter, it should be a string");
-                    }
-                    job.JsonData = DataObject;
                 }
                 else
                 {
@@ -360,138 +346,6 @@ namespace Empite.TribechimpService.PaymentService.Service
             }
         }
 
-        private async Task<RecurringInvoice> CreateRecurringInvoice(CreateRecurringInvoiceDto recurringInfo, ApplicationDbContext dbContext)
-        {
-            HttpClient httpClient = _httpClientFactory.CreateClient();
-            httpClient.AddZohoAuthorizationHeader(await _zohoTokenService.GetOAuthToken());
-            Uri url = new Uri(_settings.ZohoAccount.ApiBasePath).Append("recurringinvoices");
-            
-            InvoiceContact contact = dbContext.InvoiceContacts.Include(x=> x.RecurringInvoices).FirstOrDefault(x => x.UserId == recurringInfo.UserId);
-            List<ZohoItemRecurringInvoice> items = new List<ZohoItemRecurringInvoice>();
-            //double totalPrice = 0; 
-            foreach (var itemId in recurringInfo.Items)
-            {
-                ZohoItem zohoItem = await dbContext.ZohoItems.FirstOrDefaultAsync(y => y.Id == itemId.ItemId);
-                if(zohoItem == null)
-                      throw new Exception($"Item id is not found in the database. Item id is => {itemId.ItemId}");
-                //totalPrice = totalPrice + zohoItem.Rate * itemId.Qty;
-                items.Add(new ZohoItemRecurringInvoice{Qty = itemId.Qty,ZohoItem = zohoItem});
-            }
-            
-            
-                
-            if(contact == null)
-                  throw new Exception($"User is not found in the database UserId is => {recurringInfo.UserId}");
-            string recurringInvoiceName = contact.ZohoContactUserId + Guid.NewGuid().ToString();
-            RootRecurringInvoiceCreateRequest recurringInvoiceCreateRequest = new RootRecurringInvoiceCreateRequest
-            {
-                customer_id = contact.ZohoContactUserId,
-                line_items = items.Select(x=> new LineItemRecurringInvoiceCreateRequest{item_id = x.ZohoItem.ZohoItemId,quantity = x.Qty}).ToList(),
-                payment_options = new PaymentOptionsRecurringInvoiceCreateRequest { payment_gateways = dbContext.ConfiguredPaymentGateways.Select(x => new PaymentGatewayRecurringInvoiceCreateRequest{configured = x.IsEnabled,gateway_name = x.GatewayName} ).ToList() },
-                payment_terms = ZohoPaymentTermDaysGap,
-                recurrence_frequency = "months",
-                recurrence_name = recurringInvoiceName,
-                repeat_every = 1,
-                start_date = DateTime.UtcNow.AddDays(-1*ZohoPaymentTermDaysGap).ToString("yyyy-MM-dd")
-            };
-
-
-            string jsonString = JsonConvert.SerializeObject(recurringInvoiceCreateRequest);
-            MultipartFormDataContent form = new MultipartFormDataContent();
-            StringContent content = new StringContent(jsonString);
-            form.Add(content, "JSONString");
-            HttpResponseMessage response = await httpClient.PostAsync(url, form);
-            if (response.StatusCode == HttpStatusCode.Created)
-            {
-                var byteArray = await response.Content.ReadAsByteArrayAsync();
-                var responseString = Encoding.UTF8.GetString(byteArray, 0, byteArray.Length);
-                RootRecurringInvoiceResponse itemCreateResponse =
-                    JsonConvert.DeserializeObject<RootRecurringInvoiceResponse>(responseString);
-                if (itemCreateResponse.code == ZohoSuccessResponseCode)
-                {
-                    if (!string.IsNullOrWhiteSpace(itemCreateResponse.recurring_invoice.recurring_invoice_id))
-                    {
-                        try
-                        {
-                            RecurringInvoice dbRecurringInvoice = new RecurringInvoice();
-                            dbRecurringInvoice.InvoiceContact = contact;
-                            dbRecurringInvoice.ZohoItems = items;
-                            dbRecurringInvoice.IsDue = true;
-                            dbRecurringInvoice.AllTaskCompleted = false;
-                            dbRecurringInvoice.RecurringInvoiceId =
-                                itemCreateResponse.recurring_invoice.recurring_invoice_id;
-                            dbRecurringInvoice.RecurringInvoiceName = recurringInvoiceName;
-                            dbRecurringInvoice.UpdatedAt = DateTime.UtcNow;
-                            dbRecurringInvoice.ReferenceGuid = recurringInfo.ReferenceGuid;
-                            dbContext.RecurringInvoices.Add(dbRecurringInvoice);
-                            await dbContext.SaveChangesAsync();
-                            return dbRecurringInvoice;
-                        }
-                        catch (Exception ex)
-                        {
-                            //Todo logging to serilog
-                            await DeleteRecurringInvoice(itemCreateResponse.recurring_invoice.recurring_invoice_id);
-                            throw ex;
-                        }
-                        
-                       
-                    }
-                    else
-                    {
-                        StringBuilder builder = new StringBuilder();
-                        builder.Append((string.IsNullOrWhiteSpace(itemCreateResponse.recurring_invoice.recurring_invoice_id) ? "Recurring Invoice id is empty. " : ""));
-
-                        throw new Exception($"Response Filed came empty. Fields => {builder.ToString()}");
-                    }
-
-                }
-                else
-                {
-                    throw new Exception($"Zoho returns a erro code. Erro code is => {itemCreateResponse.code}. Message is => {itemCreateResponse.message}.");
-
-                }
-            }
-            else
-            {
-                throw new Exception($"Zoho Api call failed Erro code is => {response.StatusCode}. Reason sent by server is => {response.ReasonPhrase}.");
-            }
-        }
-
-        private async Task DeleteRecurringInvoice(string recurringInvoiceId)
-        {
-            try
-            {
-                HttpClient httpClient = _httpClientFactory.CreateClient();
-                httpClient.AddZohoAuthorizationHeader(await _zohoTokenService.GetOAuthToken());
-                Uri url = new Uri(_settings.ZohoAccount.ApiBasePath).Append("recurringinvoices", recurringInvoiceId);
-                HttpResponseMessage response = await httpClient.DeleteAsync(url);
-                if (!response.IsSuccessStatusCode)
-                {
-                    throw new Exception($"Deleteing Recurring Invoice Failed. Recurring Invoice Id is => {recurringInvoiceId}");
-                }
-                else
-                {
-                    //Todo Logging success delete of the Invoice deletion
-                    var byteArray = await response.Content.ReadAsByteArrayAsync();
-                    var responseString = Encoding.UTF8.GetString(byteArray, 0, byteArray.Length);
-                    RootZohoBasicResponse sendEmailZohoResponse =
-                        JsonConvert.DeserializeObject<RootZohoBasicResponse>(responseString);
-                    if (sendEmailZohoResponse.code != ZohoSuccessResponseCode)
-                    {
-                        throw new Exception(
-                            $"Deleteing Recurring Invoice Failed. Zoho Error code is => {sendEmailZohoResponse.code}, message is => {sendEmailZohoResponse.message}");
-                    }
-                }
-                
-            }
-            catch (Exception ex)
-            {
-                //Todo Logging
-                throw new Exception($"Deleteing Recurring Invoice Failed. Recurring Invoice Id is => {recurringInvoiceId}");
-            }
-            
-
-        }
         private async Task DeleteInvoice(string invoiceId)
         {
             try
@@ -566,40 +420,7 @@ namespace Empite.TribechimpService.PaymentService.Service
                     if (!string.IsNullOrWhiteSpace(itemCreateResponse.invoice.invoice_id))
                     {
                         
-                        //Add send mail as a task 
-                        ZohoInvoiceJobQueue firstInvoiceMail = new ZohoInvoiceJobQueue();
-                        try
-                        {
-                            
-                            firstInvoiceMail.IsSuccess = false;
-                            firstInvoiceMail.JobType = ZohoInvoiceJobQueueType.SendFirstInvoiceMail;
-                            firstInvoiceMail.JsonData = JsonConvert.SerializeObject(new SendFirstMailJob{invoiceId = itemCreateResponse.invoice.invoice_id, userEmail = contact.Email,recurringInvoiceId = recurringInvoiceId });
-                            dbContext.ZohoInvoiceJobQueues.Add(firstInvoiceMail);
-                            await dbContext.SaveChangesAsync();
-
-                        }
-                        catch (Exception ex)
-                        {
-                            //Todo logging
-                            await DeleteInvoice(itemCreateResponse.invoice.invoice_id);
-                            throw ex;
-                        }
-
-                        try
-                        {
-                            bool result = await SendFristInvoiceMail(itemCreateResponse.invoice.invoice_id, contact.Email);
-                            if (result)
-                            {
-                                firstInvoiceMail.IsSuccess = true;
-                                firstInvoiceMail.UpdatedAt = DateTime.UtcNow;
-                                recurringInvoice.AllTaskCompleted = true;
-                                await dbContext.SaveChangesAsync();
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            //Todo Logging dont throw the exception just log it
-                        }
+                        
 
                         return itemCreateResponse.invoice.invoice_id;
 
@@ -617,41 +438,6 @@ namespace Empite.TribechimpService.PaymentService.Service
                 {
                     throw new Exception($"Zoho returns a erro code. Erro code is => {itemCreateResponse.code}. Message is => {itemCreateResponse.message}.");
 
-                }
-            }
-            else
-            {
-                throw new Exception($"Zoho Api call failed Erro code is => {response.StatusCode}. Reason sent by server is => {response.ReasonPhrase}.");
-            }
-        }
-
-        private async Task<bool> SendFristInvoiceMail(string invoiceId,string email)
-        {
-            HttpClient httpClient = _httpClientFactory.CreateClient();
-            httpClient.AddZohoAuthorizationHeader(await _zohoTokenService.GetOAuthToken());
-            Uri url = new Uri(_settings.ZohoAccount.ApiBasePath).Append("invoices").Append(invoiceId).Append("email");
-            SendFristInvoiceEMailRequest sendFristInvoiceEMailRequest =
-                new SendFristInvoiceEMailRequest {to_mail_ids = new List<string> { email }};
-            string jsonString = JsonConvert.SerializeObject(sendFristInvoiceEMailRequest);
-            MultipartFormDataContent form = new MultipartFormDataContent();
-            StringContent content = new StringContent(jsonString);
-            form.Add(content, "JSONString");
-            HttpResponseMessage response = await httpClient.PostAsync(url, form);
-            if (response.IsSuccessStatusCode)
-            {
-                var byteArray = await response.Content.ReadAsByteArrayAsync();
-                var responseString = Encoding.UTF8.GetString(byteArray, 0, byteArray.Length);
-                RootZohoBasicResponse sendEmailZohoResponse =
-                    JsonConvert.DeserializeObject<RootZohoBasicResponse>(responseString);
-                if (sendEmailZohoResponse.code == ZohoSuccessResponseCode)
-                {
-                    
-                    return true;
-                }
-                else
-                {
-                    throw new Exception(
-                        $"Zoho Error code is => {sendEmailZohoResponse.code}, message is => {sendEmailZohoResponse.message}");
                 }
             }
             else
@@ -724,93 +510,6 @@ namespace Empite.TribechimpService.PaymentService.Service
 
                     job.IsSuccess = true;
                     await _dbContext.SaveChangesAsync();
-                }
-            }
-            else if (job.JobType == ZohoInvoiceJobQueueType.CreateRecurringInvoice)
-            {
-                CreateRecurringInvoiceDto model = JsonConvert.DeserializeObject<CreateRecurringInvoiceDto>(job.JsonData);
-                RecurringInvoice recurringInvoice = await CreateRecurringInvoice(model, _dbContext);
-                job.UpdatedAt = DateTime.UtcNow;
-                if (recurringInvoice == null)
-                {
-                    throw new Exception($"Item creating failed for job ID {job.Id}");
-                }
-                else
-                {
-                    ZohoInvoiceJobQueue firstInvoiceJob = new ZohoInvoiceJobQueue();
-                    try
-                    {
-                       
-                        firstInvoiceJob.IsSuccess = false;
-                        firstInvoiceJob.JobType = ZohoInvoiceJobQueueType.CreateFirstInvoice;
-                        firstInvoiceJob.JsonData = recurringInvoice.Id;
-                        _dbContext.ZohoInvoiceJobQueues.Add(firstInvoiceJob);
-                        await _dbContext.SaveChangesAsync();
-                        job.IsSuccess = true;
-                        await _dbContext.SaveChangesAsync();
-                    }
-                    catch (Exception ex)
-                    {
-                        Guid guid = Guid.NewGuid();
-                        await DeleteRecurringInvoice(recurringInvoice.RecurringInvoiceId);
-                        //Todo Logging
-
-                        //todo remove recurring invoice from the db but use a another try catch
-                        throw new Exception($"Adding First invoice is failed deleteing recurring invoice. invoice primary key is => {recurringInvoice.Id}, zoho invoice id is {recurringInvoice.RecurringInvoiceId}, View Log for more details. Guid is => {guid.ToString()}");
-                    }
-
-                    string result = await CreateInvoice(recurringInvoice.Id, _dbContext);
-                    try
-                    {
-                        firstInvoiceJob.IsSuccess = true;
-                        firstInvoiceJob.UpdatedAt = DateTime.UtcNow;
-                        await _dbContext.SaveChangesAsync();
-                    }
-                    catch (Exception ex)
-                    {
-                        //Todo log ex, but dont throw ex
-                        await DeleteInvoice(result);
-                        
-                    }
-
-                }
-            }else if (job.JobType == ZohoInvoiceJobQueueType.CreateFirstInvoice)
-            {
-                string recurringInvoiceId = job.JsonData;
-                job.UpdatedAt = DateTime.UtcNow;
-                string result = await CreateInvoice(recurringInvoiceId, _dbContext);
-                try
-                {
-                    job.IsSuccess = true;
-                    await _dbContext.SaveChangesAsync();
-                }
-                catch (Exception ex)
-                {
-                    //Todo logging
-                    await DeleteInvoice(result);
-                    throw ex;
-                }
-
-            }else if (job.JobType == ZohoInvoiceJobQueueType.SendFirstInvoiceMail)
-            {
-                SendFirstMailJob jobData = JsonConvert.DeserializeObject<SendFirstMailJob>(job.JsonData);
-                job.UpdatedAt = DateTime.UtcNow;
-                try
-                {
-                    bool result = await SendFristInvoiceMail(jobData.invoiceId, jobData.userEmail);
-                    if (result)
-                    {
-                        RecurringInvoice recurringInvoice =
-                            dbContext.RecurringInvoices.First(x => x.Id == jobData.recurringInvoiceId);
-                        recurringInvoice.AllTaskCompleted = true;
-                        job.IsSuccess = true;
-                        await dbContext.SaveChangesAsync();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    //Todo Logging
-                    throw ex;
                 }
             }
             else
