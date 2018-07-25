@@ -7,15 +7,14 @@ using RawRabbit.Operations.Publish.Context;
 
 namespace Empite.TribechimpService.PaymentService.Domain.Entity.InvoiceRelated
 {
-    public class InvoiceHistory
+    public class InvoiceHistory: BaseModel
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string Id { get; set; }
         public string ZohoInvoiceId { get; set; }
-        public Invoice RecurringInvoice { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public DateTime PaymentRecordedDate { get; set; }
+        public Purchese Purchese { get; set; }
+        public DateTime? PaymentRecordedDate { get; set; }
         public InvoiceStatus InvoiceStatus { get; set; }
     }
 

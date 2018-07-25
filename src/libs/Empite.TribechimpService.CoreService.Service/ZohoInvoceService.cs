@@ -84,7 +84,7 @@ namespace Empite.TribechimpService.PaymentService.Service
             }
         }
         /// <summary>
-        /// Root function for the Running saved invoice related jobs in the database
+        /// Root function for the Running saved purchese related jobs in the database
         /// </summary>
         /// <returns></returns>
         public async Task RunJobs()
@@ -303,11 +303,11 @@ namespace Empite.TribechimpService.PaymentService.Service
                 HttpResponseMessage response = await httpClient.DeleteAsync(url);
                 if (!response.IsSuccessStatusCode)
                 {
-                    throw new Exception($"Deleteing Invoice Failed. Recurring Invoice Id is => {invoiceId}");
+                    throw new Exception($"Deleteing Purchese Failed. Recurring Purchese Id is => {invoiceId}");
                 }
                 else
                 {
-                    //Todo Logging success delete of the Invoice deletion
+                    //Todo Logging success delete of the Purchese deletion
                     var byteArray = await response.Content.ReadAsByteArrayAsync();
                     var responseString = Encoding.UTF8.GetString(byteArray, 0, byteArray.Length);
                     RootZohoBasicResponse sendEmailZohoResponse =
@@ -315,7 +315,7 @@ namespace Empite.TribechimpService.PaymentService.Service
                     if (sendEmailZohoResponse.code != ZohoSuccessResponseCode)
                     {
                         throw new Exception(
-                            $"Deleteing Invoice Failed. Zoho Error code is => {sendEmailZohoResponse.code}, message is => {sendEmailZohoResponse.message}");
+                            $"Deleteing Purchese Failed. Zoho Error code is => {sendEmailZohoResponse.code}, message is => {sendEmailZohoResponse.message}");
                     }
                     
                 }
@@ -324,7 +324,7 @@ namespace Empite.TribechimpService.PaymentService.Service
             catch (Exception ex)
             {
                 //Todo Logging
-                throw new Exception($"Deleteing Recurring Invoice Failed. Recurring Invoice Id is => {invoiceId}");
+                throw new Exception($"Deleteing Recurring Purchese Failed. Recurring Purchese Id is => {invoiceId}");
             }
 
 
@@ -333,23 +333,23 @@ namespace Empite.TribechimpService.PaymentService.Service
         {
             //Add a History recorrd
             throw new NotImplementedException();
-            Invoice invoice = dbContext.Invoices.Include(x=> x.ZohoItems).First(x => x.Id == recurringInvoiceId);
+            Purchese purchese = dbContext.Purcheses.Include(x=> x.ZohoItems).First(x => x.Id == recurringInvoiceId);
             HttpClient httpClient = _httpClientFactory.CreateClient();
             httpClient.AddZohoAuthorizationHeader(await _zohoTokenService.GetOAuthToken());
             Uri url = new Uri(_settings.ZohoAccount.ApiBasePath).Append("invoices");
 
-            InvoiceContact contact = dbContext.InvoiceContacts.Include(x => x.Invoices).FirstOrDefault(x => x.Invoices.Contains(invoice));
+            InvoiceContact contact = dbContext.InvoiceContacts.Include(x => x.Invoices).FirstOrDefault(x => x.Invoices.Contains(purchese));
             
             if (contact == null)
                 throw new Exception($"User is not found in the database UserId is => {contact.UserId}");
             RootInvoiceCreateRequest invoiceCreateRequest = new RootInvoiceCreateRequest
             {
                 customer_id = contact.ZohoContactUserId,
-                line_items = invoice.ZohoItems.Select(x => new LineItemRecurringInvoiceCreateRequest { item_id = x.ZohoItem.ZohoItemId, quantity = x.Qty }).ToList(),
+                line_items = purchese.ZohoItems.Select(x => new LineItemRecurringInvoiceCreateRequest { item_id = x.ZohoItem.ZohoItemId, quantity = x.Qty }).ToList(),
                 payment_options = new PaymentOptionsRecurringInvoiceCreateRequest { payment_gateways = dbContext.ConfiguredPaymentGateways.Select(x => new PaymentGatewayRecurringInvoiceCreateRequest { configured = x.IsEnabled, gateway_name = x.GatewayName }).ToList() },
                 payment_terms = 0,
                 date = DateTime.UtcNow.AddDays(-1).ToString("yyyy-MM-dd"),
-                //recurring_invoice_id = recurringInvoice.RecurringInvoiceId
+                //recurring_invoice_id = purchese.RecurringInvoiceId
             };
 
 
@@ -377,7 +377,7 @@ namespace Empite.TribechimpService.PaymentService.Service
                     else
                     {
                         StringBuilder builder = new StringBuilder();
-                        builder.Append((string.IsNullOrWhiteSpace(itemCreateResponse.invoice.invoice_id) ? "Recurring Invoice id is empty. " : ""));
+                        builder.Append((string.IsNullOrWhiteSpace(itemCreateResponse.invoice.invoice_id) ? "Recurring Purchese id is empty. " : ""));
 
                         throw new Exception($"Response Filed came empty. Fields => {builder.ToString()}");
                     }
@@ -403,7 +403,7 @@ namespace Empite.TribechimpService.PaymentService.Service
                 job.UpdatedAt = DateTime.UtcNow;
                 if (contact == null)
                 {
-                    throw new Exception($"Invoice contact creating failed for job ID {job.Id}");
+                    throw new Exception($"Purchese contact creating failed for job ID {job.Id}");
                 }
                 else
                 {
@@ -620,7 +620,7 @@ namespace Empite.TribechimpService.PaymentService.Service
         }
 
         #endregion
-        #region Create Recurring Invoice
+        #region Create Recurring Purchese
 
         internal class LineItemRecurringInvoiceCreateRequest
         {

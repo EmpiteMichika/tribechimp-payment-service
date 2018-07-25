@@ -49,17 +49,17 @@ namespace Empite.TribechimpService.PaymentService.Service
             //        while (true)
             //        {
             //            await Task.Delay(10);
-            //            List<RecurringInvoice> recurringInvoices = dbContext.RecurringInvoices
+            //            List<purchese> recurringInvoices = dbContext.RecurringInvoices
             //                .Where(x =>( x.IsDue || x.UpdatedAt < DateTime.UtcNow.AddMonths(-1) ) && x.DeletedAt == null )
             //                .Skip((currentPage * ResultPerPage )- successCount).Take(ResultPerPage).ToList();
             //            if(!recurringInvoices.Any())
             //                break;
-            //            foreach (RecurringInvoice invoice in recurringInvoices)
+            //            foreach (purchese purchese in recurringInvoices)
             //            {
             //                //usin try catch to contine the flow
             //                try
             //                {
-            //                    bool res = await ProcessRecurringInvoice(invoice, dbContext);
+            //                    bool res = await ProcessRecurringInvoice(purchese, dbContext);
             //                    if (res)
             //                        successCount++;
             //                }
@@ -85,8 +85,8 @@ namespace Empite.TribechimpService.PaymentService.Service
             //}
             //isRunningCheckInvoicesDue = false;
         }
-        //Retrn True If the recurring invoice is changes to paid, so we can get the skkippin elements
-        private async Task<bool> CheckInvoice(Invoice invoice, ApplicationDbContext dbContext)
+        //Retrn True If the recurring purchese is changes to paid, so we can get the skkippin elements
+        private async Task<bool> CheckInvoice(Purchese purchese, ApplicationDbContext dbContext)
         {
             throw new NotImplementedException();
             //try
@@ -105,18 +105,18 @@ namespace Empite.TribechimpService.PaymentService.Service
             //        {
             //            if (enablePortalResponse.recurring_invoice.unpaid_child_invoices_count == 0)
             //            {
-            //                invoice.IsDue = false;
-            //                invoice.UpdatedAt = DateTime.UtcNow;
+            //                purchese.IsDue = false;
+            //                purchese.UpdatedAt = DateTime.UtcNow;
                            
             //                await dbContext.SaveChangesAsync();
             //                return true;
             //            }
             //            else
             //            {
-            //                if (!invoice.IsDue)
+            //                if (!purchese.IsDue)
             //                {
-            //                    invoice.IsDue = true;
-            //                    invoice.UpdatedAt = DateTime.UtcNow;
+            //                    purchese.IsDue = true;
+            //                    purchese.UpdatedAt = DateTime.UtcNow;
             //                    await dbContext.SaveChangesAsync();
             //                    return false;
             //                }

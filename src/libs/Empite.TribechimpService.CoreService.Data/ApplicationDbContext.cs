@@ -18,8 +18,8 @@ namespace Empite.TribechimpService.PaymentService.Data
             // Add your customizations after calling base.OnModelCreating(builder);
             builder.Entity<InvoiceContact>().HasIndex(x => x.ZohoContactUserId);
             builder.Entity<ZohoItem>().HasIndex(x => x.ZohoItemId);
-            builder.Entity<Invoice>().HasIndex(x => x.ReferenceGuid);
-
+            builder.Entity<Purchese>().HasIndex(x => x.ReferenceGuid);
+            builder.Entity<InvoiceHistory>().HasIndex(x => x.ZohoInvoiceId);
 
             builder.Entity<ZohoInvoiceJobQueue>().Property(x=> x.LastErrorMessage).HasColumnType("longtext");
             builder.Entity<ZohoInvoiceJobQueue>().Property(x => x.JsonData).HasColumnType("longtext");
@@ -27,13 +27,13 @@ namespace Empite.TribechimpService.PaymentService.Data
             builder.Entity<ZohoItemRecurringInvoice>().HasKey(x => new {x.RecurringInvoiceId, x.ZohoItemId});
             builder.Entity<ZohoItemRecurringInvoice>().HasOne(p => p.ZohoItem).WithMany(p => p.RecurringInvoices)
                 .HasForeignKey(p => p.ZohoItemId);
-            builder.Entity<ZohoItemRecurringInvoice>().HasOne(p => p.Invoice).WithMany(p => p.ZohoItems)
+            builder.Entity<ZohoItemRecurringInvoice>().HasOne(p => p.Purchese).WithMany(p => p.ZohoItems)
                 .HasForeignKey(p => p.RecurringInvoiceId);
 
         }
         public DbSet<ConfiguredPaymentGateway> ConfiguredPaymentGateways { get; set; }
         public DbSet<InvoiceContact> InvoiceContacts { get; set; }
-        public DbSet<Invoice> Invoices { get; set; }
+        public DbSet<Purchese> Purcheses { get; set; }
         public DbSet<ZohoItem> ZohoItems { get; set; }
         public DbSet<ZohoInvoiceJobQueue> ZohoInvoiceJobQueues { get; set; }
         public DbSet<InvoiceHistory> InvoiceHistories { get; set; }

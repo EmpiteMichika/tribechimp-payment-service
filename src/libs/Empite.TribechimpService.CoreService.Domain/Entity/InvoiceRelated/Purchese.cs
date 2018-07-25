@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Empite.TribechimpService.PaymentService.Domain.Entity.InvoiceRelated
 {
-    public class Invoice: BaseModel
+    public class Purchese: BaseModel
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

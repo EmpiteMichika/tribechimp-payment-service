@@ -86,9 +86,10 @@ namespace Empite.TribechimpService.PaymentService.Controllers
         {
             try
             {
-                Invoice recurringInvoice = await _dbContext.Invoices.FirstAsync(x => x.ReferenceGuid.ToString() == guid);
+                Purchese purchese = await _dbContext.Purcheses.FirstAsync(x => x.ReferenceGuid.ToString() == guid);
+                return Ok();
                 //status is 0 if its paid, 1 if its unpaid       
-                return Ok((recurringInvoice.IsDue)?(new {status = 1}): new { status = 0 });
+                //return Ok((purchese.IsDue)?(new {status = 1}): new { status = 0 });
             }
             catch (Exception e)
             {
