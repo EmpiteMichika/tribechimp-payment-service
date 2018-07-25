@@ -35,110 +35,112 @@ namespace Empite.TribechimpService.PaymentService.Service
         [AutomaticRetry(Attempts = 0, LogEvents = true, OnAttemptsExceeded = AttemptsExceededAction.Delete)]
         public async Task CheckInvoicesDueAsync()
         {
-            if (isRunningCheckInvoicesDue)
-                return;
-            isRunningCheckInvoicesDue = true;
-            try
-            {
+            throw new NotImplementedException();
+            //if (isRunningCheckInvoicesDue)
+            //    return;
+            //isRunningCheckInvoicesDue = true;
+            //try
+            //{
                 
-                using (ApplicationDbContext dbContext = _services.CreateScope().ServiceProvider.GetRequiredService<ApplicationDbContext>())
-                {
-                    int currentPage = 0;
-                    int successCount = 0;
-                    while (true)
-                    {
-                        await Task.Delay(10);
-                        List<RecurringInvoice> recurringInvoices = dbContext.RecurringInvoices
-                            .Where(x =>( x.IsDue || x.UpdatedAt < DateTime.UtcNow.AddMonths(-1) ) && x.DeletedAt == null )
-                            .Skip((currentPage * ResultPerPage )- successCount).Take(ResultPerPage).ToList();
-                        if(!recurringInvoices.Any())
-                            break;
-                        foreach (RecurringInvoice recurringInvoice in recurringInvoices)
-                        {
-                            //usin try catch to contine the flow
-                            try
-                            {
-                                bool res = await ProcessRecurringInvoice(recurringInvoice, dbContext);
-                                if (res)
-                                    successCount++;
-                            }
-                            catch (Exception ex)
-                            {
-                                //Todo Logging
+            //    using (ApplicationDbContext dbContext = _services.CreateScope().ServiceProvider.GetRequiredService<ApplicationDbContext>())
+            //    {
+            //        int currentPage = 0;
+            //        int successCount = 0;
+            //        while (true)
+            //        {
+            //            await Task.Delay(10);
+            //            List<RecurringInvoice> recurringInvoices = dbContext.RecurringInvoices
+            //                .Where(x =>( x.IsDue || x.UpdatedAt < DateTime.UtcNow.AddMonths(-1) ) && x.DeletedAt == null )
+            //                .Skip((currentPage * ResultPerPage )- successCount).Take(ResultPerPage).ToList();
+            //            if(!recurringInvoices.Any())
+            //                break;
+            //            foreach (RecurringInvoice invoice in recurringInvoices)
+            //            {
+            //                //usin try catch to contine the flow
+            //                try
+            //                {
+            //                    bool res = await ProcessRecurringInvoice(invoice, dbContext);
+            //                    if (res)
+            //                        successCount++;
+            //                }
+            //                catch (Exception ex)
+            //                {
+            //                    //Todo Logging
 
-                            }
+            //                }
                            
 
-                        }
+            //            }
 
-                        currentPage++;
-                    }
+            //            currentPage++;
+            //        }
                     
 
-                }
-            }
-            catch (Exception ex)
-            {
-                isRunningCheckInvoicesDue = false;
-                //Todo Logger
-            }
-            isRunningCheckInvoicesDue = false;
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    isRunningCheckInvoicesDue = false;
+            //    //Todo Logger
+            //}
+            //isRunningCheckInvoicesDue = false;
         }
         //Retrn True If the recurring invoice is changes to paid, so we can get the skkippin elements
-        private async Task<bool> ProcessRecurringInvoice(RecurringInvoice recurringInvoice, ApplicationDbContext dbContext)
+        private async Task<bool> CheckInvoice(Invoice invoice, ApplicationDbContext dbContext)
         {
-            try
-            {
-                HttpClient httpClient = _httpClientFactory.CreateClient();
-                httpClient.AddZohoAuthorizationHeader(_zohoTokenService.GetOAuthToken().Result);
-                Uri url = new Uri(_settings.ZohoAccount.ApiBasePath).Append("recurringinvoices", recurringInvoice.RecurringInvoiceId);
-                HttpResponseMessage response = await httpClient.GetAsync(url);
-                if (response.IsSuccessStatusCode)
-                {
-                    var byteArray = await response.Content.ReadAsByteArrayAsync();
-                    var responseString = Encoding.UTF8.GetString(byteArray, 0, byteArray.Length);
-                    ZohoInvoceService.RootRecurringPaymentCheckInvoiceClass enablePortalResponse =
-                        JsonConvert.DeserializeObject<ZohoInvoceService.RootRecurringPaymentCheckInvoiceClass>(responseString);
-                    if (enablePortalResponse.code == ZohoSuccessResponseCode)
-                    {
-                        if (enablePortalResponse.recurring_invoice.unpaid_child_invoices_count == 0)
-                        {
-                            recurringInvoice.IsDue = false;
-                            recurringInvoice.UpdatedAt = DateTime.UtcNow;
+            throw new NotImplementedException();
+            //try
+            //{
+            //    HttpClient httpClient = _httpClientFactory.CreateClient();
+            //    httpClient.AddZohoAuthorizationHeader(_zohoTokenService.GetOAuthToken().Result);
+            //    Uri url = new Uri(_settings.ZohoAccount.ApiBasePath).Append("recurringinvoices", );
+            //    HttpResponseMessage response = await httpClient.GetAsync(url);
+            //    if (response.IsSuccessStatusCode)
+            //    {
+            //        var byteArray = await response.Content.ReadAsByteArrayAsync();
+            //        var responseString = Encoding.UTF8.GetString(byteArray, 0, byteArray.Length);
+            //        ZohoInvoceService.RootRecurringPaymentCheckInvoiceClass enablePortalResponse =
+            //            JsonConvert.DeserializeObject<ZohoInvoceService.RootRecurringPaymentCheckInvoiceClass>(responseString);
+            //        if (enablePortalResponse.code == ZohoSuccessResponseCode)
+            //        {
+            //            if (enablePortalResponse.recurring_invoice.unpaid_child_invoices_count == 0)
+            //            {
+            //                invoice.IsDue = false;
+            //                invoice.UpdatedAt = DateTime.UtcNow;
                            
-                            await dbContext.SaveChangesAsync();
-                            return true;
-                        }
-                        else
-                        {
-                            if (!recurringInvoice.IsDue)
-                            {
-                                recurringInvoice.IsDue = true;
-                                recurringInvoice.UpdatedAt = DateTime.UtcNow;
-                                await dbContext.SaveChangesAsync();
-                                return false;
-                            }
-                        }
-                    }
-                    else
-                    {
+            //                await dbContext.SaveChangesAsync();
+            //                return true;
+            //            }
+            //            else
+            //            {
+            //                if (!invoice.IsDue)
+            //                {
+            //                    invoice.IsDue = true;
+            //                    invoice.UpdatedAt = DateTime.UtcNow;
+            //                    await dbContext.SaveChangesAsync();
+            //                    return false;
+            //                }
+            //            }
+            //        }
+            //        else
+            //        {
 
-                        throw new Exception($"Zoho Portle Enable failed. Respond with code {enablePortalResponse.code}, Message is => {enablePortalResponse.message}");
-                    }
-                }
-                else
-                {
-                    throw new Exception($"Zoho Api call failed Erro code is => {response.StatusCode}. Reason sent by server is => {response.ReasonPhrase}.");
-                }
-            }
-            catch (Exception ex)
-            {
-                //Todo Logging
-                return false;
-            }
+            //            throw new Exception($"Zoho Portle Enable failed. Respond with code {enablePortalResponse.code}, Message is => {enablePortalResponse.message}");
+            //        }
+            //    }
+            //    else
+            //    {
+            //        throw new Exception($"Zoho Api call failed Erro code is => {response.StatusCode}. Reason sent by server is => {response.ReasonPhrase}.");
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    //Todo Logging
+            //    return false;
+            //}
 
+            //return false;
             return false;
-
         }
     }
 }

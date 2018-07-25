@@ -21,7 +21,6 @@ namespace Empite.TribechimpService.PaymentService.Domain.Entity.InvoiceRelated
     public enum ZohoInvoiceJobQueueType
     {
         CreateContact = 1,
-        EnableClientPortle = 2,
         EnablePaymentReminders = 3,
         CreateItem = 4,
         CreateInvoice = 6

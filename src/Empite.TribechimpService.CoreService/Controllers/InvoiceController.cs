@@ -40,29 +40,7 @@ namespace Empite.TribechimpService.PaymentService.Controllers
             }
         }
 
-        [HttpPost("enableClientPortle/{userId}")]
-        public async Task<IActionResult> EnableClientPortle(string userId = null)
-        {
-            try
-            {
-                if (string.IsNullOrWhiteSpace(userId))
-                {
-                    return BadRequest();
-                }
-                else
-                {
-                    await _zohoInvoceService.AddJob(userId, ZohoInvoiceJobQueueType.EnableClientPortle);
-                }
-
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                //Todo Logging
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Exception is => {e.Message}, stacktrace => {e.StackTrace}");
-            }
-        }
+        
 
         [HttpGet("runjobs")]
         public async Task<IActionResult> RunJobs()
@@ -92,7 +70,7 @@ namespace Empite.TribechimpService.PaymentService.Controllers
         {
             try
             {
-                await _zohoInvoceService.AddJob(model, ZohoInvoiceJobQueueType.CreateRecurringInvoice);
+                await _zohoInvoceService.AddJob(model, ZohoInvoiceJobQueueType.CreateInvoice);
                 return Ok();
             }
             catch (Exception e)
@@ -108,7 +86,7 @@ namespace Empite.TribechimpService.PaymentService.Controllers
         {
             try
             {
-                RecurringInvoice recurringInvoice = await _dbContext.RecurringInvoices.FirstAsync(x => x.ReferenceGuid.ToString() == guid);
+                Invoice recurringInvoice = await _dbContext.Invoices.FirstAsync(x => x.ReferenceGuid.ToString() == guid);
                 //status is 0 if its paid, 1 if its unpaid       
                 return Ok((recurringInvoice.IsDue)?(new {status = 1}): new { status = 0 });
             }

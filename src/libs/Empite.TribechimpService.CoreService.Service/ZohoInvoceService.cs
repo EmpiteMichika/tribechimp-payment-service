@@ -60,14 +60,6 @@ namespace Empite.TribechimpService.PaymentService.Service
                     }
                     job.JsonData = JsonConvert.SerializeObject(DataObject);
                 }
-                else if (JobType == ZohoInvoiceJobQueueType.EnableClientPortle)
-                {
-                    if (DataObject?.GetType() != typeof(string))
-                    {
-                        throw new Exception("Invalid data type for the DataObject parameter, it should be a string");
-                    }
-                    job.JsonData = DataObject;
-                }
                 else if (JobType == ZohoInvoiceJobQueueType.EnablePaymentReminders)
                 {
                     if (DataObject?.GetType() != typeof(string))
@@ -214,51 +206,6 @@ namespace Empite.TribechimpService.PaymentService.Service
                 throw new Exception($"Zoho Api call failed Erro code is => {response.StatusCode}. Reason sent by server is => {response.ReasonPhrase}.");
             }
         }
-
-        private async Task<bool> EnableClientProtle(InvoiceContact contactDetails)
-        {
-            HttpClient httpClient = _httpClientFactory.CreateClient();
-            httpClient.AddZohoAuthorizationHeader(_zohoTokenService.GetOAuthToken().Result);
-            Uri url = new Uri(_settings.ZohoAccount.ApiBasePath).Append("contacts", contactDetails.ZohoContactUserId, "portal", "enable");
-
-            ContactPersonPortalRoot contactPersonPortalRoot = new ContactPersonPortalRoot
-            {
-                contact_persons = new List<ContactPersonPortal>
-                    {
-                        new ContactPersonPortal
-                        {
-                            contact_person_id = contactDetails.ZohoPrimaryContactId
-                        }
-                    }
-            };
-            string jsonRequestBody = JsonConvert.SerializeObject(contactPersonPortalRoot);
-            MultipartFormDataContent form = new MultipartFormDataContent();
-            StringContent content = new StringContent(jsonRequestBody);
-            form.Add(content, "JSONString");
-            HttpResponseMessage response = await httpClient.PostAsync(url, form);
-            if (response.IsSuccessStatusCode)
-            {
-                var byteArray = await response.Content.ReadAsByteArrayAsync();
-                var responseString = Encoding.UTF8.GetString(byteArray, 0, byteArray.Length);
-                RootZohoBasicResponse enablePortalResponse =
-                    JsonConvert.DeserializeObject<RootZohoBasicResponse>(responseString);
-                if (enablePortalResponse.code == ZohoSuccessResponseCode)
-                {
-                    return true;
-                }
-                else
-                {
-
-                    throw new Exception($"Zoho Portle Enable failed. Respond with code {enablePortalResponse.code}, Message is => {enablePortalResponse.message}");
-                }
-            }
-            else
-            {
-                throw new Exception($"Zoho Api call failed Erro code is => {response.StatusCode}. Reason sent by server is => {response.ReasonPhrase}.");
-            }
-
-        }
-
         private async Task<bool> EnablePaymentReminder(InvoiceContact contactDetails)
         {
             HttpClient httpClient = _httpClientFactory.CreateClient();
@@ -384,23 +331,25 @@ namespace Empite.TribechimpService.PaymentService.Service
         }
         private async Task<string> CreateInvoice(string recurringInvoiceId, ApplicationDbContext dbContext)
         {
-            RecurringInvoice recurringInvoice = dbContext.RecurringInvoices.Include(x=> x.ZohoItems).First(x => x.Id == recurringInvoiceId);
+            //Add a History recorrd
+            throw new NotImplementedException();
+            Invoice invoice = dbContext.Invoices.Include(x=> x.ZohoItems).First(x => x.Id == recurringInvoiceId);
             HttpClient httpClient = _httpClientFactory.CreateClient();
             httpClient.AddZohoAuthorizationHeader(await _zohoTokenService.GetOAuthToken());
             Uri url = new Uri(_settings.ZohoAccount.ApiBasePath).Append("invoices");
 
-            InvoiceContact contact = dbContext.InvoiceContacts.Include(x => x.RecurringInvoices).FirstOrDefault(x => x.RecurringInvoices.Contains(recurringInvoice));
+            InvoiceContact contact = dbContext.InvoiceContacts.Include(x => x.Invoices).FirstOrDefault(x => x.Invoices.Contains(invoice));
             
             if (contact == null)
                 throw new Exception($"User is not found in the database UserId is => {contact.UserId}");
             RootInvoiceCreateRequest invoiceCreateRequest = new RootInvoiceCreateRequest
             {
                 customer_id = contact.ZohoContactUserId,
-                line_items = recurringInvoice.ZohoItems.Select(x => new LineItemRecurringInvoiceCreateRequest { item_id = x.ZohoItem.ZohoItemId, quantity = x.Qty }).ToList(),
+                line_items = invoice.ZohoItems.Select(x => new LineItemRecurringInvoiceCreateRequest { item_id = x.ZohoItem.ZohoItemId, quantity = x.Qty }).ToList(),
                 payment_options = new PaymentOptionsRecurringInvoiceCreateRequest { payment_gateways = dbContext.ConfiguredPaymentGateways.Select(x => new PaymentGatewayRecurringInvoiceCreateRequest { configured = x.IsEnabled, gateway_name = x.GatewayName }).ToList() },
                 payment_terms = 0,
                 date = DateTime.UtcNow.AddDays(-1).ToString("yyyy-MM-dd"),
-                recurring_invoice_id = recurringInvoice.RecurringInvoiceId
+                //recurring_invoice_id = recurringInvoice.RecurringInvoiceId
             };
 
 
@@ -462,23 +411,6 @@ namespace Empite.TribechimpService.PaymentService.Service
                     job.IsSuccess = true;
                     await _dbContext.SaveChangesAsync();
                 }
-            }
-            else if (job.JobType == ZohoInvoiceJobQueueType.EnableClientPortle)
-            {
-                var UserId = GetInvoceContactByUserid(job, out var contact, _dbContext);
-
-                bool result =await EnableClientProtle(contact);
-                job.UpdatedAt = DateTime.UtcNow;
-                if (result)
-                {
-                    job.IsSuccess = true;
-                }
-                else
-                {
-                    throw new Exception($"Enable Portle Access is faild for the user {UserId} => Job Id {job.Id}");
-                }
-
-                await _dbContext.SaveChangesAsync();
             }
             else if (job.JobType == ZohoInvoiceJobQueueType.EnablePaymentReminders)
             {

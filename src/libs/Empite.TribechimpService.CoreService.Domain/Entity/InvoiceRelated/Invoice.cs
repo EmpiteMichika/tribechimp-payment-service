@@ -6,17 +6,30 @@ using System.Text;
 
 namespace Empite.TribechimpService.PaymentService.Domain.Entity.InvoiceRelated
 {
-    public class RecurringInvoice: BaseModel
+    public class Invoice: BaseModel
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string Id { get; set; }
-        public string RecurringInvoiceId { get; set; }
-        public string RecurringInvoiceName { get; set; }
+        public string InvoiceName { get; set; }
         public InvoiceContact InvoiceContact { get; set; }
         public List<ZohoItemRecurringInvoice> ZohoItems { get; set; }
-        public bool IsDue { get; set; }
-        public bool AllTaskCompleted { get; set; }
         public Guid? ReferenceGuid { get; set; }
+        public List<InvoiceHistory> InvoiceHistories { get; set; }
+        public InvoicingType InvoiceType { get; set; } = InvoicingType.Recurring;
+        public InvoicingStatus InvoiceStatus { get; set; } = InvoicingStatus.Active;
+    }
+
+    public enum InvoicingType
+    {
+        Recurring=1,
+        Temporary=2
+    }
+
+    public enum InvoicingStatus
+    {
+        Active=1,
+        Canceled=2,
+        Paused = 3
     }
 }
