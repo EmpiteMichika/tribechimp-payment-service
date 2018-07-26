@@ -58,7 +58,7 @@ namespace Empite.TribechimpService.PaymentService.Controllers
         public async Task<IActionResult> TestRAbbitMq()
         {
             var messsage = "This is from core service";
-            await _client.PublishAsync(new JiraRequest { Messsage = messsage });
+           // await _client.PublishAsync(new JiraRequest { Messsage = messsage });
             return Ok();
         }
     }

@@ -1,5 +1,5 @@
-﻿
-using System;
+﻿using System;
+using System.Data;
 using System.IO;
 using AutoMapper;
 using Empite.Core.Infrastructure.Constant;
@@ -7,6 +7,7 @@ using Empite.Core.Middleware.Hmac;
 using Empite.Core.Resilience;
 using Empite.PaymentService.Data;
 using Empite.PaymentService.Models.Configs;
+using Empite.PaymentService.Services.PaymentService;
 using Empite.TribechimpService.PaymentService.Data;
 using Empite.TribechimpService.PaymentService.Domain.Interface.Service;
 using Empite.TribechimpService.PaymentService.Infrastructure.Filter;
@@ -15,6 +16,7 @@ using Hangfire;
 using Hangfire.MySql.Core;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.EntityFrameworkCore;
@@ -38,7 +40,7 @@ using Swashbuckle.AspNetCore.Swagger;
 using HangfireAuthorizationFilter = Empite.PaymentService.Infrastructure.Filter.HangfireAuthorizationFilter;
 using MessageContext = Empite.PaymentService.Models.RabbitMq.MessageContext;
 
-namespace Empite.TribechimpService.PaymentService.Infrastructure
+namespace Empite.PaymentService.Infrastructure
 {
     public static class ApplicationBuilderExtension
     {

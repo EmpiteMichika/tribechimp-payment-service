@@ -1,20 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using Empite.PaymentService.Data;
 using Empite.PaymentService.Data.Entity.InvoiceRelated;
-using Empite.TribechimpService.Core;
-using Empite.TribechimpService.PaymentService.Data;
+using Empite.PaymentService.Models.Configs;
 using Empite.TribechimpService.PaymentService.Domain.Interface.Service;
 using Hangfire;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
 
-namespace Empite.TribechimpService.PaymentService.Service
+namespace Empite.PaymentService.Services.PaymentService
 {
     public class ZohoInvoiceDueCheckerSingleton: IZohoInvoiceDueCheckerSingleton
     {

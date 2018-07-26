@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Empite.PaymentService.Data;
 using Empite.PaymentService.Data.Entity.InvoiceRelated;
-using Empite.TribechimpService.PaymentService.Data;
 using Empite.TribechimpService.PaymentService.Domain.Dto;
 using Empite.TribechimpService.PaymentService.Domain.Interface.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace Empite.TribechimpService.PaymentService.Controllers
+namespace Empite.PaymentService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
