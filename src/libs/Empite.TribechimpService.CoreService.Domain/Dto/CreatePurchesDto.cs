@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Empite.TribechimpService.PaymentService.Domain.Dto
 {
-    public class CreateRecurringInvoiceDto
+    public class CreatePurchesDto
     {
         public string UserId { get; set; }
         public List<RecurringInvoiceItemDto> Items { get; set; }

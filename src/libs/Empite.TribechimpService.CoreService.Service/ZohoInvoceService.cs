@@ -74,11 +74,11 @@ namespace Empite.TribechimpService.PaymentService.Service
                         throw new Exception("Invalid data type for the DataObject parameter, it should be created from CreateZohoItemDto class");
                     }
                     job.JsonData = JsonConvert.SerializeObject(DataObject);
-                }else if (JobType == ZohoInvoiceJobQueueType.CreateInvoice)
+                }else if (JobType == ZohoInvoiceJobQueueType.CreateFirstInvoice)
                 {
-                    if (DataObject?.GetType() != typeof(Domain.Dto.CreateRecurringInvoiceDto))
+                    if (DataObject?.GetType() != typeof(Domain.Dto.CreatePurchesDto))
                     {
-                        throw new Exception("Invalid data type for the DataObject parameter, it should be created from CreateRecurringInvoiceDto class");
+                        throw new Exception("Invalid data type for the DataObject parameter, it should be created from CreatePurchesDto class");
                     }
                     job.JsonData = JsonConvert.SerializeObject(DataObject);
                 }
@@ -336,71 +336,71 @@ namespace Empite.TribechimpService.PaymentService.Service
 
 
         }
-        private async Task<string> CreateInvoice(string recurringInvoiceId, ApplicationDbContext dbContext)
-        {
-            //Add a History recorrd
-            throw new NotImplementedException();
-            Purchese purchese = dbContext.Purcheses.Include(x=> x.ZohoItems).First(x => x.Id == recurringInvoiceId);
-            HttpClient httpClient = _httpClientFactory.CreateClient();
-            httpClient.AddZohoAuthorizationHeader(await _zohoTokenService.GetOAuthToken());
-            Uri url = new Uri(_settings.ZohoAccount.ApiBasePath).Append("invoices");
-
-            InvoiceContact contact = dbContext.InvoiceContacts.Include(x => x.Invoices).FirstOrDefault(x => x.Invoices.Contains(purchese));
+        //private async Task<string> CreatePurchese(CreatePurchesDto model, ApplicationDbContext dbContext)
+        //{
             
-            if (contact == null)
-                throw new Exception($"User is not found in the database UserId is => {contact.UserId}");
-            RootInvoiceCreateRequest invoiceCreateRequest = new RootInvoiceCreateRequest
-            {
-                customer_id = contact.ZohoContactUserId,
-                line_items = purchese.ZohoItems.Select(x => new LineItemRecurringInvoiceCreateRequest { item_id = x.ZohoItem.ZohoItemId, quantity = x.Qty }).ToList(),
-                payment_options = new PaymentOptionsRecurringInvoiceCreateRequest { payment_gateways = dbContext.ConfiguredPaymentGateways.Select(x => new PaymentGatewayRecurringInvoiceCreateRequest { configured = x.IsEnabled, gateway_name = x.GatewayName }).ToList() },
-                payment_terms = 0,
-                date = DateTime.UtcNow.AddDays(-1).ToString("yyyy-MM-dd"),
-                //recurring_invoice_id = purchese.RecurringInvoiceId
-            };
+            
+        //    HttpClient httpClient = _httpClientFactory.CreateClient();
+        //    httpClient.AddZohoAuthorizationHeader(await _zohoTokenService.GetOAuthToken());
+        //    Uri url = new Uri(_settings.ZohoAccount.ApiBasePath).Append("invoices");
+
+        //    InvoiceContact contact = dbContext.InvoiceContacts.First(x => x.UserId == model.UserId);
+            
+        //    if (contact == null)
+        //        throw new Exception($"User is not found in the database UserId is => {contact.UserId}");
+        //    RootInvoiceCreateRequest invoiceCreateRequest = new RootInvoiceCreateRequest
+        //    {
+        //        customer_id = contact.ZohoContactUserId,
+        //        line_items = model.Items. dbContext.ZohoItems.Where().Select(x => new LineItemRecurringInvoiceCreateRequest { item_id = x.ZohoItem.ZohoItemId, quantity = x.Qty }).ToList(),
+        //        payment_options = new PaymentOptionsRecurringInvoiceCreateRequest { payment_gateways = dbContext.ConfiguredPaymentGateways.Select(x => new PaymentGatewayRecurringInvoiceCreateRequest { configured = x.IsEnabled, gateway_name = x.GatewayName }).ToList() },
+        //        payment_terms = 0,
+        //        date = DateTime.UtcNow.AddDays(-1).ToString("yyyy-MM-dd"),
+        //        //recurring_invoice_id = purchese.RecurringInvoiceId
+        //    };
 
 
-            string jsonString = JsonConvert.SerializeObject(invoiceCreateRequest);
-            MultipartFormDataContent form = new MultipartFormDataContent();
-            StringContent content = new StringContent(jsonString);
-            form.Add(content, "JSONString");
-            HttpResponseMessage response = await httpClient.PostAsync(url, form);
-            if (response.StatusCode == HttpStatusCode.Created)
-            {
-                var byteArray = await response.Content.ReadAsByteArrayAsync();
-                var responseString = Encoding.UTF8.GetString(byteArray, 0, byteArray.Length);
-                RootInvoiceResponse itemCreateResponse =
-                    JsonConvert.DeserializeObject<RootInvoiceResponse>(responseString);
-                if (itemCreateResponse.code == ZohoSuccessResponseCode)
-                {
-                    if (!string.IsNullOrWhiteSpace(itemCreateResponse.invoice.invoice_id))
-                    {
+        //    string jsonString = JsonConvert.SerializeObject(invoiceCreateRequest);
+        //    MultipartFormDataContent form = new MultipartFormDataContent();
+        //    StringContent content = new StringContent(jsonString);
+        //    form.Add(content, "JSONString");
+        //    HttpResponseMessage response = await httpClient.PostAsync(url, form);
+        //    if (response.StatusCode == HttpStatusCode.Created)
+        //    {
+        //        var byteArray = await response.Content.ReadAsByteArrayAsync();
+        //        var responseString = Encoding.UTF8.GetString(byteArray, 0, byteArray.Length);
+        //        RootInvoiceResponse itemCreateResponse =
+        //            JsonConvert.DeserializeObject<RootInvoiceResponse>(responseString);
+        //        if (itemCreateResponse.code == ZohoSuccessResponseCode)
+        //        {
+        //            if (!string.IsNullOrWhiteSpace(itemCreateResponse.invoice.invoice_id))
+        //            {
                         
                         
 
-                        return itemCreateResponse.invoice.invoice_id;
+        //                return itemCreateResponse.invoice.invoice_id;
 
-                    }
-                    else
-                    {
-                        StringBuilder builder = new StringBuilder();
-                        builder.Append((string.IsNullOrWhiteSpace(itemCreateResponse.invoice.invoice_id) ? "Recurring Purchese id is empty. " : ""));
+        //            }
+        //            else
+        //            {
+        //                StringBuilder builder = new StringBuilder();
+        //                builder.Append((string.IsNullOrWhiteSpace(itemCreateResponse.invoice.invoice_id) ? "Recurring Purchese id is empty. " : ""));
 
-                        throw new Exception($"Response Filed came empty. Fields => {builder.ToString()}");
-                    }
+        //                throw new Exception($"Response Filed came empty. Fields => {builder.ToString()}");
+        //            }
 
-                }
-                else
-                {
-                    throw new Exception($"Zoho returns a erro code. Erro code is => {itemCreateResponse.code}. Message is => {itemCreateResponse.message}.");
+        //        }
+        //        else
+        //        {
+        //            throw new Exception($"Zoho returns a erro code. Erro code is => {itemCreateResponse.code}. Message is => {itemCreateResponse.message}.");
 
-                }
-            }
-            else
-            {
-                throw new Exception($"Zoho Api call failed Erro code is => {response.StatusCode}. Reason sent by server is => {response.ReasonPhrase}.");
-            }
-        }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        throw new Exception($"Zoho Api call failed Erro code is => {response.StatusCode}. Reason sent by server is => {response.ReasonPhrase}.");
+        //    }
+        //    throw new NotImplementedException();
+        //}
         private async Task<bool> JobRunner(ZohoInvoiceJobQueue job, ApplicationDbContext _dbContext)
         {
             if (job.JobType == ZohoInvoiceJobQueueType.CreateContact)
@@ -461,7 +461,7 @@ namespace Empite.TribechimpService.PaymentService.Service
 
         //private async Task CreateInvoiceWrapper(string recurringInvoiceId, ApplicationDbContext dbContext)
         //{
-        //    bool IsSuccess = await CreateInvoice(recurringInvoiceId, dbContext);
+        //    bool IsSuccess = await CreateFirstInvoice(recurringInvoiceId, dbContext);
         //}
         private string GetInvoceContactByUserid(ZohoInvoiceJobQueue job, out InvoiceContact contact, ApplicationDbContext _dbContext)
         {
@@ -474,7 +474,6 @@ namespace Empite.TribechimpService.PaymentService.Service
 
             return UserId;
         }
-
 
         #region response classes
         internal class RootZohoBasicResponse

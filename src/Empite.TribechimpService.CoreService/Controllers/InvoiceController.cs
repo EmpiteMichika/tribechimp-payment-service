@@ -66,11 +66,11 @@ namespace Empite.TribechimpService.PaymentService.Controllers
         }
 
         [HttpPost("createRecurringInvoice")]
-        public async Task<IActionResult> CreateRecurringInvoice([FromBody]CreateRecurringInvoiceDto model)
+        public async Task<IActionResult> CreateRecurringInvoice([FromBody]CreatePurchesDto model)
         {
             try
             {
-                await _zohoInvoceService.AddJob(model, ZohoInvoiceJobQueueType.CreateInvoice);
+                await _zohoInvoceService.AddJob(model, ZohoInvoiceJobQueueType.CreateFirstInvoice);
                 return Ok();
             }
             catch (Exception e)
