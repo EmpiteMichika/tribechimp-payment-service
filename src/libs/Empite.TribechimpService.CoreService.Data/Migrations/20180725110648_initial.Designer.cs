@@ -201,7 +201,7 @@ namespace Empite.TribechimpService.PaymentService.Data.Migrations
                     b.ToTable("ZohoItems");
                 });
 
-            modelBuilder.Entity("Empite.TribechimpService.PaymentService.Domain.Entity.InvoiceRelated.ZohoItemRecurringInvoice", b =>
+            modelBuilder.Entity("Empite.TribechimpService.PaymentService.Domain.Entity.InvoiceRelated.ZohoItem_Purchese", b =>
                 {
                     b.Property<string>("RecurringInvoiceId");
 
@@ -213,7 +213,7 @@ namespace Empite.TribechimpService.PaymentService.Data.Migrations
 
                     b.HasIndex("ZohoItemId");
 
-                    b.ToTable("ZohoItemRecurringInvoice");
+                    b.ToTable("ZohoItem_Purchese");
                 });
 
             modelBuilder.Entity("Empite.TribechimpService.PaymentService.Domain.Entity.InvoiceRelated.InvoiceHistory", b =>
@@ -230,7 +230,7 @@ namespace Empite.TribechimpService.PaymentService.Data.Migrations
                         .HasForeignKey("InvoiceContactUserId");
                 });
 
-            modelBuilder.Entity("Empite.TribechimpService.PaymentService.Domain.Entity.InvoiceRelated.ZohoItemRecurringInvoice", b =>
+            modelBuilder.Entity("Empite.TribechimpService.PaymentService.Domain.Entity.InvoiceRelated.ZohoItem_Purchese", b =>
                 {
                     b.HasOne("Empite.TribechimpService.PaymentService.Domain.Entity.InvoiceRelated.Purchese", "Purchese")
                         .WithMany("ZohoItems")

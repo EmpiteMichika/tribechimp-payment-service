@@ -24,10 +24,10 @@ namespace Empite.TribechimpService.PaymentService.Data
             builder.Entity<ZohoInvoiceJobQueue>().Property(x=> x.LastErrorMessage).HasColumnType("longtext");
             builder.Entity<ZohoInvoiceJobQueue>().Property(x => x.JsonData).HasColumnType("longtext");
 
-            builder.Entity<ZohoItemRecurringInvoice>().HasKey(x => new {x.RecurringInvoiceId, x.ZohoItemId});
-            builder.Entity<ZohoItemRecurringInvoice>().HasOne(p => p.ZohoItem).WithMany(p => p.RecurringInvoices)
+            builder.Entity<ZohoItem_Purchese>().HasKey(x => new {x.RecurringInvoiceId, x.ZohoItemId});
+            builder.Entity<ZohoItem_Purchese>().HasOne(p => p.ZohoItem).WithMany(p => p.RecurringInvoices)
                 .HasForeignKey(p => p.ZohoItemId);
-            builder.Entity<ZohoItemRecurringInvoice>().HasOne(p => p.Purchese).WithMany(p => p.ZohoItems)
+            builder.Entity<ZohoItem_Purchese>().HasOne(p => p.Purchese).WithMany(p => p.ZohoItems)
                 .HasForeignKey(p => p.RecurringInvoiceId);
 
         }

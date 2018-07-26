@@ -140,7 +140,7 @@ namespace Empite.TribechimpService.PaymentService.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ZohoItemRecurringInvoice",
+                name: "ZohoItem_Purchese",
                 columns: table => new
                 {
                     RecurringInvoiceId = table.Column<string>(nullable: false),
@@ -191,7 +191,7 @@ namespace Empite.TribechimpService.PaymentService.Data.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_ZohoItemRecurringInvoice_ZohoItemId",
-                table: "ZohoItemRecurringInvoice",
+                table: "ZohoItem_Purchese",
                 column: "ZohoItemId");
 
             migrationBuilder.CreateIndex(
@@ -212,7 +212,7 @@ namespace Empite.TribechimpService.PaymentService.Data.Migrations
                 name: "ZohoInvoiceJobQueues");
 
             migrationBuilder.DropTable(
-                name: "ZohoItemRecurringInvoice");
+                name: "ZohoItem_Purchese");
 
             migrationBuilder.DropTable(
                 name: "Purcheses");

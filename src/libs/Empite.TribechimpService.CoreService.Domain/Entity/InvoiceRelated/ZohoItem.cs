@@ -15,6 +15,6 @@ namespace Empite.TribechimpService.PaymentService.Domain.Entity.InvoiceRelated
         public string Description { get; set; }
         public double Rate { get; set; }
         public string ZohoItemId { get; set; }
-        public List<ZohoItemRecurringInvoice> RecurringInvoices { get; set; }
+        public List<ZohoItem_Purchese> RecurringInvoices { get; set; }
     }
 }

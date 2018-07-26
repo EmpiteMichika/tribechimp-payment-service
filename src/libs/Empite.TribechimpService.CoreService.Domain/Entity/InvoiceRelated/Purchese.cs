@@ -13,7 +13,7 @@ namespace Empite.TribechimpService.PaymentService.Domain.Entity.InvoiceRelated
         public string Id { get; set; }
         public string InvoiceName { get; set; }
         public InvoiceContact InvoiceContact { get; set; }
-        public List<ZohoItemRecurringInvoice> ZohoItems { get; set; }
+        public List<ZohoItem_Purchese> ZohoItems { get; set; }
         public Guid? ReferenceGuid { get; set; }
         public bool IsPaidForThisMonth { get; set; } = false;
         public List<InvoiceHistory> InvoiceHistories { get; set; }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Empite.TribechimpService.PaymentService.Domain.Entity.InvoiceRelated
 {
-    public class ZohoItemRecurringInvoice
+    public class ZohoItem_Purchese
     {
         public string RecurringInvoiceId { get; set; }
         public Purchese Purchese { get; set; }
