@@ -1,0 +1,1 @@
+2018-07-30 09:55:13.395 +05:30 [Information] Entity Framework Core "2.1.0-rtm-30799" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"

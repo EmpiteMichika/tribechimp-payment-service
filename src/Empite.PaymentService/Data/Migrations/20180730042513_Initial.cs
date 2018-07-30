@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Empite.TribechimpService.PaymentService.Data.Migrations
+namespace Empite.PaymentService.Data.Migrations
 {
-    public partial class initial : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -98,6 +98,7 @@ namespace Empite.TribechimpService.PaymentService.Data.Migrations
                     InvoiceName = table.Column<string>(nullable: true),
                     InvoiceContactUserId = table.Column<string>(nullable: true),
                     ReferenceGuid = table.Column<Guid>(nullable: true),
+                    IsPaidForThisMonth = table.Column<bool>(nullable: false),
                     InvoiceType = table.Column<int>(nullable: false),
                     InvoiceStatus = table.Column<int>(nullable: false)
                 },
@@ -149,15 +150,15 @@ namespace Empite.TribechimpService.PaymentService.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ZohoItemRecurringInvoice", x => new { x.RecurringInvoiceId, x.ZohoItemId });
+                    table.PrimaryKey("PK_ZohoItem_Purchese", x => new { x.RecurringInvoiceId, x.ZohoItemId });
                     table.ForeignKey(
-                        name: "FK_ZohoItemRecurringInvoice_Purcheses_RecurringInvoiceId",
+                        name: "FK_ZohoItem_Purchese_Purcheses_RecurringInvoiceId",
                         column: x => x.RecurringInvoiceId,
                         principalTable: "Purcheses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ZohoItemRecurringInvoice_ZohoItems_ZohoItemId",
+                        name: "FK_ZohoItem_Purchese_ZohoItems_ZohoItemId",
                         column: x => x.ZohoItemId,
                         principalTable: "ZohoItems",
                         principalColumn: "Id",
@@ -190,7 +191,7 @@ namespace Empite.TribechimpService.PaymentService.Data.Migrations
                 column: "ReferenceGuid");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ZohoItemRecurringInvoice_ZohoItemId",
+                name: "IX_ZohoItem_Purchese_ZohoItemId",
                 table: "ZohoItem_Purchese",
                 column: "ZohoItemId");
 
