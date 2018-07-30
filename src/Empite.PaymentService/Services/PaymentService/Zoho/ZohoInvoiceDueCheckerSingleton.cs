@@ -3,12 +3,12 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Empite.PaymentService.Data;
 using Empite.PaymentService.Data.Entity.InvoiceRelated;
+using Empite.PaymentService.Interface.Service.Zoho;
 using Empite.PaymentService.Models.Configs;
-using Empite.TribechimpService.PaymentService.Domain.Interface.Service;
 using Hangfire;
 using Microsoft.Extensions.Options;
 
-namespace Empite.PaymentService.Services.PaymentService
+namespace Empite.PaymentService.Services.PaymentService.Zoho
 {
     public class ZohoInvoiceDueCheckerSingleton: IZohoInvoiceDueCheckerSingleton
     {

@@ -1,4 +1,4 @@
-﻿namespace Empite.TribechimpService.PaymentService.Domain.Entity
+﻿namespace Empite.PaymentService.Data.Entity
 {
     public abstract class BaseEntity : BaseModel
     {

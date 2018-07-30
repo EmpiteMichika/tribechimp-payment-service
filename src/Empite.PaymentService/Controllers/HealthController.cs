@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Empite.TribechimpService.PaymentService.Controllers
+namespace Empite.PaymentService.Interface.Service.Zoho.Zoho.Zoho.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

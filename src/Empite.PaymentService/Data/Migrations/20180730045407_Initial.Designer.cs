@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Empite.PaymentService.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180730042513_Initial")]
+    [Migration("20180730045407_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -4,80 +4,73 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Runtime.InteropServices;
-using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
-using Empite.Core.Extensions;
 using Empite.PaymentService.Data;
 using Empite.PaymentService.Data.Entity.InvoiceRelated;
+using Empite.PaymentService.Interface.Service;
+using Empite.PaymentService.Interface.Service.Zoho;
 using Empite.PaymentService.Models.Configs;
-using Empite.TribechimpService.PaymentService.Data;
-using Empite.TribechimpService.PaymentService.Domain.Dto;
-using Empite.TribechimpService.PaymentService.Domain.Interface.Service;
-using Microsoft.AspNetCore.Localization;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
-using Microsoft.EntityFrameworkCore.Storage;
+using Empite.PaymentService.Models.Dto;
+using Empite.PaymentService.Services.PaymentService.Zoho;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
-namespace Empite.TribechimpService.PaymentService.Service
+namespace Empite.PaymentService.Services.PaymentService
 {
-    public class ZohoInvoceService: IZohoInvoceService
+    public class InvoceService: IInvoceService
     {
         private readonly ApplicationDbContext dbContext;
-        private readonly IZohoInvoiceSingleton _zohoTokenService;
         private static bool _isJobsProcessing = false;
         private const int RowsPerPage = 100;
         private readonly Settings _settings;
         private const int ZohoSuccessResponseCode = 0;
         private const int ZohoPaymentTermDaysGap = 10;
-        private readonly IHttpClientFactory _httpClientFactory;
         private IServiceProvider _services { get; }
+        private IInvoiceWorkerService<ZohoInvoiceWorkerService> _workerService;
 
-        public ZohoInvoceService(IZohoInvoiceSingleton zohoTokenService, IOptions<Settings> options, IHttpClientFactory httpClientFactory, IServiceProvider services)
+        public InvoceService(IOptions<Settings> options, IServiceProvider services,IInvoiceWorkerService<ZohoInvoiceWorkerService> workerService)
         {
-            
-            _zohoTokenService = zohoTokenService;
-            _settings = options.Value;
-            _httpClientFactory = httpClientFactory;
+
             _services = services;
+            _workerService = workerService;
+
+
         }
 
-        public async Task AddJob(dynamic DataObject, ZohoInvoiceJobQueueType JobType)
+        public async Task AddJob(dynamic DataObject, InvoiceJobQueueType JobType)
         {
             using (ApplicationDbContext _dbContext = _services.CreateScope().ServiceProvider.GetRequiredService<ApplicationDbContext>())
             {
                 ZohoInvoiceJobQueue job = new ZohoInvoiceJobQueue();
                 job.IsSuccess = false;
                 job.JobType = JobType;
-                if (JobType == ZohoInvoiceJobQueueType.CreateContact)
+                if (JobType == InvoiceJobQueueType.CreateContact)
                 {
-                    if (DataObject?.GetType() != typeof(Domain.Dto.CreateContact))
+                    if (DataObject?.GetType() != typeof(CreateContact))
                     {
                         throw new Exception("Invalid data type for the DataObject parameter, it should be created from CreateContact class");
                     }
                     job.JsonData = JsonConvert.SerializeObject(DataObject);
                 }
-                else if (JobType == ZohoInvoiceJobQueueType.EnablePaymentReminders)
+                else if (JobType == InvoiceJobQueueType.EnablePaymentReminders)
                 {
                     if (DataObject?.GetType() != typeof(string))
                     {
                         throw new Exception("Invalid data type for the DataObject parameter, it should be a string");
                     }
                     job.JsonData = DataObject;
-                }else if (JobType == ZohoInvoiceJobQueueType.CreateItem)
+                }else if (JobType == InvoiceJobQueueType.CreateItem)
                 {
-                    if (DataObject?.GetType() != typeof(Domain.Dto.CreateZohoItemDto))
+                    if (DataObject?.GetType() != typeof(CreateZohoItemDto))
                     {
                         throw new Exception("Invalid data type for the DataObject parameter, it should be created from CreateZohoItemDto class");
                     }
                     job.JsonData = JsonConvert.SerializeObject(DataObject);
-                }else if (JobType == ZohoInvoiceJobQueueType.CreateFirstInvoice)
+                }else if (JobType == InvoiceJobQueueType.CreateFirstInvoice)
                 {
-                    if (DataObject?.GetType() != typeof(Domain.Dto.CreatePurchesDto))
+                    if (DataObject?.GetType() != typeof(CreatePurchesDto))
                     {
                         throw new Exception("Invalid data type for the DataObject parameter, it should be created from CreatePurchesDto class");
                     }
@@ -122,7 +115,7 @@ namespace Empite.TribechimpService.PaymentService.Service
                             await Task.Delay(10);
                             try
                             {
-                                await JobRunner(job, _dbContext);
+                                await ZohoJobRunner(job, _dbContext);
                             }
                             catch (Exception ex)
                             {
@@ -148,197 +141,8 @@ namespace Empite.TribechimpService.PaymentService.Service
             _isJobsProcessing = false;
             
         }
-        private async Task<InvoiceContact> CreateContact(CreateContact model, ApplicationDbContext _dbContext)
-        {
-            HttpClient httpClient = _httpClientFactory.CreateClient();
-            httpClient.AddZohoAuthorizationHeader(await _zohoTokenService.GetOAuthToken());
-            Uri url = new Uri(_settings.ZohoAccount.ApiBasePath).Append("contacts");
-            ContactPersonRoot contactPerson = new ContactPersonRoot
-            {
-                contact_name = model.FirstName + " " + model.LastName,
-                payment_terms = _settings.ZohoAccount.PaymentTerm,
-                contact_persons = new List<ContactPerson>
-                {
-                    new ContactPerson
-                    {
-                        email = model.Email,
-                        first_name = model.FirstName,
-                        is_primary_contact = true,
-                        last_name = model.LastName,
-                        mobile = model.Mobile
-                    }
-                }
-            };
-            string jsonString = JsonConvert.SerializeObject(contactPerson);
-            MultipartFormDataContent form = new MultipartFormDataContent();
-            StringContent content = new StringContent(jsonString);
-            form.Add(content, "JSONString");
-            HttpResponseMessage response = await httpClient.PostAsync(url, form);
-            if (response.StatusCode == HttpStatusCode.Created)
-            {
-                var byteArray = await response.Content.ReadAsByteArrayAsync();
-                var responseString = Encoding.UTF8.GetString(byteArray, 0, byteArray.Length);
-                RootContactResponse contactResponse =
-                    JsonConvert.DeserializeObject<RootContactResponse>(responseString);
-                if (contactResponse.code == ZohoSuccessResponseCode)
-                {
-                    if (!string.IsNullOrWhiteSpace(contactResponse.contact.contact_id) &&
-                        !string.IsNullOrWhiteSpace(contactResponse.contact.primary_contact_id))
-                    {
-                        InvoiceContact dbInvoiceContact = new InvoiceContact
-                        {
-                            Email = model.Email,
-                            UserId = model.UserId,
-                            ZohoContactUserId = contactResponse.contact.contact_id,
-                            ZohoPrimaryContactId = contactResponse.contact.primary_contact_id
-                        };
-                        _dbContext.InvoiceContacts.Add(dbInvoiceContact);
-                        await _dbContext.SaveChangesAsync();
-                        return dbInvoiceContact;
-                    }
-                    else
-                    {
-                        StringBuilder builder = new StringBuilder();
-                        builder.Append((string.IsNullOrWhiteSpace(contactResponse.contact.contact_id) ? "Contact id is empty. " : ""));
-                        builder.Append((string.IsNullOrWhiteSpace(contactResponse.contact.primary_contact_id) ? "Primary Contact id is empty. " : ""));
-                        throw new Exception($"Response Filed came empty. Fields => {builder.ToString()}");
-                    }
-
-                }
-                else
-                {
-                    throw new Exception($"Zoho returns a erro code. Erro code is => {contactResponse.code}. Message is => {contactResponse.message}.");
-
-                }
-            }
-            else
-            {
-                throw new Exception($"Zoho Api call failed Erro code is => {response.StatusCode}. Reason sent by server is => {response.ReasonPhrase}.");
-            }
-        }
-        private async Task<bool> EnablePaymentReminder(InvoiceContact contactDetails)
-        {
-            HttpClient httpClient = _httpClientFactory.CreateClient();
-            httpClient.AddZohoAuthorizationHeader(await _zohoTokenService.GetOAuthToken());
-            Uri url = new Uri(_settings.ZohoAccount.ApiBasePath).Append("contacts", contactDetails.ZohoContactUserId, "paymentreminder", "enable");
-            HttpResponseMessage response = await httpClient.PostAsync(url, null);
-            if (response.IsSuccessStatusCode)
-            {
-                var byteArray = await response.Content.ReadAsByteArrayAsync();
-                var responseString = Encoding.UTF8.GetString(byteArray, 0, byteArray.Length);
-                RootZohoBasicResponse enablePortalResponse =
-                    JsonConvert.DeserializeObject<RootZohoBasicResponse>(responseString);
-                if (enablePortalResponse.code == ZohoSuccessResponseCode)
-                {
-                    return true;
-                }
-                else
-                {
-
-                    throw new Exception($"Zoho Portle Enable failed. Respond with code {enablePortalResponse.code}, Message is => {enablePortalResponse.message}");
-                }
-            }
-            else
-            {
-                throw new Exception($"Zoho Api call failed Erro code is => {response.StatusCode}. Reason sent by server is => {response.ReasonPhrase}.");
-            }
-        }
-
-        private async Task<ZohoItem> CreateItem(CreateZohoItemDto model, ApplicationDbContext _dbContext)
-        {
-            HttpClient httpClient = _httpClientFactory.CreateClient();
-            httpClient.AddZohoAuthorizationHeader(await _zohoTokenService.GetOAuthToken());
-            Uri url = new Uri(_settings.ZohoAccount.ApiBasePath).Append("items");
-            ZohoCreateItemReqeust zohoItem = new ZohoCreateItemReqeust();
-            zohoItem.description = model.Description;
-            zohoItem.name = model.Name;
-            zohoItem.rate = model.Rate;
-            zohoItem.product_type = model.ProdcuType.ToString();
-            
-            string jsonString = JsonConvert.SerializeObject(zohoItem);
-            MultipartFormDataContent form = new MultipartFormDataContent();
-            StringContent content = new StringContent(jsonString);
-            form.Add(content, "JSONString");
-            HttpResponseMessage response = await httpClient.PostAsync(url, form);
-            if (response.StatusCode == HttpStatusCode.Created)
-            {
-                var byteArray = await response.Content.ReadAsByteArrayAsync();
-                var responseString = Encoding.UTF8.GetString(byteArray, 0, byteArray.Length);
-                RootItemCreateResponse itemCreateResponse =
-                    JsonConvert.DeserializeObject<RootItemCreateResponse>(responseString);
-                if (itemCreateResponse.code == ZohoSuccessResponseCode)
-                {
-                    if (!string.IsNullOrWhiteSpace(itemCreateResponse.item.item_id))
-                    {
-                        ZohoItem dbZohoItem = new ZohoItem
-                        {
-                            ZohoItemId = itemCreateResponse.item.item_id,
-                            Description = model.Description,
-                            Name = model.Name,
-                            Rate = model.Rate
-                        };
-
-                        _dbContext.ZohoItems.Add(dbZohoItem);
-                        await _dbContext.SaveChangesAsync();
-                        return dbZohoItem;
-                    }
-                    else
-                    {
-                        StringBuilder builder = new StringBuilder();
-                        builder.Append((string.IsNullOrWhiteSpace(itemCreateResponse.item.item_id) ? "Item id is empty. " : ""));
-                        
-                        throw new Exception($"Response Filed came empty. Fields => {builder.ToString()}");
-                    }
-
-                }
-                else
-                {
-                    throw new Exception($"Zoho returns a erro code. Erro code is => {itemCreateResponse.code}. Message is => {itemCreateResponse.message}.");
-
-                }
-            }
-            else
-            {
-                throw new Exception($"Zoho Api call failed Erro code is => {response.StatusCode}. Reason sent by server is => {response.ReasonPhrase}.");
-            }
-        }
-
-        private async Task DeleteInvoice(string invoiceId)
-        {
-            try
-            {
-                HttpClient httpClient = _httpClientFactory.CreateClient();
-                httpClient.AddZohoAuthorizationHeader(await _zohoTokenService.GetOAuthToken());
-                Uri url = new Uri(_settings.ZohoAccount.ApiBasePath).Append("invoices", invoiceId);
-                HttpResponseMessage response = await httpClient.DeleteAsync(url);
-                if (!response.IsSuccessStatusCode)
-                {
-                    throw new Exception($"Deleteing Purchese Failed. Recurring Purchese Id is => {invoiceId}");
-                }
-                else
-                {
-                    //Todo Logging success delete of the Purchese deletion
-                    var byteArray = await response.Content.ReadAsByteArrayAsync();
-                    var responseString = Encoding.UTF8.GetString(byteArray, 0, byteArray.Length);
-                    RootZohoBasicResponse sendEmailZohoResponse =
-                        JsonConvert.DeserializeObject<RootZohoBasicResponse>(responseString);
-                    if (sendEmailZohoResponse.code != ZohoSuccessResponseCode)
-                    {
-                        throw new Exception(
-                            $"Deleteing Purchese Failed. Zoho Error code is => {sendEmailZohoResponse.code}, message is => {sendEmailZohoResponse.message}");
-                    }
-                    
-                }
-
-            }
-            catch (Exception ex)
-            {
-                //Todo Logging
-                throw new Exception($"Deleteing Recurring Purchese Failed. Recurring Purchese Id is => {invoiceId}");
-            }
-
-
-        }
+        
+        
         //private async Task<string> CreatePurchese(CreatePurchesDto model, ApplicationDbContext dbContext)
         //{
             
@@ -404,12 +208,12 @@ namespace Empite.TribechimpService.PaymentService.Service
         //    }
         //    throw new NotImplementedException();
         //}
-        private async Task<bool> JobRunner(ZohoInvoiceJobQueue job, ApplicationDbContext _dbContext)
+        private async Task<bool> ZohoJobRunner(ZohoInvoiceJobQueue job, ApplicationDbContext _dbContext)
         {
-            if (job.JobType == ZohoInvoiceJobQueueType.CreateContact)
+            if (job.JobType == InvoiceJobQueueType.CreateContact)
             {
                 CreateContact model = JsonConvert.DeserializeObject<CreateContact>(job.JsonData);
-                InvoiceContact contact =await CreateContact(model, _dbContext);
+                InvoiceContact contact =await _workerService.CreateContact(model, _dbContext);
                 job.UpdatedAt = DateTime.UtcNow;
                 if (contact == null)
                 {
@@ -422,11 +226,11 @@ namespace Empite.TribechimpService.PaymentService.Service
                     await _dbContext.SaveChangesAsync();
                 }
             }
-            else if (job.JobType == ZohoInvoiceJobQueueType.EnablePaymentReminders)
+            else if (job.JobType == InvoiceJobQueueType.EnablePaymentReminders)
             {
                 var UserId = GetInvoceContactByUserid(job, out var contact, _dbContext);
 
-                bool result = await EnablePaymentReminder(contact);
+                bool result = await _workerService.EnablePaymentReminder(contact);
                 job.UpdatedAt = DateTime.UtcNow;
                 if (result)
                 {
@@ -438,10 +242,10 @@ namespace Empite.TribechimpService.PaymentService.Service
                 }
 
                 await _dbContext.SaveChangesAsync();
-            }else if (job.JobType == ZohoInvoiceJobQueueType.CreateItem)
+            }else if (job.JobType == InvoiceJobQueueType.CreateItem)
             {
                 CreateZohoItemDto model = JsonConvert.DeserializeObject<CreateZohoItemDto>(job.JsonData);
-                ZohoItem zohoItem = await CreateItem(model, _dbContext);
+                ZohoItem zohoItem = await _workerService.CreateItem(model, _dbContext);
                 job.UpdatedAt = DateTime.UtcNow;
                 if (zohoItem == null)
                 {

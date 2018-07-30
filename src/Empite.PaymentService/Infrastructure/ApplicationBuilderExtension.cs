@@ -6,12 +6,14 @@ using Empite.Core.Infrastructure.Constant;
 using Empite.Core.Middleware.Hmac;
 using Empite.Core.Resilience;
 using Empite.PaymentService.Data;
+using Empite.PaymentService.Interface.Service;
+using Empite.PaymentService.Interface.Service.Zoho;
+using Empite.PaymentService.Interface.Service.Zoho.Zoho;
+using Empite.PaymentService.Interface.Service.Zoho.Zoho.Zoho.Infrastructure.Filter;
 using Empite.PaymentService.Models.Configs;
 using Empite.PaymentService.Services.PaymentService;
-using Empite.TribechimpService.PaymentService.Data;
-using Empite.TribechimpService.PaymentService.Domain.Interface.Service;
-using Empite.TribechimpService.PaymentService.Infrastructure.Filter;
-using Empite.TribechimpService.PaymentService.Service;
+
+using Empite.PaymentService.Services.PaymentService.Zoho;
 using Hangfire;
 using Hangfire.MySql.Core;
 using Microsoft.AspNetCore.Authentication;
@@ -74,7 +76,8 @@ namespace Empite.PaymentService.Infrastructure
             services.AddTransient<IAuthenticationService, AuthenticationService>();
             
             services.AddSingleton<IZohoInvoiceSingleton, ZohoInvoiceSingletonTokenService>();
-            services.AddSingleton<IZohoInvoceService, ZohoInvoceService>();
+            services.AddSingleton<IInvoiceWorkerService<ZohoInvoiceWorkerService>, ZohoInvoiceWorkerService>();
+            services.AddSingleton<IInvoceService, InvoceService>();
             services.AddSingleton<IZohoInvoiceDueCheckerSingleton, ZohoInvoiceDueCheckerSingleton>();
             /*====== INJECT APPLICATION REPOSITORIES =======*/
             //services.AddTransient<IUserRepository, UserRepository>();

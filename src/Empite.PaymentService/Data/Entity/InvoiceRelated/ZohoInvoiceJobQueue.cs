@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Empite.TribechimpService.PaymentService.Domain.Entity;
 
 namespace Empite.PaymentService.Data.Entity.InvoiceRelated
 {
@@ -10,13 +9,13 @@ namespace Empite.PaymentService.Data.Entity.InvoiceRelated
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string Id { get; set; }
         public string JsonData { get; set; }
-        public ZohoInvoiceJobQueueType JobType { get; set; }
+        public InvoiceJobQueueType JobType { get; set; }
         public bool IsSuccess { get; set; }
         public int ReTryCount { get; set; } = 0;
         public string LastErrorMessage { get; set; }
     }
 
-    public enum ZohoInvoiceJobQueueType
+    public enum InvoiceJobQueueType
     {
         CreateContact = 1,
         EnablePaymentReminders = 2,

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Empite.TribechimpService.PaymentService.Domain.Entity;
 
 namespace Empite.PaymentService.Data.Entity.InvoiceRelated
 {

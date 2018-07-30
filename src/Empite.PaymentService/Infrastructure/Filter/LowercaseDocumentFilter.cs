@@ -3,7 +3,7 @@ using System.Linq;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Empite.TribechimpService.PaymentService.Infrastructure.Filter
+namespace Empite.PaymentService.Interface.Service.Zoho.Zoho.Zoho.Infrastructure.Filter
 {
 	public class LowercaseDocumentFilter : IDocumentFilter
 	{

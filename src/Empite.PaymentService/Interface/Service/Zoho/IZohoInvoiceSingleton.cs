@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Empite.TribechimpService.PaymentService.Domain.Interface.Service
+namespace Empite.PaymentService.Interface.Service.Zoho
 {
     public interface IZohoInvoiceSingleton
     {

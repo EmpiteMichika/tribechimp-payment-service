@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Empite.TribechimpService.PaymentService.Domain.Interface.Service
+namespace Empite.PaymentService.Interface.Service
 {
     public interface IDbInitializer
     {

@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using System.Threading.Tasks;
-using Empite.PaymentService.Data;
 using Empite.PaymentService.Data.Entity.InvoiceRelated;
-using Empite.TribechimpService.PaymentService.Domain.Dto;
-using Empite.TribechimpService.PaymentService.Domain.Entity;
-using Empite.TribechimpService.PaymentService.Domain.Interface.Service;
+using Empite.PaymentService.Interface.Service;
 using Microsoft.EntityFrameworkCore;
 
-namespace Empite.TribechimpService.PaymentService.Data
+namespace Empite.PaymentService.Data
 {
     public class DbInitializer : IDbInitializer
     {

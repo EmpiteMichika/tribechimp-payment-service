@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RawRabbit;
 
-namespace Empite.TribechimpService.PaymentService.Controllers
+namespace Empite.PaymentService.Interface.Service.Zoho.Zoho.Zoho.Controllers
 {
     [Route(ApplicationConstant.API_ROUTE)]
     [Authorize(AuthenticationSchemes = ApplicationConstant.HMAC_AUTH_SCHEMA)]

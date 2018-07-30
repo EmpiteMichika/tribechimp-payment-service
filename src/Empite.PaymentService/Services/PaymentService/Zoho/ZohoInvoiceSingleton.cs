@@ -4,12 +4,12 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Empite.Core.Extensions;
+using Empite.PaymentService.Interface.Service.Zoho;
 using Empite.PaymentService.Models.Configs;
-using Empite.TribechimpService.PaymentService.Domain.Interface.Service;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
-namespace Empite.PaymentService.Services.PaymentService
+namespace Empite.PaymentService.Services.PaymentService.Zoho
 {
     public class ZohoInvoiceSingletonTokenService : IZohoInvoiceSingleton
     {

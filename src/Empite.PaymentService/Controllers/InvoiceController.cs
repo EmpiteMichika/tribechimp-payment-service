@@ -2,8 +2,9 @@
 using System.Threading.Tasks;
 using Empite.PaymentService.Data;
 using Empite.PaymentService.Data.Entity.InvoiceRelated;
-using Empite.TribechimpService.PaymentService.Domain.Dto;
-using Empite.TribechimpService.PaymentService.Domain.Interface.Service;
+using Empite.PaymentService.Interface.Service;
+
+using Empite.PaymentService.Models.Dto;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,11 +15,11 @@ namespace Empite.PaymentService.Controllers
     [ApiController]
     public class InvoiceController : ControllerBase
     {
-        private readonly IZohoInvoceService _zohoInvoceService;
+        private readonly IInvoceService _invoceService;
         private readonly ApplicationDbContext _dbContext;
-        public InvoiceController(IZohoInvoceService zohoService,ApplicationDbContext dbContext)
+        public InvoiceController(IInvoceService service,ApplicationDbContext dbContext)
         {
-            _zohoInvoceService = zohoService;
+            _invoceService = service;
             _dbContext = dbContext;
         }
         
@@ -27,8 +28,8 @@ namespace Empite.PaymentService.Controllers
         {
             try
             {
-                await _zohoInvoceService.AddJob(createContact, ZohoInvoiceJobQueueType.CreateContact);
-                await _zohoInvoceService.AddJob(createContact.UserId, ZohoInvoiceJobQueueType.EnablePaymentReminders);
+                await _invoceService.AddJob(createContact, InvoiceJobQueueType.CreateContact);
+                await _invoceService.AddJob(createContact.UserId, InvoiceJobQueueType.EnablePaymentReminders);
                 return Ok();
             }
             catch (Exception e)
@@ -44,7 +45,7 @@ namespace Empite.PaymentService.Controllers
         [HttpGet("runjobs")]
         public async Task<IActionResult> RunJobs()
         {
-            _zohoInvoceService.RunJobs();
+            _invoceService.RunJobs();
             return Ok();
         }
 
@@ -53,7 +54,7 @@ namespace Empite.PaymentService.Controllers
         {
             try
             {
-                await _zohoInvoceService.AddJob(itemDto, ZohoInvoiceJobQueueType.CreateItem);
+                await _invoceService.AddJob(itemDto, InvoiceJobQueueType.CreateItem);
                 return Ok();
             }
             catch (Exception e)
@@ -69,7 +70,7 @@ namespace Empite.PaymentService.Controllers
         {
             try
             {
-                await _zohoInvoceService.AddJob(model, ZohoInvoiceJobQueueType.CreateFirstInvoice);
+                await _invoceService.AddJob(model, InvoiceJobQueueType.CreateFirstInvoice);
                 return Ok();
             }
             catch (Exception e)
