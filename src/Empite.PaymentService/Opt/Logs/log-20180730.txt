@@ -129,3 +129,684 @@ ORDER BY `MigrationId`;"
 2018-07-30 15:53:07.900 +05:30 [Information] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
 ""INSERT INTO `__EFMigrationsHistory` (`MigrationId`, `ProductVersion`)
 VALUES ('20180730045407_Initial', '2.1.0-rtm-30799');"
+2018-07-30 15:58:03.778 +05:30 [Information] User profile is available. Using '"C:\Users\michi\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+2018-07-30 15:58:04.636 +05:30 [Information] DB tables already exist. Exit install
+2018-07-30 15:58:05.376 +05:30 [Information] Entity Framework Core "2.1.0-rtm-30799" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-30 15:58:05.426 +05:30 [Information] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='dev-tribechimppaymentcore' AND TABLE_NAME='__EFMigrationsHistory';"
+2018-07-30 15:58:05.457 +05:30 [Information] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='dev-tribechimppaymentcore' AND TABLE_NAME='__EFMigrationsHistory';"
+2018-07-30 15:58:05.476 +05:30 [Information] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT `MigrationId`, `ProductVersion`
+FROM `__EFMigrationsHistory`
+ORDER BY `MigrationId`;"
+2018-07-30 15:58:05.534 +05:30 [Information] No migrations were applied. The database is already up to date.
+2018-07-30 15:58:05.791 +05:30 [Information] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM `ConfiguredPaymentGateways` AS `c`)
+    THEN TRUE ELSE FALSE
+END"
+2018-07-30 15:58:05.887 +05:30 [Information] Executed DbCommand ("1"ms) [Parameters=["@p0='?' (Size = 255), @p1='?' (Size = 4000), @p2='?' (DbType = Boolean)"], CommandType='Text', CommandTimeout='30']"
+""INSERT INTO `ConfiguredPaymentGateways` (`Id`, `GatewayName`, `IsEnabled`)
+VALUES (@p0, @p1, @p2);"
+2018-07-30 15:58:07.271 +05:30 [Information] Request starting HTTP/1.1 GET https://localhost:5011/swagger/index.html  
+2018-07-30 15:58:07.341 +05:30 [Information] Request finished in 68.6681ms 200 text/html
+2018-07-30 15:58:07.426 +05:30 [Information] Request starting HTTP/1.1 GET https://localhost:5011/swagger/swagger-ui-bundle.js  
+2018-07-30 15:58:07.428 +05:30 [Information] Request starting HTTP/1.1 GET https://localhost:5011/swagger/swagger-ui-standalone-preset.js  
+2018-07-30 15:58:07.442 +05:30 [Information] Request starting HTTP/1.1 GET https://localhost:5011/swagger/swagger-ui.css  
+2018-07-30 15:58:07.499 +05:30 [Information] The file "/swagger-ui.css" was not modified
+2018-07-30 15:58:07.503 +05:30 [Information] The file "/swagger-ui-bundle.js" was not modified
+2018-07-30 15:58:07.506 +05:30 [Information] The file "/swagger-ui-standalone-preset.js" was not modified
+2018-07-30 15:58:07.546 +05:30 [Information] Request finished in 116.7155ms 304 application/javascript
+2018-07-30 15:58:07.557 +05:30 [Information] Request finished in 75.7059ms 304 text/css
+2018-07-30 15:58:07.558 +05:30 [Information] Request finished in 90.5257ms 304 application/javascript
+2018-07-30 15:58:07.862 +05:30 [Information] Request starting HTTP/1.1 GET https://localhost:5011/swagger/v1/swagger.json  
+2018-07-30 15:58:08.266 +05:30 [Information] Request finished in 397.3097ms 200 application/json;charset=utf-8
+2018-07-30 16:07:24.133 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/api/invoice/createcontact application/json 143
+2018-07-30 16:07:24.215 +05:30 [Information] Route matched with "{action = \"CreateContact\", controller = \"Invoice\"}". Executing action "Empite.PaymentService.Controllers.InvoiceController.CreateContact (Empite..PaymentService)"
+2018-07-30 16:07:24.274 +05:30 [Information] Executing action method "Empite.PaymentService.Controllers.InvoiceController.CreateContact (Empite..PaymentService)" with arguments (["Empite.PaymentService.Models.Dto.CreateContact"]) - Validation state: Valid
+2018-07-30 16:07:24.400 +05:30 [Information] Entity Framework Core "2.1.0-rtm-30799" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-30 16:07:24.551 +05:30 [Information] Executed DbCommand ("6"ms) [Parameters=["@p0='?' (Size = 255), @p1='?' (DbType = DateTime), @p2='?' (DbType = Guid), @p3='?' (DbType = DateTime), @p4='?' (DbType = Guid), @p5='?' (DbType = Boolean), @p6='?' (DbType = Int32), @p7='?' (Size = 8000) (DbType = AnsiString), @p8='?' (Size = 8000) (DbType = AnsiString), @p9='?' (DbType = Int32), @p10='?' (DbType = DateTime), @p11='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""INSERT INTO `ZohoInvoiceJobQueues` (`Id`, `CreatedAt`, `CreatedBy`, `DeletedAt`, `DeletedBy`, `IsSuccess`, `JobType`, `JsonData`, `LastErrorMessage`, `ReTryCount`, `UpdatedAt`, `UpdatedBy`)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11);"
+2018-07-30 16:07:24.566 +05:30 [Information] Entity Framework Core "2.1.0-rtm-30799" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-30 16:07:24.620 +05:30 [Information] Executed DbCommand ("0"ms) [Parameters=["@p0='?' (Size = 255), @p1='?' (DbType = DateTime), @p2='?' (DbType = Guid), @p3='?' (DbType = DateTime), @p4='?' (DbType = Guid), @p5='?' (DbType = Boolean), @p6='?' (DbType = Int32), @p7='?' (Size = 8000) (DbType = AnsiString), @p8='?' (Size = 8000) (DbType = AnsiString), @p9='?' (DbType = Int32), @p10='?' (DbType = DateTime), @p11='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""INSERT INTO `ZohoInvoiceJobQueues` (`Id`, `CreatedAt`, `CreatedBy`, `DeletedAt`, `DeletedBy`, `IsSuccess`, `JobType`, `JsonData`, `LastErrorMessage`, `ReTryCount`, `UpdatedAt`, `UpdatedBy`)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11);"
+2018-07-30 16:07:24.639 +05:30 [Information] Executed action method "Empite.PaymentService.Controllers.InvoiceController.CreateContact (Empite..PaymentService)", returned result "Microsoft.AspNetCore.Mvc.OkResult" in 351.752ms.
+2018-07-30 16:07:24.653 +05:30 [Information] Executing HttpStatusCodeResult, setting HTTP status code 200
+2018-07-30 16:07:24.663 +05:30 [Information] Executed action "Empite.PaymentService.Controllers.InvoiceController.CreateContact (Empite..PaymentService)" in 440.5593ms
+2018-07-30 16:07:24.677 +05:30 [Information] Request finished in 543.4124ms 200 
+2018-07-30 16:07:36.449 +05:30 [Error] MySql.Data.MySqlClient.MySqlException (0x80004005): Deadlock found when trying to get lock; try restarting transaction ---> MySql.Data.MySqlClient.MySqlException (0x80004005): Deadlock found when trying to get lock; try restarting transaction
+   at MySqlConnector.Core.ResultSet.ReadResultSetHeaderAsync(IOBehavior ioBehavior) in C:\projects\mysqlconnector\src\MySqlConnector\Core\ResultSet.cs:line 44
+   at MySql.Data.MySqlClient.MySqlDataReader.ActivateResultSet(ResultSet resultSet) in C:\projects\mysqlconnector\src\MySqlConnector\MySql.Data.MySqlClient\MySqlDataReader.cs:line 93
+   at MySql.Data.MySqlClient.MySqlDataReader.ReadFirstResultSetAsync(IOBehavior ioBehavior) in C:\projects\mysqlconnector\src\MySqlConnector\MySql.Data.MySqlClient\MySqlDataReader.cs:line 328
+   at MySql.Data.MySqlClient.MySqlDataReader.CreateAsync(MySqlCommand command, CommandBehavior behavior, IOBehavior ioBehavior) in C:\projects\mysqlconnector\src\MySqlConnector\MySql.Data.MySqlClient\MySqlDataReader.cs:line 313
+   at MySqlConnector.Core.TextCommandExecutor.ExecuteReaderAsync(String commandText, MySqlParameterCollection parameterCollection, CommandBehavior behavior, IOBehavior ioBehavior, CancellationToken cancellationToken) in C:\projects\mysqlconnector\src\MySqlConnector\Core\TextCommandExecutor.cs:line 73
+   at MySqlConnector.Core.TextCommandExecutor.ExecuteNonQueryAsync(String commandText, MySqlParameterCollection parameterCollection, IOBehavior ioBehavior, CancellationToken cancellationToken) in C:\projects\mysqlconnector\src\MySqlConnector\Core\TextCommandExecutor.cs:line 26
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteNonQuery() in C:\projects\mysqlconnector\src\MySqlConnector\MySql.Data.MySqlClient\MySqlCommand.cs:line 60
+   at Dapper.SqlMapper.ExecuteCommand(IDbConnection cnn, CommandDefinition& command, Action`2 paramReader)
+   at Dapper.SqlMapper.ExecuteImpl(IDbConnection cnn, CommandDefinition& command)
+   at Dapper.SqlMapper.Execute(IDbConnection cnn, String sql, Object param, IDbTransaction transaction, Nullable`1 commandTimeout, Nullable`1 commandType)
+   at Hangfire.MySql.Core.MySqlDistributedLock.AcquireLock(String resource, TimeSpan timeout)
+   at Hangfire.MySql.Core.MySqlDistributedLock.Acquire()
+   at Hangfire.MySql.Core.ExpirationManager.<>c__DisplayClass10_2.<Execute>b__0(MySqlConnection connection)
+2018-07-30 16:07:57.348 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/api/invoice/createItem application/json 114
+2018-07-30 16:07:57.356 +05:30 [Information] Route matched with "{action = \"CreateItem\", controller = \"Invoice\"}". Executing action "Empite.PaymentService.Controllers.InvoiceController.CreateItem (Empite..PaymentService)"
+2018-07-30 16:07:57.371 +05:30 [Information] Executing action method "Empite.PaymentService.Controllers.InvoiceController.CreateItem (Empite..PaymentService)" with arguments (["Empite.PaymentService.Models.Dto.CreateZohoItemDto"]) - Validation state: Valid
+2018-07-30 16:07:57.384 +05:30 [Information] Entity Framework Core "2.1.0-rtm-30799" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-30 16:07:57.400 +05:30 [Information] Executed DbCommand ("5"ms) [Parameters=["@p0='?' (Size = 255), @p1='?' (DbType = DateTime), @p2='?' (DbType = Guid), @p3='?' (DbType = DateTime), @p4='?' (DbType = Guid), @p5='?' (DbType = Boolean), @p6='?' (DbType = Int32), @p7='?' (Size = 8000) (DbType = AnsiString), @p8='?' (Size = 8000) (DbType = AnsiString), @p9='?' (DbType = Int32), @p10='?' (DbType = DateTime), @p11='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""INSERT INTO `ZohoInvoiceJobQueues` (`Id`, `CreatedAt`, `CreatedBy`, `DeletedAt`, `DeletedBy`, `IsSuccess`, `JobType`, `JsonData`, `LastErrorMessage`, `ReTryCount`, `UpdatedAt`, `UpdatedBy`)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11);"
+2018-07-30 16:07:57.408 +05:30 [Information] Executed action method "Empite.PaymentService.Controllers.InvoiceController.CreateItem (Empite..PaymentService)", returned result "Microsoft.AspNetCore.Mvc.OkResult" in 32.975ms.
+2018-07-30 16:07:57.412 +05:30 [Information] Executing HttpStatusCodeResult, setting HTTP status code 200
+2018-07-30 16:07:57.416 +05:30 [Information] Executed action "Empite.PaymentService.Controllers.InvoiceController.CreateItem (Empite..PaymentService)" in 56.2755ms
+2018-07-30 16:07:57.420 +05:30 [Information] Request finished in 80.9673ms 200 
+2018-07-30 16:09:00.717 +05:30 [Information] Request starting HTTP/1.1 GET https://localhost:5011/api/invoice/runjobs  
+2018-07-30 16:09:00.726 +05:30 [Information] Route matched with "{action = \"RunJobs\", controller = \"Invoice\"}". Executing action "Empite.PaymentService.Controllers.InvoiceController.RunJobs (Empite..PaymentService)"
+2018-07-30 16:09:00.740 +05:30 [Information] Executing action method "Empite.PaymentService.Controllers.InvoiceController.RunJobs (Empite..PaymentService)" - Validation state: Valid
+2018-07-30 16:09:00.749 +05:30 [Information] Entity Framework Core "2.1.0-rtm-30799" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-30 16:09:00.798 +05:30 [Information] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT COUNT(*)
+FROM `ZohoInvoiceJobQueues` AS `x`
+WHERE `x`.`IsSuccess` = FALSE"
+2018-07-30 16:09:00.835 +05:30 [Information] Executed DbCommand ("1"ms) [Parameters=["@__p_1='?' (DbType = Int32), @__p_0='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SELECT `x`.`Id`, `x`.`CreatedAt`, `x`.`CreatedBy`, `x`.`DeletedAt`, `x`.`DeletedBy`, `x`.`IsSuccess`, `x`.`JobType`, `x`.`JsonData`, `x`.`LastErrorMessage`, `x`.`ReTryCount`, `x`.`UpdatedAt`, `x`.`UpdatedBy`
+FROM `ZohoInvoiceJobQueues` AS `x`
+WHERE `x`.`IsSuccess` = FALSE
+ORDER BY `x`.`CreatedAt`
+LIMIT @__p_1 OFFSET @__p_0"
+2018-07-30 16:09:00.856 +05:30 [Information] Executed action method "Empite.PaymentService.Controllers.InvoiceController.RunJobs (Empite..PaymentService)", returned result "Microsoft.AspNetCore.Mvc.OkResult" in 113.2524ms.
+2018-07-30 16:09:00.860 +05:30 [Information] Executing HttpStatusCodeResult, setting HTTP status code 200
+2018-07-30 16:09:00.863 +05:30 [Information] Executed action "Empite.PaymentService.Controllers.InvoiceController.RunJobs (Empite..PaymentService)" in 129.134ms
+2018-07-30 16:09:00.884 +05:30 [Information] Request finished in 161.751ms 200 
+2018-07-30 16:09:02.082 +05:30 [Information] Start processing HTTP request "POST" https://invoice.zoho.com/api/v3/contacts
+2018-07-30 16:09:02.087 +05:30 [Information] Sending HTTP request "POST" https://invoice.zoho.com/api/v3/contacts
+2018-07-30 16:09:03.369 +05:30 [Information] Received HTTP response after 1278.5926ms - Created
+2018-07-30 16:09:03.375 +05:30 [Information] End processing HTTP request after 1296.8432ms - Created
+2018-07-30 16:09:03.413 +05:30 [Information] Executed DbCommand ("0"ms) [Parameters=["@p0='?' (Size = 255), @p1='?' (DbType = DateTime), @p2='?' (DbType = Guid), @p3='?' (DbType = DateTime), @p4='?' (DbType = Guid), @p5='?' (Size = 4000), @p6='?' (Size = 4000), @p7='?' (DbType = DateTime), @p8='?' (DbType = Guid), @p9='?' (Size = 255), @p10='?' (Size = 4000)"], CommandType='Text', CommandTimeout='30']"
+""INSERT INTO `InvoiceContacts` (`UserId`, `CreatedAt`, `CreatedBy`, `DeletedAt`, `DeletedBy`, `Email`, `OrganizationId`, `UpdatedAt`, `UpdatedBy`, `ZohoContactUserId`, `ZohoPrimaryContactId`)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10);"
+2018-07-30 16:09:03.429 +05:30 [Information] Executed DbCommand ("4"ms) [Parameters=["@p2='?' (Size = 255), @p0='?' (DbType = Boolean), @p1='?' (DbType = DateTime)"], CommandType='Text', CommandTimeout='30']"
+""UPDATE `ZohoInvoiceJobQueues` SET `IsSuccess` = @p0, `UpdatedAt` = @p1
+WHERE `Id` = @p2;
+SELECT ROW_COUNT();"
+2018-07-30 16:09:03.460 +05:30 [Information] Executed DbCommand ("0"ms) [Parameters=["@__UserId_0='?' (Size = 255)"], CommandType='Text', CommandTimeout='30']"
+""SELECT `x`.`UserId`, `x`.`CreatedAt`, `x`.`CreatedBy`, `x`.`DeletedAt`, `x`.`DeletedBy`, `x`.`Email`, `x`.`OrganizationId`, `x`.`UpdatedAt`, `x`.`UpdatedBy`, `x`.`ZohoContactUserId`, `x`.`ZohoPrimaryContactId`
+FROM `InvoiceContacts` AS `x`
+WHERE `x`.`UserId` = @__UserId_0
+LIMIT 1"
+2018-07-30 16:09:03.471 +05:30 [Information] Start processing HTTP request "POST" https://invoice.zoho.com/api/v3/contacts/1414691000000105007/paymentreminder/enable
+2018-07-30 16:09:03.474 +05:30 [Information] Sending HTTP request "POST" https://invoice.zoho.com/api/v3/contacts/1414691000000105007/paymentreminder/enable
+2018-07-30 16:09:03.824 +05:30 [Information] Received HTTP response after 349.5692ms - OK
+2018-07-30 16:09:03.828 +05:30 [Information] End processing HTTP request after 356.1481ms - OK
+2018-07-30 16:09:03.838 +05:30 [Information] Executed DbCommand ("1"ms) [Parameters=["@p2='?' (Size = 255), @p0='?' (DbType = Boolean), @p1='?' (DbType = DateTime)"], CommandType='Text', CommandTimeout='30']"
+""UPDATE `ZohoInvoiceJobQueues` SET `IsSuccess` = @p0, `UpdatedAt` = @p1
+WHERE `Id` = @p2;
+SELECT ROW_COUNT();"
+2018-07-30 16:09:03.860 +05:30 [Information] Start processing HTTP request "POST" https://invoice.zoho.com/api/v3/items
+2018-07-30 16:09:03.862 +05:30 [Information] Sending HTTP request "POST" https://invoice.zoho.com/api/v3/items
+2018-07-30 16:09:04.463 +05:30 [Information] Received HTTP response after 599.614ms - Created
+2018-07-30 16:09:04.467 +05:30 [Information] End processing HTTP request after 607.0867ms - Created
+2018-07-30 16:09:04.505 +05:30 [Information] Executed DbCommand ("0"ms) [Parameters=["@p0='?' (Size = 255), @p1='?' (DbType = DateTime), @p2='?' (DbType = Guid), @p3='?' (DbType = DateTime), @p4='?' (DbType = Guid), @p5='?' (Size = 4000), @p6='?' (Size = 4000), @p7='?' (DbType = Double), @p8='?' (DbType = DateTime), @p9='?' (DbType = Guid), @p10='?' (Size = 255)"], CommandType='Text', CommandTimeout='30']"
+""INSERT INTO `ZohoItems` (`Id`, `CreatedAt`, `CreatedBy`, `DeletedAt`, `DeletedBy`, `Description`, `Name`, `Rate`, `UpdatedAt`, `UpdatedBy`, `ZohoItemId`)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10);"
+2018-07-30 16:09:04.516 +05:30 [Information] Executed DbCommand ("1"ms) [Parameters=["@p2='?' (Size = 255), @p0='?' (DbType = Boolean), @p1='?' (DbType = DateTime)"], CommandType='Text', CommandTimeout='30']"
+""UPDATE `ZohoInvoiceJobQueues` SET `IsSuccess` = @p0, `UpdatedAt` = @p1
+WHERE `Id` = @p2;
+SELECT ROW_COUNT();"
+2018-07-30 16:10:06.791 +05:30 [Information] Request starting HTTP/1.1 GET https://localhost:5011/schedules  
+2018-07-30 16:10:06.877 +05:30 [Information] Request finished in 107.2115ms 200 text/html
+2018-07-30 16:10:06.918 +05:30 [Information] Request starting HTTP/1.1 GET https://localhost:5011/schedules/css1616  
+2018-07-30 16:10:06.919 +05:30 [Information] Request starting HTTP/1.1 GET https://localhost:5011/schedules/js1616  
+2018-07-30 16:10:06.944 +05:30 [Information] Request finished in 29.1334ms 200 text/css
+2018-07-30 16:10:06.973 +05:30 [Information] Request finished in 57.8604ms 200 application/javascript
+2018-07-30 16:10:09.180 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 228
+2018-07-30 16:10:09.211 +05:30 [Information] Request finished in 31.5638ms 200 application/json
+2018-07-30 16:10:10.265 +05:30 [Information] Request starting HTTP/1.1 GET https://localhost:5011/schedules/recurring  
+2018-07-30 16:10:10.300 +05:30 [Information] Request finished in 37.3782ms 200 text/html
+2018-07-30 16:10:12.378 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:10:12.387 +05:30 [Information] Request finished in 9.239ms 200 application/json
+2018-07-30 16:10:14.378 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:10:14.385 +05:30 [Information] Request finished in 7.4115ms 200 application/json
+2018-07-30 16:10:16.376 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:10:16.384 +05:30 [Information] Request finished in 6.3993ms 200 application/json
+2018-07-30 16:10:18.376 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:10:18.385 +05:30 [Information] Request finished in 8.2054ms 200 application/json
+2018-07-30 16:10:20.376 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:10:20.386 +05:30 [Information] Request finished in 7.4742ms 200 application/json
+2018-07-30 16:10:22.380 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:10:22.394 +05:30 [Information] Request finished in 15.6256ms 200 application/json
+2018-07-30 16:10:24.384 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:10:24.407 +05:30 [Information] Request finished in 25.8499ms 200 application/json
+2018-07-30 16:10:26.375 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:10:26.382 +05:30 [Information] Request finished in 6.4931ms 200 application/json
+2018-07-30 16:10:28.376 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:10:28.386 +05:30 [Information] Request finished in 8.128ms 200 application/json
+2018-07-30 16:10:30.375 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:10:30.383 +05:30 [Information] Request finished in 6.7324ms 200 application/json
+2018-07-30 16:10:32.375 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:10:32.382 +05:30 [Information] Request finished in 6.7504ms 200 application/json
+2018-07-30 16:10:34.374 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:10:34.382 +05:30 [Information] Request finished in 5.8963ms 200 application/json
+2018-07-30 16:10:36.380 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:10:36.394 +05:30 [Information] Request finished in 14.4739ms 200 application/json
+2018-07-30 16:10:38.384 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:10:38.395 +05:30 [Information] Request finished in 19.2022ms 200 application/json
+2018-07-30 16:10:40.381 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:10:40.391 +05:30 [Information] Request finished in 10.6572ms 200 application/json
+2018-07-30 16:10:42.376 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:10:42.384 +05:30 [Information] Request finished in 6.3052ms 200 application/json
+2018-07-30 16:10:44.376 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:10:44.385 +05:30 [Information] Request finished in 8.5561ms 200 application/json
+2018-07-30 16:10:46.384 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:10:46.407 +05:30 [Information] Request finished in 24.6496ms 200 application/json
+2018-07-30 16:10:48.376 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:10:48.385 +05:30 [Information] Request finished in 7.5408ms 200 application/json
+2018-07-30 16:10:50.375 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:10:50.381 +05:30 [Information] Request finished in 5.6339ms 200 application/json
+2018-07-30 16:10:52.377 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:10:52.396 +05:30 [Information] Request finished in 13.7427ms 200 application/json
+2018-07-30 16:10:54.375 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:10:54.382 +05:30 [Information] Request finished in 6.2681ms 200 application/json
+2018-07-30 16:10:56.375 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:10:56.383 +05:30 [Information] Request finished in 6.5305ms 200 application/json
+2018-07-30 16:10:58.378 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:10:58.426 +05:30 [Information] Request finished in 39.8585ms 200 application/json
+2018-07-30 16:11:00.376 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:11:00.384 +05:30 [Information] Request finished in 6.6684ms 200 application/json
+2018-07-30 16:11:02.377 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:11:02.386 +05:30 [Information] Request finished in 7.6288ms 200 application/json
+2018-07-30 16:11:04.375 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:11:04.382 +05:30 [Information] Request finished in 6.2019ms 200 application/json
+2018-07-30 16:11:06.376 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:11:06.385 +05:30 [Information] Request finished in 7.4278ms 200 application/json
+2018-07-30 16:11:08.375 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:11:08.381 +05:30 [Information] Request finished in 5.7027ms 200 application/json
+2018-07-30 16:11:10.376 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:11:10.388 +05:30 [Information] Request finished in 11.1708ms 200 application/json
+2018-07-30 16:11:12.392 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:11:12.403 +05:30 [Information] Request finished in 22.5276ms 200 application/json
+2018-07-30 16:11:14.375 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:11:14.381 +05:30 [Information] Request finished in 5.5321ms 200 application/json
+2018-07-30 16:11:16.375 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:11:16.385 +05:30 [Information] Request finished in 7.0419ms 200 application/json
+2018-07-30 16:11:18.374 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:11:18.381 +05:30 [Information] Request finished in 5.5107ms 200 application/json
+2018-07-30 16:11:20.376 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:11:20.383 +05:30 [Information] Request finished in 6.8323ms 200 application/json
+2018-07-30 16:11:22.376 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:11:22.385 +05:30 [Information] Request finished in 7.462ms 200 application/json
+2018-07-30 16:11:24.376 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:11:24.383 +05:30 [Information] Request finished in 6.1913ms 200 application/json
+2018-07-30 16:11:26.374 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:11:26.382 +05:30 [Information] Request finished in 6.5462ms 200 application/json
+2018-07-30 16:11:28.376 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:11:28.389 +05:30 [Information] Request finished in 8.7699ms 200 application/json
+2018-07-30 16:11:30.375 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:11:30.382 +05:30 [Information] Request finished in 6.0547ms 200 application/json
+2018-07-30 16:11:32.375 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:11:32.383 +05:30 [Information] Request finished in 6.5372ms 200 application/json
+2018-07-30 16:11:34.392 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:11:34.406 +05:30 [Information] Request finished in 11.9987ms 200 application/json
+2018-07-30 16:11:36.376 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:11:36.384 +05:30 [Information] Request finished in 7.9427ms 200 application/json
+2018-07-30 16:11:38.377 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:11:38.385 +05:30 [Information] Request finished in 6.4144ms 200 application/json
+2018-07-30 16:11:40.381 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:11:40.394 +05:30 [Information] Request finished in 14.8486ms 200 application/json
+2018-07-30 16:11:42.376 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:11:42.391 +05:30 [Information] Request finished in 8.6643ms 200 application/json
+2018-07-30 16:11:44.375 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:11:44.381 +05:30 [Information] Request finished in 5.9795ms 200 application/json
+2018-07-30 16:11:46.378 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:11:46.395 +05:30 [Information] Request finished in 9.024ms 200 application/json
+2018-07-30 16:11:48.376 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:11:48.382 +05:30 [Information] Request finished in 6.342ms 200 application/json
+2018-07-30 16:11:50.377 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:11:50.389 +05:30 [Information] Request finished in 9.9952ms 200 application/json
+2018-07-30 16:11:52.379 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:11:52.392 +05:30 [Information] Request finished in 11.9513ms 200 application/json
+2018-07-30 16:11:54.380 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:11:54.388 +05:30 [Information] Request finished in 7.2585ms 200 application/json
+2018-07-30 16:11:56.375 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:11:56.382 +05:30 [Information] Request finished in 5.9718ms 200 application/json
+2018-07-30 16:11:58.375 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:11:58.383 +05:30 [Information] Request finished in 6.4422ms 200 application/json
+2018-07-30 16:12:00.375 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:12:00.383 +05:30 [Information] Request finished in 6.4873ms 200 application/json
+2018-07-30 16:12:02.378 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:12:02.405 +05:30 [Information] Request finished in 15.4265ms 200 application/json
+2018-07-30 16:12:04.378 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:12:04.392 +05:30 [Information] Request finished in 15.1273ms 200 application/json
+2018-07-30 16:12:06.377 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:12:06.390 +05:30 [Information] Request finished in 13.0236ms 200 application/json
+2018-07-30 16:12:08.377 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:12:08.389 +05:30 [Information] Request finished in 10.4928ms 200 application/json
+2018-07-30 16:12:10.378 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:12:10.389 +05:30 [Information] Request finished in 9.9814ms 200 application/json
+2018-07-30 16:12:12.377 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:12:12.385 +05:30 [Information] Request finished in 7.0105ms 200 application/json
+2018-07-30 16:12:14.378 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:12:14.395 +05:30 [Information] Request finished in 16.2416ms 200 application/json
+2018-07-30 16:12:16.375 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:12:16.383 +05:30 [Information] Request finished in 7.0083ms 200 application/json
+2018-07-30 16:12:18.374 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:12:18.381 +05:30 [Information] Request finished in 5.7011ms 200 application/json
+2018-07-30 16:12:20.375 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:12:20.383 +05:30 [Information] Request finished in 6.3756ms 200 application/json
+2018-07-30 16:12:22.376 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:12:22.390 +05:30 [Information] Request finished in 7.1865ms 200 application/json
+2018-07-30 16:12:24.377 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:12:24.384 +05:30 [Information] Request finished in 7.1766ms 200 application/json
+2018-07-30 16:12:26.375 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:12:26.383 +05:30 [Information] Request finished in 6.5126ms 200 application/json
+2018-07-30 16:12:28.376 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:12:28.383 +05:30 [Information] Request finished in 6.648ms 200 application/json
+2018-07-30 16:12:30.378 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:12:30.394 +05:30 [Information] Request finished in 15.246ms 200 application/json
+2018-07-30 16:12:32.377 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:12:32.390 +05:30 [Information] Request finished in 7.9718ms 200 application/json
+2018-07-30 16:12:34.378 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:12:34.386 +05:30 [Information] Request finished in 7.5884ms 200 application/json
+2018-07-30 16:12:36.377 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:12:36.390 +05:30 [Information] Request finished in 12.6358ms 200 application/json
+2018-07-30 16:12:38.376 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:12:38.386 +05:30 [Information] Request finished in 7.328ms 200 application/json
+2018-07-30 16:12:40.383 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:12:40.389 +05:30 [Information] Request finished in 12.5017ms 200 application/json
+2018-07-30 16:12:42.375 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:12:42.384 +05:30 [Information] Request finished in 7.2265ms 200 application/json
+2018-07-30 16:12:44.375 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:12:44.382 +05:30 [Information] Request finished in 5.9904ms 200 application/json
+2018-07-30 16:12:46.375 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:12:46.382 +05:30 [Information] Request finished in 6.7065ms 200 application/json
+2018-07-30 16:12:48.377 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:12:48.388 +05:30 [Information] Request finished in 9.1676ms 200 application/json
+2018-07-30 16:12:50.377 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:12:50.385 +05:30 [Information] Request finished in 7.9724ms 200 application/json
+2018-07-30 16:12:52.376 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:12:52.383 +05:30 [Information] Request finished in 7.4739ms 200 application/json
+2018-07-30 16:12:54.379 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:12:54.390 +05:30 [Information] Request finished in 9.6332ms 200 application/json
+2018-07-30 16:12:56.375 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:12:56.383 +05:30 [Information] Request finished in 6.711ms 200 application/json
+2018-07-30 16:12:58.375 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:12:58.381 +05:30 [Information] Request finished in 5.7603ms 200 application/json
+2018-07-30 16:13:00.377 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:13:00.389 +05:30 [Information] Request finished in 10.536ms 200 application/json
+2018-07-30 16:13:02.385 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:13:02.392 +05:30 [Information] Request finished in 9.1753ms 200 application/json
+2018-07-30 16:13:04.381 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:13:04.394 +05:30 [Information] Request finished in 11.727ms 200 application/json
+2018-07-30 16:13:06.380 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:13:06.387 +05:30 [Information] Request finished in 7.4144ms 200 application/json
+2018-07-30 16:13:08.380 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:13:08.388 +05:30 [Information] Request finished in 8.2115ms 200 application/json
+2018-07-30 16:13:10.381 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:13:10.388 +05:30 [Information] Request finished in 6.79ms 200 application/json
+2018-07-30 16:13:12.380 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:13:12.388 +05:30 [Information] Request finished in 7.6876ms 200 application/json
+2018-07-30 16:13:14.381 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:13:14.389 +05:30 [Information] Request finished in 8.0723ms 200 application/json
+2018-07-30 16:13:16.381 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:13:16.387 +05:30 [Information] Request finished in 6.7456ms 200 application/json
+2018-07-30 16:13:18.400 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:13:18.405 +05:30 [Information] Request finished in 5.7897ms 200 application/json
+2018-07-30 16:13:20.380 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:13:20.387 +05:30 [Information] Request finished in 6.3017ms 200 application/json
+2018-07-30 16:13:22.381 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:13:22.407 +05:30 [Information] Request finished in 27.0009ms 200 application/json
+2018-07-30 16:13:24.386 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:13:24.393 +05:30 [Information] Request finished in 7.3497ms 200 application/json
+2018-07-30 16:13:26.381 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:13:26.389 +05:30 [Information] Request finished in 8.8902ms 200 application/json
+2018-07-30 16:13:28.379 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:13:28.386 +05:30 [Information] Request finished in 6.5292ms 200 application/json
+2018-07-30 16:13:30.382 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:13:30.390 +05:30 [Information] Request finished in 9.5968ms 200 application/json
+2018-07-30 16:13:32.382 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:13:32.389 +05:30 [Information] Request finished in 7.1948ms 200 application/json
+2018-07-30 16:13:34.380 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:13:34.386 +05:30 [Information] Request finished in 6.1248ms 200 application/json
+2018-07-30 16:13:36.386 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:13:36.401 +05:30 [Information] Request finished in 15.4633ms 200 application/json
+2018-07-30 16:13:36.807 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/api/invoice/createrecurringinvoice application/json 194
+2018-07-30 16:13:36.819 +05:30 [Information] Route matched with "{action = \"CreateRecurringInvoice\", controller = \"Invoice\"}". Executing action "Empite.PaymentService.Controllers.InvoiceController.CreateRecurringInvoice (Empite..PaymentService)"
+2018-07-30 16:13:36.842 +05:30 [Information] Executing action method "Empite.PaymentService.Controllers.InvoiceController.CreateRecurringInvoice (Empite..PaymentService)" with arguments (["Empite.PaymentService.Models.Dto.CreatePurchesDto"]) - Validation state: Valid
+2018-07-30 16:13:36.855 +05:30 [Information] Entity Framework Core "2.1.0-rtm-30799" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-30 16:13:36.876 +05:30 [Information] Executed DbCommand ("0"ms) [Parameters=["@p0='?' (Size = 255), @p1='?' (DbType = DateTime), @p2='?' (DbType = Guid), @p3='?' (DbType = DateTime), @p4='?' (DbType = Guid), @p5='?' (DbType = Boolean), @p6='?' (DbType = Int32), @p7='?' (Size = 8000) (DbType = AnsiString), @p8='?' (Size = 8000) (DbType = AnsiString), @p9='?' (DbType = Int32), @p10='?' (DbType = DateTime), @p11='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""INSERT INTO `ZohoInvoiceJobQueues` (`Id`, `CreatedAt`, `CreatedBy`, `DeletedAt`, `DeletedBy`, `IsSuccess`, `JobType`, `JsonData`, `LastErrorMessage`, `ReTryCount`, `UpdatedAt`, `UpdatedBy`)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11);"
+2018-07-30 16:13:36.883 +05:30 [Information] Executed action method "Empite.PaymentService.Controllers.InvoiceController.CreateRecurringInvoice (Empite..PaymentService)", returned result "Microsoft.AspNetCore.Mvc.OkResult" in 36.7254ms.
+2018-07-30 16:13:36.888 +05:30 [Information] Executing HttpStatusCodeResult, setting HTTP status code 200
+2018-07-30 16:13:36.891 +05:30 [Information] Executed action "Empite.PaymentService.Controllers.InvoiceController.CreateRecurringInvoice (Empite..PaymentService)" in 63.1244ms
+2018-07-30 16:13:36.898 +05:30 [Information] Request finished in 87.4832ms 200 
+2018-07-30 16:13:38.381 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:13:38.387 +05:30 [Information] Request finished in 6.7926ms 200 application/json
+2018-07-30 16:13:40.379 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:13:40.391 +05:30 [Information] Request finished in 9.1856ms 200 application/json
+2018-07-30 16:13:41.956 +05:30 [Information] Request starting HTTP/1.1 GET https://localhost:5011/api/invoice/runjobs  
+2018-07-30 16:13:41.961 +05:30 [Information] Route matched with "{action = \"RunJobs\", controller = \"Invoice\"}". Executing action "Empite.PaymentService.Controllers.InvoiceController.RunJobs (Empite..PaymentService)"
+2018-07-30 16:13:41.968 +05:30 [Information] Executing action method "Empite.PaymentService.Controllers.InvoiceController.RunJobs (Empite..PaymentService)" - Validation state: Valid
+2018-07-30 16:13:41.974 +05:30 [Information] Entity Framework Core "2.1.0-rtm-30799" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-30 16:13:41.985 +05:30 [Information] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT COUNT(*)
+FROM `ZohoInvoiceJobQueues` AS `x`
+WHERE `x`.`IsSuccess` = FALSE"
+2018-07-30 16:13:41.991 +05:30 [Information] Executed DbCommand ("0"ms) [Parameters=["@__p_1='?' (DbType = Int32), @__p_0='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SELECT `x`.`Id`, `x`.`CreatedAt`, `x`.`CreatedBy`, `x`.`DeletedAt`, `x`.`DeletedBy`, `x`.`IsSuccess`, `x`.`JobType`, `x`.`JsonData`, `x`.`LastErrorMessage`, `x`.`ReTryCount`, `x`.`UpdatedAt`, `x`.`UpdatedBy`
+FROM `ZohoInvoiceJobQueues` AS `x`
+WHERE `x`.`IsSuccess` = FALSE
+ORDER BY `x`.`CreatedAt`
+LIMIT @__p_1 OFFSET @__p_0"
+2018-07-30 16:13:42.001 +05:30 [Information] Executed action method "Empite.PaymentService.Controllers.InvoiceController.RunJobs (Empite..PaymentService)", returned result "Microsoft.AspNetCore.Mvc.OkResult" in 26.1779ms.
+2018-07-30 16:13:42.005 +05:30 [Information] Executing HttpStatusCodeResult, setting HTTP status code 200
+2018-07-30 16:13:42.008 +05:30 [Information] Executed action "Empite.PaymentService.Controllers.InvoiceController.RunJobs (Empite..PaymentService)" in 42.0563ms
+2018-07-30 16:13:42.018 +05:30 [Information] Request finished in 55.8992ms 200 
+2018-07-30 16:13:45.659 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:13:46.329 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:13:46.365 +05:30 [Information] Request finished in 677.9456ms 200 application/json
+2018-07-30 16:13:49.727 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:13:49.750 +05:30 [Information] Request finished in 4067.3347ms 200 application/json
+2018-07-30 16:13:50.470 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:13:50.493 +05:30 [Information] Request finished in 790.271ms 200 application/json
+2018-07-30 16:13:50.504 +05:30 [Information] Request finished in 768.6643ms 200 application/json
+2018-07-30 16:13:51.553 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:13:56.185 +05:30 [Information] Request finished in 66.5747ms 200 application/json
+2018-07-30 16:13:56.189 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:13:56.190 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:13:56.227 +05:30 [Information] Request finished in 38.2915ms 200 application/json
+2018-07-30 16:13:56.229 +05:30 [Information] Request finished in 37.6323ms 200 application/json
+2018-07-30 16:13:59.958 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:13:59.959 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:14:00.748 +05:30 [Information] Request finished in 770.1619ms 200 application/json
+2018-07-30 16:14:04.821 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:14:04.825 +05:30 [Information] Request finished in 4864.0918ms 200 application/json
+2018-07-30 16:14:04.828 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:14:04.836 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:14:04.838 +05:30 [Information] Request finished in 4083.3635ms 200 application/json
+2018-07-30 16:14:04.847 +05:30 [Information] Executed DbCommand ("9"ms) [Parameters=["@p2='?' (Size = 255), @p0='?' (Size = 8000) (DbType = AnsiString), @p1='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""UPDATE `ZohoInvoiceJobQueues` SET `LastErrorMessage` = @p0, `ReTryCount` = @p1
+WHERE `Id` = @p2;
+SELECT ROW_COUNT();"
+2018-07-30 16:14:04.849 +05:30 [Information] Request finished in 19.3366ms 200 application/json
+2018-07-30 16:14:04.854 +05:30 [Information] Request finished in 21.7612ms 200 application/json
+2018-07-30 16:14:06.385 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:14:06.392 +05:30 [Information] Request finished in 10.2208ms 200 application/json
+2018-07-30 16:14:08.383 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:14:08.390 +05:30 [Information] Request finished in 7.5616ms 200 application/json
+2018-07-30 16:14:10.380 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:14:10.386 +05:30 [Information] Request finished in 6.1529ms 200 application/json
+2018-07-30 16:14:12.383 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:14:12.391 +05:30 [Information] Request finished in 10.4806ms 200 application/json
+2018-07-30 16:14:14.383 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:14:14.391 +05:30 [Information] Request finished in 8.9888ms 200 application/json
+2018-07-30 16:14:16.388 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:14:16.399 +05:30 [Information] Request finished in 11.6864ms 200 application/json
+2018-07-30 16:14:18.384 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:14:18.395 +05:30 [Information] Request finished in 12.7942ms 200 application/json
+2018-07-30 16:14:20.382 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:14:20.389 +05:30 [Information] Request finished in 7.8163ms 200 application/json
+2018-07-30 16:14:22.380 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:14:22.388 +05:30 [Information] Request finished in 8.102ms 200 application/json
+2018-07-30 16:14:24.383 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:14:24.391 +05:30 [Information] Request finished in 10.4012ms 200 application/json
+2018-07-30 16:14:26.386 +05:30 [Information] Request starting HTTP/1.1 POST https://localhost:5011/schedules/stats application/x-www-form-urlencoded; charset=UTF-8 167
+2018-07-30 16:14:26.402 +05:30 [Information] Request finished in 16.6694ms 200 application/json
+2018-07-30 16:14:27.035 +05:30 [Information] Request starting HTTP/1.1 GET https://localhost:5011/api/invoice/runjobs  
+2018-07-30 16:14:27.040 +05:30 [Information] Route matched with "{action = \"RunJobs\", controller = \"Invoice\"}". Executing action "Empite.PaymentService.Controllers.InvoiceController.RunJobs (Empite..PaymentService)"
+2018-07-30 16:14:27.043 +05:30 [Information] Executing action method "Empite.PaymentService.Controllers.InvoiceController.RunJobs (Empite..PaymentService)" - Validation state: Valid
+2018-07-30 16:14:27.051 +05:30 [Information] Entity Framework Core "2.1.0-rtm-30799" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-30 16:14:27.059 +05:30 [Information] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT COUNT(*)
+FROM `ZohoInvoiceJobQueues` AS `x`
+WHERE `x`.`IsSuccess` = FALSE"
+2018-07-30 16:14:27.067 +05:30 [Information] Executed DbCommand ("0"ms) [Parameters=["@__p_1='?' (DbType = Int32), @__p_0='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SELECT `x`.`Id`, `x`.`CreatedAt`, `x`.`CreatedBy`, `x`.`DeletedAt`, `x`.`DeletedBy`, `x`.`IsSuccess`, `x`.`JobType`, `x`.`JsonData`, `x`.`LastErrorMessage`, `x`.`ReTryCount`, `x`.`UpdatedAt`, `x`.`UpdatedBy`
+FROM `ZohoInvoiceJobQueues` AS `x`
+WHERE `x`.`IsSuccess` = FALSE
+ORDER BY `x`.`CreatedAt`
+LIMIT @__p_1 OFFSET @__p_0"
+2018-07-30 16:14:27.076 +05:30 [Information] Executed action method "Empite.PaymentService.Controllers.InvoiceController.RunJobs (Empite..PaymentService)", returned result "Microsoft.AspNetCore.Mvc.OkResult" in 26.5795ms.
+2018-07-30 16:14:27.079 +05:30 [Information] Executing HttpStatusCodeResult, setting HTTP status code 200
+2018-07-30 16:14:27.084 +05:30 [Information] Executed action "Empite.PaymentService.Controllers.InvoiceController.RunJobs (Empite..PaymentService)" in 40.806ms
+2018-07-30 16:14:27.089 +05:30 [Information] Request finished in 56.1523ms 200 
+2018-07-30 16:15:32.263 +05:30 [Information] User profile is available. Using '"C:\Users\michi\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+2018-07-30 16:15:32.949 +05:30 [Information] DB tables already exist. Exit install
+2018-07-30 16:15:33.596 +05:30 [Information] Entity Framework Core "2.1.0-rtm-30799" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-30 16:15:33.629 +05:30 [Information] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='dev-tribechimppaymentcore' AND TABLE_NAME='__EFMigrationsHistory';"
+2018-07-30 16:15:33.643 +05:30 [Information] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='dev-tribechimppaymentcore' AND TABLE_NAME='__EFMigrationsHistory';"
+2018-07-30 16:15:33.651 +05:30 [Information] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT `MigrationId`, `ProductVersion`
+FROM `__EFMigrationsHistory`
+ORDER BY `MigrationId`;"
+2018-07-30 16:15:33.678 +05:30 [Information] No migrations were applied. The database is already up to date.
+2018-07-30 16:15:33.758 +05:30 [Information] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM `ConfiguredPaymentGateways` AS `c`)
+    THEN TRUE ELSE FALSE
+END"
+2018-07-30 16:15:34.916 +05:30 [Information] Request starting HTTP/1.1 GET https://localhost:5011/swagger/index.html  
+2018-07-30 16:15:35.053 +05:30 [Information] Request finished in 51.1689ms 200 text/html
+2018-07-30 16:15:35.364 +05:30 [Information] Request starting HTTP/1.1 GET https://localhost:5011/swagger/v1/swagger.json  
+2018-07-30 16:15:35.690 +05:30 [Information] Request finished in 327.7254ms 200 application/json;charset=utf-8
+2018-07-30 16:16:16.656 +05:30 [Information] Request starting HTTP/1.1 GET https://localhost:5011/api/invoice/runjobs  
+2018-07-30 16:16:16.765 +05:30 [Information] Route matched with "{action = \"RunJobs\", controller = \"Invoice\"}". Executing action "Empite.PaymentService.Controllers.InvoiceController.RunJobs (Empite..PaymentService)"
+2018-07-30 16:16:16.781 +05:30 [Information] Executing action method "Empite.PaymentService.Controllers.InvoiceController.RunJobs (Empite..PaymentService)" - Validation state: Valid
+2018-07-30 16:16:16.799 +05:30 [Information] Entity Framework Core "2.1.0-rtm-30799" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-30 16:16:16.858 +05:30 [Information] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT COUNT(*)
+FROM `ZohoInvoiceJobQueues` AS `x`
+WHERE `x`.`IsSuccess` = FALSE"
+2018-07-30 16:16:16.895 +05:30 [Information] Executed DbCommand ("1"ms) [Parameters=["@__p_1='?' (DbType = Int32), @__p_0='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SELECT `x`.`Id`, `x`.`CreatedAt`, `x`.`CreatedBy`, `x`.`DeletedAt`, `x`.`DeletedBy`, `x`.`IsSuccess`, `x`.`JobType`, `x`.`JsonData`, `x`.`LastErrorMessage`, `x`.`ReTryCount`, `x`.`UpdatedAt`, `x`.`UpdatedBy`
+FROM `ZohoInvoiceJobQueues` AS `x`
+WHERE `x`.`IsSuccess` = FALSE
+ORDER BY `x`.`CreatedAt`
+LIMIT @__p_1 OFFSET @__p_0"
+2018-07-30 16:16:16.970 +05:30 [Information] Executed action method "Empite.PaymentService.Controllers.InvoiceController.RunJobs (Empite..PaymentService)", returned result "Microsoft.AspNetCore.Mvc.OkResult" in 177.1878ms.
+2018-07-30 16:16:16.979 +05:30 [Information] Executing HttpStatusCodeResult, setting HTTP status code 200
+2018-07-30 16:16:16.988 +05:30 [Information] Executed action "Empite.PaymentService.Controllers.InvoiceController.RunJobs (Empite..PaymentService)" in 214.855ms
+2018-07-30 16:16:16.996 +05:30 [Information] Request finished in 340.0281ms 200 
+2018-07-30 16:16:25.490 +05:30 [Information] Executed DbCommand ("0"ms) [Parameters=["@__model_UserId_0='?' (Size = 255)"], CommandType='Text', CommandTimeout='30']"
+""SELECT `x`.`UserId`, `x`.`CreatedAt`, `x`.`CreatedBy`, `x`.`DeletedAt`, `x`.`DeletedBy`, `x`.`Email`, `x`.`OrganizationId`, `x`.`UpdatedAt`, `x`.`UpdatedBy`, `x`.`ZohoContactUserId`, `x`.`ZohoPrimaryContactId`
+FROM `InvoiceContacts` AS `x`
+WHERE `x`.`UserId` = @__model_UserId_0
+LIMIT 1"
+2018-07-30 16:16:30.769 +05:30 [Information] Executed DbCommand ("0"ms) [Parameters=["@__x_ItemId_0='?' (Size = 255)"], CommandType='Text', CommandTimeout='30']"
+""SELECT `y`.`Id`, `y`.`CreatedAt`, `y`.`CreatedBy`, `y`.`DeletedAt`, `y`.`DeletedBy`, `y`.`Description`, `y`.`Name`, `y`.`Rate`, `y`.`UpdatedAt`, `y`.`UpdatedBy`, `y`.`ZohoItemId`
+FROM `ZohoItems` AS `y`
+WHERE `y`.`Id` = @__x_ItemId_0
+LIMIT 1"
+2018-07-30 16:16:41.605 +05:30 [Information] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT `x`.`IsEnabled` AS `configured`, `x`.`GatewayName` AS `gateway_name`
+FROM `ConfiguredPaymentGateways` AS `x`"
+2018-07-30 16:16:55.342 +05:30 [Information] Start processing HTTP request "POST" https://invoice.zoho.com/api/v3/invoices?send=true
+2018-07-30 16:16:55.347 +05:30 [Information] Sending HTTP request "POST" https://invoice.zoho.com/api/v3/invoices?send=true
+2018-07-30 16:16:56.370 +05:30 [Information] Received HTTP response after 1019.7462ms - BadRequest
+2018-07-30 16:16:56.374 +05:30 [Information] End processing HTTP request after 1043.1302ms - BadRequest
+2018-07-30 16:17:17.462 +05:30 [Information] Executed DbCommand ("5"ms) [Parameters=["@p2='?' (Size = 255), @p0='?' (Size = 8000) (DbType = AnsiString), @p1='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""UPDATE `ZohoInvoiceJobQueues` SET `LastErrorMessage` = @p0, `ReTryCount` = @p1
+WHERE `Id` = @p2;
+SELECT ROW_COUNT();"
+2018-07-30 16:17:43.810 +05:30 [Information] User profile is available. Using '"C:\Users\michi\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+2018-07-30 16:17:44.928 +05:30 [Information] DB tables already exist. Exit install
+2018-07-30 16:17:45.561 +05:30 [Information] Entity Framework Core "2.1.0-rtm-30799" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-30 16:17:45.605 +05:30 [Information] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='dev-tribechimppaymentcore' AND TABLE_NAME='__EFMigrationsHistory';"
+2018-07-30 16:17:45.613 +05:30 [Information] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='dev-tribechimppaymentcore' AND TABLE_NAME='__EFMigrationsHistory';"
+2018-07-30 16:17:45.624 +05:30 [Information] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT `MigrationId`, `ProductVersion`
+FROM `__EFMigrationsHistory`
+ORDER BY `MigrationId`;"
+2018-07-30 16:17:45.639 +05:30 [Information] No migrations were applied. The database is already up to date.
+2018-07-30 16:17:45.715 +05:30 [Information] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM `ConfiguredPaymentGateways` AS `c`)
+    THEN TRUE ELSE FALSE
+END"
+2018-07-30 16:17:46.973 +05:30 [Information] Request starting HTTP/1.1 GET https://localhost:5011/swagger/index.html  
+2018-07-30 16:17:47.085 +05:30 [Information] Request finished in 110.5996ms 200 text/html
+2018-07-30 16:17:47.406 +05:30 [Information] Request starting HTTP/1.1 GET https://localhost:5011/swagger/v1/swagger.json  
+2018-07-30 16:17:47.717 +05:30 [Information] Request finished in 311.6259ms 200 application/json;charset=utf-8
+2018-07-30 16:17:53.100 +05:30 [Information] Request starting HTTP/1.1 GET https://localhost:5011/api/invoice/runjobs  
+2018-07-30 16:17:53.188 +05:30 [Information] Route matched with "{action = \"RunJobs\", controller = \"Invoice\"}". Executing action "Empite.PaymentService.Controllers.InvoiceController.RunJobs (Empite..PaymentService)"
+2018-07-30 16:17:53.208 +05:30 [Information] Executing action method "Empite.PaymentService.Controllers.InvoiceController.RunJobs (Empite..PaymentService)" - Validation state: Valid
+2018-07-30 16:17:53.220 +05:30 [Information] Entity Framework Core "2.1.0-rtm-30799" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-30 16:17:53.273 +05:30 [Information] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT COUNT(*)
+FROM `ZohoInvoiceJobQueues` AS `x`
+WHERE `x`.`IsSuccess` = FALSE"
+2018-07-30 16:17:53.303 +05:30 [Information] Executed DbCommand ("1"ms) [Parameters=["@__p_1='?' (DbType = Int32), @__p_0='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SELECT `x`.`Id`, `x`.`CreatedAt`, `x`.`CreatedBy`, `x`.`DeletedAt`, `x`.`DeletedBy`, `x`.`IsSuccess`, `x`.`JobType`, `x`.`JsonData`, `x`.`LastErrorMessage`, `x`.`ReTryCount`, `x`.`UpdatedAt`, `x`.`UpdatedBy`
+FROM `ZohoInvoiceJobQueues` AS `x`
+WHERE `x`.`IsSuccess` = FALSE
+ORDER BY `x`.`CreatedAt`
+LIMIT @__p_1 OFFSET @__p_0"
+2018-07-30 16:17:53.362 +05:30 [Information] Executed action method "Empite.PaymentService.Controllers.InvoiceController.RunJobs (Empite..PaymentService)", returned result "Microsoft.AspNetCore.Mvc.OkResult" in 146.9078ms.
+2018-07-30 16:17:53.376 +05:30 [Information] Executing HttpStatusCodeResult, setting HTTP status code 200
+2018-07-30 16:17:53.386 +05:30 [Information] Executed action "Empite.PaymentService.Controllers.InvoiceController.RunJobs (Empite..PaymentService)" in 186.3139ms
+2018-07-30 16:17:53.394 +05:30 [Information] Request finished in 293.0816ms 200 
+2018-07-30 16:18:00.177 +05:30 [Information] Executed DbCommand ("0"ms) [Parameters=["@__model_UserId_0='?' (Size = 255)"], CommandType='Text', CommandTimeout='30']"
+""SELECT `x`.`UserId`, `x`.`CreatedAt`, `x`.`CreatedBy`, `x`.`DeletedAt`, `x`.`DeletedBy`, `x`.`Email`, `x`.`OrganizationId`, `x`.`UpdatedAt`, `x`.`UpdatedBy`, `x`.`ZohoContactUserId`, `x`.`ZohoPrimaryContactId`
+FROM `InvoiceContacts` AS `x`
+WHERE `x`.`UserId` = @__model_UserId_0
+LIMIT 1"
+2018-07-30 16:18:02.327 +05:30 [Information] Executed DbCommand ("0"ms) [Parameters=["@__x_ItemId_0='?' (Size = 255)"], CommandType='Text', CommandTimeout='30']"
+""SELECT `y`.`Id`, `y`.`CreatedAt`, `y`.`CreatedBy`, `y`.`DeletedAt`, `y`.`DeletedBy`, `y`.`Description`, `y`.`Name`, `y`.`Rate`, `y`.`UpdatedAt`, `y`.`UpdatedBy`, `y`.`ZohoItemId`
+FROM `ZohoItems` AS `y`
+WHERE `y`.`Id` = @__x_ItemId_0
+LIMIT 1"
+2018-07-30 16:18:03.213 +05:30 [Information] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT `x`.`IsEnabled` AS `configured`, `x`.`GatewayName` AS `gateway_name`
+FROM `ConfiguredPaymentGateways` AS `x`"
+2018-07-30 16:19:23.006 +05:30 [Information] User profile is available. Using '"C:\Users\michi\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+2018-07-30 16:19:24.025 +05:30 [Information] DB tables already exist. Exit install
+2018-07-30 16:19:24.596 +05:30 [Information] Entity Framework Core "2.1.0-rtm-30799" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-30 16:19:24.632 +05:30 [Information] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='dev-tribechimppaymentcore' AND TABLE_NAME='__EFMigrationsHistory';"
+2018-07-30 16:19:24.640 +05:30 [Information] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='dev-tribechimppaymentcore' AND TABLE_NAME='__EFMigrationsHistory';"
+2018-07-30 16:19:24.649 +05:30 [Information] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT `MigrationId`, `ProductVersion`
+FROM `__EFMigrationsHistory`
+ORDER BY `MigrationId`;"
+2018-07-30 16:19:24.659 +05:30 [Information] No migrations were applied. The database is already up to date.
+2018-07-30 16:19:24.732 +05:30 [Information] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM `ConfiguredPaymentGateways` AS `c`)
+    THEN TRUE ELSE FALSE
+END"
+2018-07-30 16:19:26.160 +05:30 [Information] Request starting HTTP/1.1 GET https://localhost:5011/swagger/index.html  
+2018-07-30 16:19:26.240 +05:30 [Information] Request finished in 52.6704ms 200 text/html
+2018-07-30 16:19:26.552 +05:30 [Information] Request starting HTTP/1.1 GET https://localhost:5011/swagger/v1/swagger.json  
+2018-07-30 16:19:26.826 +05:30 [Information] Request finished in 273.2048ms 200 application/json;charset=utf-8
+2018-07-30 16:19:31.020 +05:30 [Information] Request starting HTTP/1.1 GET https://localhost:5011/api/invoice/runjobs  
+2018-07-30 16:19:31.098 +05:30 [Information] Route matched with "{action = \"RunJobs\", controller = \"Invoice\"}". Executing action "Empite.PaymentService.Controllers.InvoiceController.RunJobs (Empite..PaymentService)"
+2018-07-30 16:19:31.112 +05:30 [Information] Executing action method "Empite.PaymentService.Controllers.InvoiceController.RunJobs (Empite..PaymentService)" - Validation state: Valid
+2018-07-30 16:19:31.124 +05:30 [Information] Entity Framework Core "2.1.0-rtm-30799" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-30 16:19:31.175 +05:30 [Information] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT COUNT(*)
+FROM `ZohoInvoiceJobQueues` AS `x`
+WHERE `x`.`IsSuccess` = FALSE"
+2018-07-30 16:19:31.209 +05:30 [Information] Executed DbCommand ("1"ms) [Parameters=["@__p_1='?' (DbType = Int32), @__p_0='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SELECT `x`.`Id`, `x`.`CreatedAt`, `x`.`CreatedBy`, `x`.`DeletedAt`, `x`.`DeletedBy`, `x`.`IsSuccess`, `x`.`JobType`, `x`.`JsonData`, `x`.`LastErrorMessage`, `x`.`ReTryCount`, `x`.`UpdatedAt`, `x`.`UpdatedBy`
+FROM `ZohoInvoiceJobQueues` AS `x`
+WHERE `x`.`IsSuccess` = FALSE
+ORDER BY `x`.`CreatedAt`
+LIMIT @__p_1 OFFSET @__p_0"
+2018-07-30 16:19:31.280 +05:30 [Information] Executed action method "Empite.PaymentService.Controllers.InvoiceController.RunJobs (Empite..PaymentService)", returned result "Microsoft.AspNetCore.Mvc.OkResult" in 160.6384ms.
+2018-07-30 16:19:31.291 +05:30 [Information] Executing HttpStatusCodeResult, setting HTTP status code 200
+2018-07-30 16:19:31.300 +05:30 [Information] Executed action "Empite.PaymentService.Controllers.InvoiceController.RunJobs (Empite..PaymentService)" in 191.8451ms
+2018-07-30 16:19:31.306 +05:30 [Information] Request finished in 285.4012ms 200 
+2018-07-30 16:19:38.002 +05:30 [Information] Executed DbCommand ("0"ms) [Parameters=["@__model_UserId_0='?' (Size = 255)"], CommandType='Text', CommandTimeout='30']"
+""SELECT `x`.`UserId`, `x`.`CreatedAt`, `x`.`CreatedBy`, `x`.`DeletedAt`, `x`.`DeletedBy`, `x`.`Email`, `x`.`OrganizationId`, `x`.`UpdatedAt`, `x`.`UpdatedBy`, `x`.`ZohoContactUserId`, `x`.`ZohoPrimaryContactId`
+FROM `InvoiceContacts` AS `x`
+WHERE `x`.`UserId` = @__model_UserId_0
+LIMIT 1"
+2018-07-30 16:19:41.321 +05:30 [Information] Executed DbCommand ("0"ms) [Parameters=["@__x_ItemId_0='?' (Size = 255)"], CommandType='Text', CommandTimeout='30']"
+""SELECT `y`.`Id`, `y`.`CreatedAt`, `y`.`CreatedBy`, `y`.`DeletedAt`, `y`.`DeletedBy`, `y`.`Description`, `y`.`Name`, `y`.`Rate`, `y`.`UpdatedAt`, `y`.`UpdatedBy`, `y`.`ZohoItemId`
+FROM `ZohoItems` AS `y`
+WHERE `y`.`Id` = @__x_ItemId_0
+LIMIT 1"
+2018-07-30 16:19:42.685 +05:30 [Information] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT `x`.`IsEnabled` AS `configured`, `x`.`GatewayName` AS `gateway_name`
+FROM `ConfiguredPaymentGateways` AS `x`"
+2018-07-30 16:20:09.074 +05:30 [Information] Start processing HTTP request "POST" https://invoice.zoho.com/api/v3/invoices?send=true
+2018-07-30 16:20:09.079 +05:30 [Information] Sending HTTP request "POST" https://invoice.zoho.com/api/v3/invoices?send=true
+2018-07-30 16:20:11.501 +05:30 [Information] Received HTTP response after 2418.5244ms - Created
+2018-07-30 16:20:11.506 +05:30 [Information] End processing HTTP request after 2438.6208ms - Created
+2018-07-30 16:23:43.705 +05:30 [Information] User profile is available. Using '"C:\Users\michi\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+2018-07-30 16:23:44.381 +05:30 [Information] DB tables already exist. Exit install
+2018-07-30 16:23:45.186 +05:30 [Information] Entity Framework Core "2.1.0-rtm-30799" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-30 16:23:45.219 +05:30 [Information] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='dev-tribechimppaymentcore' AND TABLE_NAME='__EFMigrationsHistory';"
+2018-07-30 16:23:45.229 +05:30 [Information] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='dev-tribechimppaymentcore' AND TABLE_NAME='__EFMigrationsHistory';"
+2018-07-30 16:23:45.237 +05:30 [Information] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT `MigrationId`, `ProductVersion`
+FROM `__EFMigrationsHistory`
+ORDER BY `MigrationId`;"
+2018-07-30 16:23:45.248 +05:30 [Information] No migrations were applied. The database is already up to date.
+2018-07-30 16:23:45.325 +05:30 [Information] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM `ConfiguredPaymentGateways` AS `c`)
+    THEN TRUE ELSE FALSE
+END"
+2018-07-30 16:23:46.530 +05:30 [Information] Request starting HTTP/1.1 GET https://localhost:5011/swagger/index.html  
+2018-07-30 16:23:46.614 +05:30 [Information] Request finished in 68.8697ms 200 text/html
+2018-07-30 16:23:46.927 +05:30 [Information] Request starting HTTP/1.1 GET https://localhost:5011/swagger/v1/swagger.json  
+2018-07-30 16:23:47.178 +05:30 [Information] Request finished in 250.8128ms 200 application/json;charset=utf-8
+2018-07-30 16:23:57.417 +05:30 [Information] Request starting HTTP/1.1 GET https://localhost:5011/api/invoice/runjobs  
+2018-07-30 16:23:57.489 +05:30 [Information] Route matched with "{action = \"RunJobs\", controller = \"Invoice\"}". Executing action "Empite.PaymentService.Controllers.InvoiceController.RunJobs (Empite..PaymentService)"
+2018-07-30 16:23:57.505 +05:30 [Information] Executing action method "Empite.PaymentService.Controllers.InvoiceController.RunJobs (Empite..PaymentService)" - Validation state: Valid
+2018-07-30 16:23:57.517 +05:30 [Information] Entity Framework Core "2.1.0-rtm-30799" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-30 16:23:57.593 +05:30 [Information] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT COUNT(*)
+FROM `ZohoInvoiceJobQueues` AS `x`
+WHERE `x`.`IsSuccess` = FALSE"
+2018-07-30 16:23:57.620 +05:30 [Information] Executed DbCommand ("1"ms) [Parameters=["@__p_1='?' (DbType = Int32), @__p_0='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SELECT `x`.`Id`, `x`.`CreatedAt`, `x`.`CreatedBy`, `x`.`DeletedAt`, `x`.`DeletedBy`, `x`.`IsSuccess`, `x`.`JobType`, `x`.`JsonData`, `x`.`LastErrorMessage`, `x`.`ReTryCount`, `x`.`UpdatedAt`, `x`.`UpdatedBy`
+FROM `ZohoInvoiceJobQueues` AS `x`
+WHERE `x`.`IsSuccess` = FALSE
+ORDER BY `x`.`CreatedAt`
+LIMIT @__p_1 OFFSET @__p_0"
+2018-07-30 16:23:57.683 +05:30 [Information] Executed action method "Empite.PaymentService.Controllers.InvoiceController.RunJobs (Empite..PaymentService)", returned result "Microsoft.AspNetCore.Mvc.OkResult" in 169.7478ms.
+2018-07-30 16:23:57.693 +05:30 [Information] Executing HttpStatusCodeResult, setting HTTP status code 200
+2018-07-30 16:23:57.705 +05:30 [Information] Executed action "Empite.PaymentService.Controllers.InvoiceController.RunJobs (Empite..PaymentService)" in 204.3507ms
+2018-07-30 16:24:00.034 +05:30 [Information] Request finished in 2607.823ms 200 
+2018-07-30 16:24:01.208 +05:30 [Information] Executed DbCommand ("0"ms) [Parameters=["@__model_UserId_0='?' (Size = 255)"], CommandType='Text', CommandTimeout='30']"
+""SELECT `x`.`UserId`, `x`.`CreatedAt`, `x`.`CreatedBy`, `x`.`DeletedAt`, `x`.`DeletedBy`, `x`.`Email`, `x`.`OrganizationId`, `x`.`UpdatedAt`, `x`.`UpdatedBy`, `x`.`ZohoContactUserId`, `x`.`ZohoPrimaryContactId`
+FROM `InvoiceContacts` AS `x`
+WHERE `x`.`UserId` = @__model_UserId_0
+LIMIT 1"
+2018-07-30 16:24:01.237 +05:30 [Information] Executed DbCommand ("0"ms) [Parameters=["@__x_ItemId_0='?' (Size = 255)"], CommandType='Text', CommandTimeout='30']"
+""SELECT `y`.`Id`, `y`.`CreatedAt`, `y`.`CreatedBy`, `y`.`DeletedAt`, `y`.`DeletedBy`, `y`.`Description`, `y`.`Name`, `y`.`Rate`, `y`.`UpdatedAt`, `y`.`UpdatedBy`, `y`.`ZohoItemId`
+FROM `ZohoItems` AS `y`
+WHERE `y`.`Id` = @__x_ItemId_0
+LIMIT 1"
+2018-07-30 16:24:01.275 +05:30 [Information] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT `x`.`IsEnabled` AS `configured`, `x`.`GatewayName` AS `gateway_name`
+FROM `ConfiguredPaymentGateways` AS `x`"
+2018-07-30 16:24:01.298 +05:30 [Information] Start processing HTTP request "POST" https://invoice.zoho.com/api/v3/invoices?send=true
+2018-07-30 16:24:01.302 +05:30 [Information] Sending HTTP request "POST" https://invoice.zoho.com/api/v3/invoices?send=true
+2018-07-30 16:24:03.750 +05:30 [Information] Received HTTP response after 2443.0444ms - Created
+2018-07-30 16:24:03.760 +05:30 [Information] End processing HTTP request after 2465.2713ms - Created
+2018-07-30 16:24:03.897 +05:30 [Information] Executed DbCommand ("6"ms) [Parameters=["@p1='?' (Size = 255), @p0='?' (DbType = Boolean)"], CommandType='Text', CommandTimeout='30']"
+""UPDATE `ZohoInvoiceJobQueues` SET `IsSuccess` = @p0
+WHERE `Id` = @p1;
+SELECT ROW_COUNT();"

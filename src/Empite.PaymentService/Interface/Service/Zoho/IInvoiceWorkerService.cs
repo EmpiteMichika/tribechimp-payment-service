@@ -11,6 +11,6 @@ namespace Empite.PaymentService.Interface.Service.Zoho
         Task<bool> EnablePaymentReminder(InvoiceContact contactDetails);
         Task<ZohoItem> CreateItem(CreateZohoItemDto model, ApplicationDbContext _dbContext);
         Task DeleteInvoice(string invoiceId);
-        Task<bool> CreateInvoice(CreatePurchesDto model, ApplicationDbContext dbContext, bool isFirst = false);
+        Task<bool> CreateInvoice(ZohoInvoiceJobQueue job,CreatePurchesDto model, ApplicationDbContext dbContext, bool isFirst = false);
     }
 }

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Empite.PaymentService.Data;
@@ -6,6 +8,7 @@ using Empite.PaymentService.Data.Entity.InvoiceRelated;
 using Empite.PaymentService.Interface.Service.Zoho;
 using Empite.PaymentService.Models.Configs;
 using Hangfire;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
 namespace Empite.PaymentService.Services.PaymentService.Zoho
@@ -31,54 +34,55 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
         public async Task CheckInvoicesDueAsync()
         {
             throw new NotImplementedException();
-            //if (isRunningCheckInvoicesDue)
-            //    return;
-            //isRunningCheckInvoicesDue = true;
-            //try
-            //{
-                
-            //    using (ApplicationDbContext dbContext = _services.CreateScope().ServiceProvider.GetRequiredService<ApplicationDbContext>())
-            //    {
-            //        int currentPage = 0;
-            //        int successCount = 0;
-            //        while (true)
-            //        {
-            //            await Task.Delay(10);
-            //            List<purchese> recurringInvoices = dbContext.RecurringInvoices
-            //                .Where(x =>( x.IsDue || x.UpdatedAt < DateTime.UtcNow.AddMonths(-1) ) && x.DeletedAt == null )
-            //                .Skip((currentPage * ResultPerPage )- successCount).Take(ResultPerPage).ToList();
-            //            if(!recurringInvoices.Any())
-            //                break;
-            //            foreach (purchese purchese in recurringInvoices)
-            //            {
-            //                //usin try catch to contine the flow
-            //                try
-            //                {
-            //                    bool res = await ProcessRecurringInvoice(purchese, dbContext);
-            //                    if (res)
-            //                        successCount++;
-            //                }
-            //                catch (Exception ex)
-            //                {
-            //                    //Todo Logging
 
-            //                }
-                           
+            if (isRunningCheckInvoicesDue)
+                return;
+            isRunningCheckInvoicesDue = true;
+            try
+            {
 
-            //            }
+                using (ApplicationDbContext dbContext = _services.CreateScope().ServiceProvider.GetRequiredService<ApplicationDbContext>())
+                {
+                    int currentPage = 0;
+                    int successCount = 0;
+                    while (true)
+                    {
+                        await Task.Delay(10);
+                        List<Purchese> recurringInvoices = dbContext.Purcheses
+                            .Where(x => (x.IsPaidForThisMonth || x.UpdatedAt < DateTime.UtcNow.AddMonths(-1)) && x.DeletedAt == null)
+                            .Skip((currentPage * ResultPerPage) - successCount).Take(ResultPerPage).ToList();
+                        if (!recurringInvoices.Any())
+                            break;
+                        foreach (Purchese purchese in recurringInvoices)
+                        {
+                            //usin try catch to contine the flow
+                            try
+                            {
+                                //bool res = await ProcessRecurringInvoice(purchese, dbContext);
+                                //if (res)
+                                //    successCount++;
+                            }
+                            catch (Exception ex)
+                            {
+                                //Todo Logging
 
-            //            currentPage++;
-            //        }
-                    
+                            }
 
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    isRunningCheckInvoicesDue = false;
-            //    //Todo Logger
-            //}
-            //isRunningCheckInvoicesDue = false;
+
+                        }
+
+                        currentPage++;
+                    }
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                isRunningCheckInvoicesDue = false;
+                //Todo Logger
+            }
+            isRunningCheckInvoicesDue = false;
         }
         //Retrn True If the recurring purchese is changes to paid, so we can get the skkippin elements
         private async Task<bool> CheckInvoice(Purchese purchese, ApplicationDbContext dbContext)

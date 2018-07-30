@@ -21,7 +21,7 @@ namespace Empite.PaymentService.Services.PaymentService
 {
     public class InvoceService: IInvoceService
     {
-        private readonly ApplicationDbContext dbContext;
+        
         private static bool _isJobsProcessing = false;
         private const int RowsPerPage = 100;
         private readonly Settings _settings;
@@ -193,7 +193,7 @@ namespace Empite.PaymentService.Services.PaymentService
             }else if (job.JobType == InvoiceJobQueueType.CreateFirstInvoice)
             {
                 CreatePurchesDto model = JsonConvert.DeserializeObject<CreatePurchesDto>(job.JsonData);
-                bool resut = await _workerService.CreateInvoice(model, dbContext, true);
+                bool resut = await _workerService.CreateInvoice(job,model, _dbContext, true);
                 if (!resut)
                 {
                     throw new Exception($"Frist invoice creating failed for job ID {job.Id}");

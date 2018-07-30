@@ -22,7 +22,6 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
         private readonly IHttpClientFactory _httpClientFactory;
         private IServiceProvider _services { get; }
         private const int ZohoSuccessResponseCode = 0;
-        private const int ZohoPaymentTermDaysGap = 10;
         private readonly Settings _settings;
         public ZohoInvoiceWorkerService(IZohoInvoiceSingleton zohoTokenService, IHttpClientFactory httpClientFactory, IServiceProvider services, IOptions<Settings> options)
         {
@@ -223,7 +222,7 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
 
         }
 
-        public async Task<bool> CreateInvoice(CreatePurchesDto model,ApplicationDbContext dbContext,bool isFirst = false)
+        public async Task<bool> CreateInvoice(ZohoInvoiceJobQueue job,CreatePurchesDto model,ApplicationDbContext dbContext,bool isFirst = false)
         {
             HttpClient httpClient = _httpClientFactory.CreateClient();
             httpClient.AddZohoAuthorizationHeader(await _zohoTokenService.GetOAuthToken());
@@ -247,7 +246,7 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
                     var dbZohoItems = zohoItems.First(y => y.Id == x.ItemId);
                     return new InvoceService.LineItemRecurringInvoiceCreateRequest
                     {
-                        item_id = dbZohoItems.Id,
+                        item_id = dbZohoItems.ZohoItemId,
                         quantity = x.Qty
                     };
                 }).ToList(),
@@ -303,7 +302,8 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
                                 dbHistory.ZohoInvoiceId = itemCreateResponse.invoice.invoice_id;
                                 dbHistory.Purchese = dbPurchese;
                             }
-                            
+
+                            job.IsSuccess = true;
                             await dbContext.SaveChangesAsync();
                         }
                         catch (Exception ex)
