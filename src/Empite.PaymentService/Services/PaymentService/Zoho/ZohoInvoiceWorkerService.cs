@@ -220,6 +220,18 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
 
 
         }
-        public async 
+
+        public async Task<bool> CreateInvoice(CreatePurchesDto model,ApplicationDbContext dbContext,bool isFirst = false)
+        {
+            HttpClient httpClient = _httpClientFactory.CreateClient();
+            httpClient.AddZohoAuthorizationHeader(await _zohoTokenService.GetOAuthToken());
+            Uri url = new Uri(_settings.ZohoAccount.ApiBasePath).Append("invoices");
+
+            InvoiceContact contact = dbContext.InvoiceContacts.First(x => x.UserId == model.UserId);
+            if (contact == null)
+                    throw new Exception($"User is not found in the database UserId is => {contact.UserId}");
+
+            return true;
+        }
     }
 }
