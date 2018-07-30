@@ -1,2 +1,131 @@
 2018-07-30 09:55:13.395 +05:30 [Information] Entity Framework Core "2.1.0-rtm-30799" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
 2018-07-30 10:24:07.415 +05:30 [Information] Entity Framework Core "2.1.0-rtm-30799" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-30 15:53:06.368 +05:30 [Information] Entity Framework Core "2.1.0-rtm-30799" initialized '"ApplicationDbContext"' using provider '"Pomelo.EntityFrameworkCore.MySql"' with options: "None"
+2018-07-30 15:53:06.624 +05:30 [Information] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE DATABASE `dev-tribechimppaymentcore`;"
+2018-07-30 15:53:06.734 +05:30 [Information] Executed DbCommand ("21"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE `__EFMigrationsHistory` (
+    `MigrationId` varchar(95) NOT NULL,
+    `ProductVersion` varchar(32) NOT NULL,
+    CONSTRAINT `PK___EFMigrationsHistory` PRIMARY KEY (`MigrationId`)
+);"
+2018-07-30 15:53:06.796 +05:30 [Information] Executed DbCommand ("20"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='dev-tribechimppaymentcore' AND TABLE_NAME='__EFMigrationsHistory';"
+2018-07-30 15:53:06.799 +05:30 [Information] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT `MigrationId`, `ProductVersion`
+FROM `__EFMigrationsHistory`
+ORDER BY `MigrationId`;"
+2018-07-30 15:53:06.805 +05:30 [Information] Applying migration '"20180730045407_Initial"'.
+2018-07-30 15:53:06.881 +05:30 [Information] Executed DbCommand ("22"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE `ConfiguredPaymentGateways` (
+    `Id` varchar(255) NOT NULL,
+    `GatewayName` longtext NULL,
+    `IsEnabled` bit NOT NULL,
+    CONSTRAINT `PK_ConfiguredPaymentGateways` PRIMARY KEY (`Id`)
+);"
+2018-07-30 15:53:06.902 +05:30 [Information] Executed DbCommand ("21"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE `InvoiceContacts` (
+    `CreatedAt` datetime(6) NOT NULL,
+    `CreatedBy` char(36) NULL,
+    `UpdatedAt` datetime(6) NULL,
+    `UpdatedBy` char(36) NULL,
+    `DeletedAt` datetime(6) NULL,
+    `DeletedBy` char(36) NULL,
+    `OrganizationId` longtext NULL,
+    `UserId` varchar(255) NOT NULL,
+    `ZohoContactUserId` varchar(255) NULL,
+    `ZohoPrimaryContactId` longtext NULL,
+    `Email` longtext NULL,
+    CONSTRAINT `PK_InvoiceContacts` PRIMARY KEY (`UserId`)
+);"
+2018-07-30 15:53:06.924 +05:30 [Information] Executed DbCommand ("21"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE `ZohoInvoiceJobQueues` (
+    `CreatedAt` datetime(6) NOT NULL,
+    `CreatedBy` char(36) NULL,
+    `UpdatedAt` datetime(6) NULL,
+    `UpdatedBy` char(36) NULL,
+    `DeletedAt` datetime(6) NULL,
+    `DeletedBy` char(36) NULL,
+    `Id` varchar(255) NOT NULL,
+    `JsonData` longtext NULL,
+    `JobType` int NOT NULL,
+    `IsSuccess` bit NOT NULL,
+    `ReTryCount` int NOT NULL,
+    `LastErrorMessage` longtext NULL,
+    CONSTRAINT `PK_ZohoInvoiceJobQueues` PRIMARY KEY (`Id`)
+);"
+2018-07-30 15:53:06.944 +05:30 [Information] Executed DbCommand ("20"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE `ZohoItems` (
+    `CreatedAt` datetime(6) NOT NULL,
+    `CreatedBy` char(36) NULL,
+    `UpdatedAt` datetime(6) NULL,
+    `UpdatedBy` char(36) NULL,
+    `DeletedAt` datetime(6) NULL,
+    `DeletedBy` char(36) NULL,
+    `Id` varchar(255) NOT NULL,
+    `Name` longtext NULL,
+    `Description` longtext NULL,
+    `Rate` double NOT NULL,
+    `ZohoItemId` varchar(255) NULL,
+    CONSTRAINT `PK_ZohoItems` PRIMARY KEY (`Id`)
+);"
+2018-07-30 15:53:06.968 +05:30 [Information] Executed DbCommand ("24"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE `Purcheses` (
+    `CreatedAt` datetime(6) NOT NULL,
+    `CreatedBy` char(36) NULL,
+    `UpdatedAt` datetime(6) NULL,
+    `UpdatedBy` char(36) NULL,
+    `DeletedAt` datetime(6) NULL,
+    `DeletedBy` char(36) NULL,
+    `Id` varchar(255) NOT NULL,
+    `InvoiceName` longtext NULL,
+    `InvoiceContactUserId` varchar(255) NULL,
+    `ReferenceGuid` char(36) NULL,
+    `IsPaidForThisMonth` bit NOT NULL,
+    `InvoiceType` int NOT NULL,
+    `InvoiceStatus` int NOT NULL,
+    CONSTRAINT `PK_Purcheses` PRIMARY KEY (`Id`),
+    CONSTRAINT `FK_Purcheses_InvoiceContacts_InvoiceContactUserId` FOREIGN KEY (`InvoiceContactUserId`) REFERENCES `InvoiceContacts` (`UserId`) ON DELETE NO ACTION
+);"
+2018-07-30 15:53:07.178 +05:30 [Information] Executed DbCommand ("24"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE `InvoiceHistories` (
+    `CreatedAt` datetime(6) NOT NULL,
+    `CreatedBy` char(36) NULL,
+    `UpdatedAt` datetime(6) NULL,
+    `UpdatedBy` char(36) NULL,
+    `DeletedAt` datetime(6) NULL,
+    `DeletedBy` char(36) NULL,
+    `Id` varchar(255) NOT NULL,
+    `ZohoInvoiceId` varchar(255) NULL,
+    `PurcheseId` varchar(255) NULL,
+    `PaymentRecordedDate` datetime(6) NULL,
+    `InvoiceStatus` int NOT NULL,
+    CONSTRAINT `PK_InvoiceHistories` PRIMARY KEY (`Id`),
+    CONSTRAINT `FK_InvoiceHistories_Purcheses_PurcheseId` FOREIGN KEY (`PurcheseId`) REFERENCES `Purcheses` (`Id`) ON DELETE NO ACTION
+);"
+2018-07-30 15:53:07.564 +05:30 [Information] Executed DbCommand ("23"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE `ZohoItem_Purchese` (
+    `RecurringInvoiceId` varchar(255) NOT NULL,
+    `ZohoItemId` varchar(255) NOT NULL,
+    `Qty` int NOT NULL,
+    CONSTRAINT `PK_ZohoItem_Purchese` PRIMARY KEY (`RecurringInvoiceId`, `ZohoItemId`),
+    CONSTRAINT `FK_ZohoItem_Purchese_Purcheses_RecurringInvoiceId` FOREIGN KEY (`RecurringInvoiceId`) REFERENCES `Purcheses` (`Id`) ON DELETE CASCADE,
+    CONSTRAINT `FK_ZohoItem_Purchese_ZohoItems_ZohoItemId` FOREIGN KEY (`ZohoItemId`) REFERENCES `ZohoItems` (`Id`) ON DELETE CASCADE
+);"
+2018-07-30 15:53:07.582 +05:30 [Information] Executed DbCommand ("18"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE INDEX `IX_InvoiceContacts_ZohoContactUserId` ON `InvoiceContacts` (`ZohoContactUserId`);"
+2018-07-30 15:53:07.600 +05:30 [Information] Executed DbCommand ("17"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE INDEX `IX_InvoiceHistories_PurcheseId` ON `InvoiceHistories` (`PurcheseId`);"
+2018-07-30 15:53:07.615 +05:30 [Information] Executed DbCommand ("15"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE INDEX `IX_InvoiceHistories_ZohoInvoiceId` ON `InvoiceHistories` (`ZohoInvoiceId`);"
+2018-07-30 15:53:07.851 +05:30 [Information] Executed DbCommand ("19"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE INDEX `IX_Purcheses_InvoiceContactUserId` ON `Purcheses` (`InvoiceContactUserId`);"
+2018-07-30 15:53:07.863 +05:30 [Information] Executed DbCommand ("12"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE INDEX `IX_Purcheses_ReferenceGuid` ON `Purcheses` (`ReferenceGuid`);"
+2018-07-30 15:53:07.882 +05:30 [Information] Executed DbCommand ("19"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE INDEX `IX_ZohoItem_Purchese_ZohoItemId` ON `ZohoItem_Purchese` (`ZohoItemId`);"
+2018-07-30 15:53:07.897 +05:30 [Information] Executed DbCommand ("14"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE INDEX `IX_ZohoItems_ZohoItemId` ON `ZohoItems` (`ZohoItemId`);"
+2018-07-30 15:53:07.900 +05:30 [Information] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""INSERT INTO `__EFMigrationsHistory` (`MigrationId`, `ProductVersion`)
+VALUES ('20180730045407_Initial', '2.1.0-rtm-30799');"

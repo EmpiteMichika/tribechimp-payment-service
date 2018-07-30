@@ -141,73 +141,6 @@ namespace Empite.PaymentService.Services.PaymentService
             _isJobsProcessing = false;
             
         }
-        
-        
-        //private async Task<string> CreatePurchese(CreatePurchesDto model, ApplicationDbContext dbContext)
-        //{
-            
-            
-        //    HttpClient httpClient = _httpClientFactory.CreateClient();
-        //    httpClient.AddZohoAuthorizationHeader(await _zohoTokenService.GetOAuthToken());
-        //    Uri url = new Uri(_settings.ZohoAccount.ApiBasePath).Append("invoices");
-
-        //    InvoiceContact contact = dbContext.InvoiceContacts.First(x => x.UserId == model.UserId);
-            
-        //    if (contact == null)
-        //        throw new Exception($"User is not found in the database UserId is => {contact.UserId}");
-        //    RootInvoiceCreateRequest invoiceCreateRequest = new RootInvoiceCreateRequest
-        //    {
-        //        customer_id = contact.ZohoContactUserId,
-        //        line_items = model.Items. dbContext.ZohoItems.Where().Select(x => new LineItemRecurringInvoiceCreateRequest { item_id = x.ZohoItem.ZohoItemId, quantity = x.Qty }).ToList(),
-        //        payment_options = new PaymentOptionsRecurringInvoiceCreateRequest { payment_gateways = dbContext.ConfiguredPaymentGateways.Select(x => new PaymentGatewayRecurringInvoiceCreateRequest { configured = x.IsEnabled, gateway_name = x.GatewayName }).ToList() },
-        //        payment_terms = 0,
-        //        date = DateTime.UtcNow.AddDays(-1).ToString("yyyy-MM-dd"),
-        //        //recurring_invoice_id = purchese.RecurringInvoiceId
-        //    };
-
-
-        //    string jsonString = JsonConvert.SerializeObject(invoiceCreateRequest);
-        //    MultipartFormDataContent form = new MultipartFormDataContent();
-        //    StringContent content = new StringContent(jsonString);
-        //    form.Add(content, "JSONString");
-        //    HttpResponseMessage response = await httpClient.PostAsync(url, form);
-        //    if (response.StatusCode == HttpStatusCode.Created)
-        //    {
-        //        var byteArray = await response.Content.ReadAsByteArrayAsync();
-        //        var responseString = Encoding.UTF8.GetString(byteArray, 0, byteArray.Length);
-        //        RootInvoiceResponse itemCreateResponse =
-        //            JsonConvert.DeserializeObject<RootInvoiceResponse>(responseString);
-        //        if (itemCreateResponse.code == ZohoSuccessResponseCode)
-        //        {
-        //            if (!string.IsNullOrWhiteSpace(itemCreateResponse.invoice.invoice_id))
-        //            {
-                        
-                        
-
-        //                return itemCreateResponse.invoice.invoice_id;
-
-        //            }
-        //            else
-        //            {
-        //                StringBuilder builder = new StringBuilder();
-        //                builder.Append((string.IsNullOrWhiteSpace(itemCreateResponse.invoice.invoice_id) ? "Recurring Purchese id is empty. " : ""));
-
-        //                throw new Exception($"Response Filed came empty. Fields => {builder.ToString()}");
-        //            }
-
-        //        }
-        //        else
-        //        {
-        //            throw new Exception($"Zoho returns a erro code. Erro code is => {itemCreateResponse.code}. Message is => {itemCreateResponse.message}.");
-
-        //        }
-        //    }
-        //    else
-        //    {
-        //        throw new Exception($"Zoho Api call failed Erro code is => {response.StatusCode}. Reason sent by server is => {response.ReasonPhrase}.");
-        //    }
-        //    throw new NotImplementedException();
-        //}
         private async Task<bool> ZohoJobRunner(ZohoInvoiceJobQueue job, ApplicationDbContext _dbContext)
         {
             if (job.JobType == InvoiceJobQueueType.CreateContact)
@@ -256,6 +189,14 @@ namespace Empite.PaymentService.Services.PaymentService
 
                     job.IsSuccess = true;
                     await _dbContext.SaveChangesAsync();
+                }
+            }else if (job.JobType == InvoiceJobQueueType.CreateFirstInvoice)
+            {
+                CreatePurchesDto model = JsonConvert.DeserializeObject<CreatePurchesDto>(job.JsonData);
+                bool resut = await _workerService.CreateInvoice(model, dbContext, true);
+                if (!resut)
+                {
+                    throw new Exception($"Frist invoice creating failed for job ID {job.Id}");
                 }
             }
             else
@@ -341,6 +282,7 @@ namespace Empite.PaymentService.Services.PaymentService
         internal class SubInvoiceResponse
         {
             public string invoice_id { get; set; }
+            public string invoice_number { get; set; }
         }
 
         #endregion
