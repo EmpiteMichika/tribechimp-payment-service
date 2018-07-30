@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Empite.PaymentService.Infrastructure;
 using Empite.TribechimpService.PaymentService.Infrastructure;
 using Empite.TribechimpService.PaymentService.Domain.Interface.Service;
 using Microsoft.AspNetCore.Builder;
