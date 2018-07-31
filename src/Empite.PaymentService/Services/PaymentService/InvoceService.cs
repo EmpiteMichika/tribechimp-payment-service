@@ -12,6 +12,7 @@ using Empite.PaymentService.Interface.Service;
 using Empite.PaymentService.Interface.Service.Zoho;
 using Empite.PaymentService.Models.Configs;
 using Empite.PaymentService.Models.Dto;
+using Empite.PaymentService.Models.Dto.Zoho;
 using Empite.PaymentService.Services.PaymentService.Zoho;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -39,16 +40,17 @@ namespace Empite.PaymentService.Services.PaymentService
 
         }
 
-        public async Task AddJob(dynamic DataObject, InvoiceJobQueueType JobType)
+        public async Task AddJob(dynamic DataObject, InvoiceJobQueueType JobType, ExternalInvoiceGatewayType externalInvoiceGatewayType)
         {
             using (ApplicationDbContext _dbContext = _services.CreateScope().ServiceProvider.GetRequiredService<ApplicationDbContext>())
             {
-                ZohoInvoiceJobQueue job = new ZohoInvoiceJobQueue();
+                InvoiceJobQueue job = new InvoiceJobQueue();
                 job.IsSuccess = false;
                 job.JobType = JobType;
+                job.InvoiceGatewayType = externalInvoiceGatewayType;
                 if (JobType == InvoiceJobQueueType.CreateContact)
                 {
-                    if (DataObject?.GetType() != typeof(CreateContact))
+                    if (DataObject?.GetType() != typeof(ZohoCreateContact))
                     {
                         throw new Exception("Invalid data type for the DataObject parameter, it should be created from CreateContact class");
                     }
@@ -63,14 +65,14 @@ namespace Empite.PaymentService.Services.PaymentService
                     job.JsonData = DataObject;
                 }else if (JobType == InvoiceJobQueueType.CreateItem)
                 {
-                    if (DataObject?.GetType() != typeof(CreateZohoItemDto))
+                    if (DataObject?.GetType() != typeof(ZohoCreateItemDto))
                     {
                         throw new Exception("Invalid data type for the DataObject parameter, it should be created from CreateZohoItemDto class");
                     }
                     job.JsonData = JsonConvert.SerializeObject(DataObject);
                 }else if (JobType == InvoiceJobQueueType.CreateFirstInvoice)
                 {
-                    if (DataObject?.GetType() != typeof(CreatePurchesDto))
+                    if (DataObject?.GetType() != typeof(ZohoCreatePurchesDto))
                     {
                         throw new Exception("Invalid data type for the DataObject parameter, it should be created from CreatePurchesDto class");
                     }
@@ -80,7 +82,7 @@ namespace Empite.PaymentService.Services.PaymentService
                 {
                     throw new Exception("Invalid Job type");
                 }
-                _dbContext.ZohoInvoiceJobQueues.Add(job);
+                _dbContext.InvoiceJobQueues.Add(job);
                 await _dbContext.SaveChangesAsync(); 
             }
         }
@@ -103,19 +105,23 @@ namespace Empite.PaymentService.Services.PaymentService
             {
                 using (ApplicationDbContext _dbContext = _services.CreateScope().ServiceProvider.GetRequiredService<ApplicationDbContext>())
                 {
-                    int count = _dbContext.ZohoInvoiceJobQueues.Count(x => x.IsSuccess == false);
+                    int count = _dbContext.InvoiceJobQueues.Count(x => x.IsSuccess == false);
                     int pages = Convert.ToInt32((count / 100));
 
                     for (int y = 0; y <= pages; y++)
                     {
-                        List<ZohoInvoiceJobQueue> jobs = _dbContext.ZohoInvoiceJobQueues.Where(x => x.IsSuccess == false).OrderBy(x => x.CreatedAt)
+                        List<InvoiceJobQueue> jobs = _dbContext.InvoiceJobQueues.Where(x => x.IsSuccess == false).OrderBy(x => x.CreatedAt)
                             .Skip(pages * RowsPerPage).Take(RowsPerPage).ToList();
-                        foreach (ZohoInvoiceJobQueue job in jobs)
+                        foreach (InvoiceJobQueue job in jobs)
                         {
                             await Task.Delay(10);
                             try
                             {
-                                await ZohoJobRunner(job, _dbContext);
+                                if (job.InvoiceGatewayType == ExternalInvoiceGatewayType.Zoho)
+                                {
+                                    await ZohoJobRunner(job, _dbContext);
+                                }
+                                
                             }
                             catch (Exception ex)
                             {
@@ -141,11 +147,11 @@ namespace Empite.PaymentService.Services.PaymentService
             _isJobsProcessing = false;
             
         }
-        private async Task<bool> ZohoJobRunner(ZohoInvoiceJobQueue job, ApplicationDbContext _dbContext)
+        private async Task<bool> ZohoJobRunner(InvoiceJobQueue job, ApplicationDbContext _dbContext)
         {
             if (job.JobType == InvoiceJobQueueType.CreateContact)
             {
-                CreateContact model = JsonConvert.DeserializeObject<CreateContact>(job.JsonData);
+                ZohoCreateContact model = JsonConvert.DeserializeObject<ZohoCreateContact>(job.JsonData);
                 InvoiceContact contact =await _workerService.CreateContact(model, _dbContext);
                 job.UpdatedAt = DateTime.UtcNow;
                 if (contact == null)
@@ -177,10 +183,10 @@ namespace Empite.PaymentService.Services.PaymentService
                 await _dbContext.SaveChangesAsync();
             }else if (job.JobType == InvoiceJobQueueType.CreateItem)
             {
-                CreateZohoItemDto model = JsonConvert.DeserializeObject<CreateZohoItemDto>(job.JsonData);
-                ZohoItem zohoItem = await _workerService.CreateItem(model, _dbContext);
+                ZohoCreateItemDto model = JsonConvert.DeserializeObject<ZohoCreateItemDto>(job.JsonData);
+                Item item = await _workerService.CreateItem(model, _dbContext);
                 job.UpdatedAt = DateTime.UtcNow;
-                if (zohoItem == null)
+                if (item == null)
                 {
                     throw new Exception($"Item creating failed for job ID {job.Id}");
                 }
@@ -192,7 +198,7 @@ namespace Empite.PaymentService.Services.PaymentService
                 }
             }else if (job.JobType == InvoiceJobQueueType.CreateFirstInvoice)
             {
-                CreatePurchesDto model = JsonConvert.DeserializeObject<CreatePurchesDto>(job.JsonData);
+                ZohoCreatePurchesDto model = JsonConvert.DeserializeObject<ZohoCreatePurchesDto>(job.JsonData);
                 bool resut = await _workerService.CreateInvoice(job,model, _dbContext, true);
                 if (!resut)
                 {
@@ -211,7 +217,7 @@ namespace Empite.PaymentService.Services.PaymentService
         //{
         //    bool IsSuccess = await CreateFirstInvoice(recurringInvoiceId, dbContext);
         //}
-        private string GetInvoceContactByUserid(ZohoInvoiceJobQueue job, out InvoiceContact contact, ApplicationDbContext _dbContext)
+        private string GetInvoceContactByUserid(InvoiceJobQueue job, out InvoiceContact contact, ApplicationDbContext _dbContext)
         {
             string UserId = job.JsonData;
             contact = _dbContext.InvoiceContacts.FirstOrDefault(x => x.UserId == UserId);

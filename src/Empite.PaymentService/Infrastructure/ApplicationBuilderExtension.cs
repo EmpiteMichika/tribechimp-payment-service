@@ -75,10 +75,10 @@ namespace Empite.PaymentService.Infrastructure
             /*====== INJECT APPLICATION SERVICES =======*/
             services.AddTransient<IAuthenticationService, AuthenticationService>();
             
-            services.AddSingleton<IZohoInvoiceSingleton, ZohoInvoiceSingletonTokenService>();
-            services.AddSingleton<IInvoiceWorkerService<ZohoInvoiceWorkerService>, ZohoInvoiceWorkerService>();
-            services.AddSingleton<IInvoceService, InvoceService>();
-            services.AddSingleton<IZohoInvoiceDueCheckerSingleton, ZohoInvoiceDueCheckerSingleton>();
+            services.AddTransient<IZohoInvoiceSingleton, ZohoInvoiceSingletonTokenService>();
+            services.AddTransient<IInvoiceWorkerService<ZohoInvoiceWorkerService>, ZohoInvoiceWorkerService>();
+            services.AddTransient<IInvoceService, InvoceService>();
+            services.AddTransient<IRecurringInvoiceService<ZohoRecurringInvoiceService>, ZohoRecurringInvoiceService>();
             /*====== INJECT APPLICATION REPOSITORIES =======*/
             //services.AddTransient<IUserRepository, UserRepository>();
 
@@ -226,7 +226,7 @@ namespace Empite.PaymentService.Infrastructure
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
 
-                IZohoInvoiceDueCheckerSingleton sender = serviceScope.ServiceProvider.GetRequiredService<IZohoInvoiceDueCheckerSingleton>();
+                IRecurringInvoiceService<ZohoRecurringInvoiceService> sender = serviceScope.ServiceProvider.GetRequiredService<IRecurringInvoiceService<ZohoRecurringInvoiceService>>();
                
                 if (_settings.HangfireServiceConfig.CheckRecurringPayment)
                     RecurringJob.AddOrUpdate(() => sender.CheckInvoicesDueAsync(), Cron.Minutely);

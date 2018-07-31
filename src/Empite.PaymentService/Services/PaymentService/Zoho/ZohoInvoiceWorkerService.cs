@@ -7,9 +7,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Empite.PaymentService.Data;
 using Empite.PaymentService.Data.Entity.InvoiceRelated;
+using Empite.PaymentService.Interface.Service;
 using Empite.PaymentService.Interface.Service.Zoho;
 using Empite.PaymentService.Models.Configs;
 using Empite.PaymentService.Models.Dto;
+using Empite.PaymentService.Models.Dto.Zoho;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
@@ -30,7 +32,7 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
             _services = services;
             _settings = options.Value;
         }
-        public async Task<InvoiceContact> CreateContact(CreateContact model, ApplicationDbContext _dbContext)
+        public async Task<InvoiceContact> CreateContact(ZohoCreateContact model, ApplicationDbContext _dbContext)
         {
             HttpClient httpClient = _httpClientFactory.CreateClient();
             httpClient.AddZohoAuthorizationHeader(await _zohoTokenService.GetOAuthToken());
@@ -71,8 +73,8 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
                         {
                             Email = model.Email,
                             UserId = model.UserId,
-                            ZohoContactUserId = contactResponse.contact.contact_id,
-                            ZohoPrimaryContactId = contactResponse.contact.primary_contact_id
+                            ExternalContactUserId = contactResponse.contact.contact_id,
+                            ExternalPrimaryContactId = contactResponse.contact.primary_contact_id
                         };
                         _dbContext.InvoiceContacts.Add(dbInvoiceContact);
                         await _dbContext.SaveChangesAsync();
@@ -102,7 +104,7 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
         {
             HttpClient httpClient = _httpClientFactory.CreateClient();
             httpClient.AddZohoAuthorizationHeader(await _zohoTokenService.GetOAuthToken());
-            Uri url = new Uri(_settings.ZohoAccount.ApiBasePath).Append("contacts", contactDetails.ZohoContactUserId, "paymentreminder", "enable");
+            Uri url = new Uri(_settings.ZohoAccount.ApiBasePath).Append("contacts", contactDetails.ExternalContactUserId, "paymentreminder", "enable");
             HttpResponseMessage response = await httpClient.PostAsync(url, null);
             if (response.IsSuccessStatusCode)
             {
@@ -126,7 +128,7 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
             }
         }
 
-        public async Task<ZohoItem> CreateItem(CreateZohoItemDto model, ApplicationDbContext _dbContext)
+        public async Task<Item> CreateItem(ZohoCreateItemDto model, ApplicationDbContext _dbContext)
         {
             HttpClient httpClient = _httpClientFactory.CreateClient();
             httpClient.AddZohoAuthorizationHeader(await _zohoTokenService.GetOAuthToken());
@@ -152,17 +154,17 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
                 {
                     if (!string.IsNullOrWhiteSpace(itemCreateResponse.item.item_id))
                     {
-                        ZohoItem dbZohoItem = new ZohoItem
+                        Item dbItem = new Item
                         {
-                            ZohoItemId = itemCreateResponse.item.item_id,
+                            ItemId = itemCreateResponse.item.item_id,
                             Description = model.Description,
                             Name = model.Name,
                             Rate = model.Rate
                         };
 
-                        _dbContext.ZohoItems.Add(dbZohoItem);
+                        _dbContext.Items.Add(dbItem);
                         await _dbContext.SaveChangesAsync();
-                        return dbZohoItem;
+                        return dbItem;
                     }
                     else
                     {
@@ -222,7 +224,7 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
 
         }
 
-        public async Task<bool> CreateInvoice(ZohoInvoiceJobQueue job,CreatePurchesDto model,ApplicationDbContext dbContext,bool isFirst = false)
+        public async Task<bool> CreateInvoice(InvoiceJobQueue job,ZohoCreatePurchesDto model,ApplicationDbContext dbContext,bool isFirst = false)
         {
             HttpClient httpClient = _httpClientFactory.CreateClient();
             httpClient.AddZohoAuthorizationHeader(await _zohoTokenService.GetOAuthToken());
@@ -231,29 +233,29 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
             InvoiceContact contact = dbContext.InvoiceContacts.First(x => x.UserId == model.UserId);
             if (contact == null)
                     throw new Exception($"User is not found in the database UserId is => {contact.UserId}");
-            List<ZohoItem> zohoItems = new List<ZohoItem>();
+            List<Item> zohoItems = new List<Item>();
             zohoItems = model.Items.Select(x =>
             {
-                var dbZohoItems = dbContext.ZohoItems.First(y => y.Id == x.ItemId);
+                var dbZohoItems = dbContext.Items.First(y => y.Id == x.ItemId);
                 return dbZohoItems;
             }).ToList();
 
             InvoceService.RootInvoiceCreateRequest invoiceCreateRequest = new InvoceService.RootInvoiceCreateRequest
             {
-                customer_id = contact.ZohoContactUserId,
+                customer_id = contact.ExternalContactUserId,
                 line_items = model.Items.Select(x =>
                 {
                     var dbZohoItems = zohoItems.First(y => y.Id == x.ItemId);
                     return new InvoceService.LineItemRecurringInvoiceCreateRequest
                     {
-                        item_id = dbZohoItems.ZohoItemId,
+                        item_id = dbZohoItems.ItemId,
                         quantity = x.Qty
                     };
                 }).ToList(),
                 payment_options = new InvoceService.PaymentOptionsRecurringInvoiceCreateRequest { payment_gateways = dbContext.ConfiguredPaymentGateways.Select(x => new InvoceService.PaymentGatewayRecurringInvoiceCreateRequest { configured = x.IsEnabled, gateway_name = x.GatewayName }).ToList() },
                 payment_terms = (isFirst)? 0:_settings.ZohoAccount.PaymentTerm,
                 date = DateTime.UtcNow.AddDays(-1).ToString("yyyy-MM-dd"),
-                contact_persons = new List<string> { contact.ZohoPrimaryContactId}
+                contact_persons = new List<string> { contact.ExternalPrimaryContactId}
             };
             string jsonString = JsonConvert.SerializeObject(invoiceCreateRequest);
             MultipartFormDataContent form = new MultipartFormDataContent();
@@ -280,18 +282,19 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
                                 dbPurchese.InvoiceHistories = new List<InvoiceHistory>{new InvoiceHistory
                                 {
                                     InvoiceStatus = InvoiceStatus.Unpaid,
-                                    ZohoInvoiceId = itemCreateResponse.invoice.invoice_id
+                                    InvoiceId = itemCreateResponse.invoice.invoice_id
                                 }};
                                 dbPurchese.InvoiceName = "";
-                                dbPurchese.ZohoItems = zohoItems.Select(x => new ZohoItem_Purchese
+                                dbPurchese.Items = zohoItems.Select(x => new Item_Purchese
                                 {
                                     Qty = model.Items.First(y => y.ItemId == x.Id).Qty,
-                                    ZohoItem = x
+                                    Item = x
                                 }).ToList();
                                 dbPurchese.InvoiceStatus = InvoicingStatus.Active;
                                 dbPurchese.InvoiceType = InvoicingType.Recurring;
                                 dbPurchese.IsPaidForThisMonth = false;
                                 dbPurchese.ReferenceGuid = model.ReferenceGuid;
+                                dbPurchese.InvoiceGatewayType = ExternalInvoiceGatewayType.Zoho;
                             }
                             else
                             {
@@ -299,7 +302,7 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
                                     dbContext.Purcheses.First(x => x.ReferenceGuid == model.ReferenceGuid);
                                 InvoiceHistory dbHistory = new InvoiceHistory();
                                 dbHistory.InvoiceStatus = InvoiceStatus.Unpaid;
-                                dbHistory.ZohoInvoiceId = itemCreateResponse.invoice.invoice_id;
+                                dbHistory.InvoiceId = itemCreateResponse.invoice.invoice_id;
                                 dbHistory.Purchese = dbPurchese;
                             }
 

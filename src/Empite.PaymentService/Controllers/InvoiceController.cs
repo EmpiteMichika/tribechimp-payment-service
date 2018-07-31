@@ -5,6 +5,7 @@ using Empite.PaymentService.Data.Entity.InvoiceRelated;
 using Empite.PaymentService.Interface.Service;
 
 using Empite.PaymentService.Models.Dto;
+using Empite.PaymentService.Models.Dto.Zoho;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -24,12 +25,12 @@ namespace Empite.PaymentService.Controllers
         }
         
         [HttpPost("createContact")]
-        public async Task<IActionResult> CreateContact([FromBody]CreateContact createContact)
+        public async Task<IActionResult> CreateContact([FromBody]ZohoCreateContact createContact)
         {
             try
             {
-                await _invoceService.AddJob(createContact, InvoiceJobQueueType.CreateContact);
-                await _invoceService.AddJob(createContact.UserId, InvoiceJobQueueType.EnablePaymentReminders);
+                await _invoceService.AddJob(createContact, InvoiceJobQueueType.CreateContact,ExternalInvoiceGatewayType.Zoho);
+                await _invoceService.AddJob(createContact.UserId, InvoiceJobQueueType.EnablePaymentReminders, ExternalInvoiceGatewayType.Zoho);
                 return Ok();
             }
             catch (Exception e)
@@ -50,11 +51,11 @@ namespace Empite.PaymentService.Controllers
         }
 
         [HttpPost("createItem")]
-        public async Task<IActionResult> CreateItem([FromBody] CreateZohoItemDto itemDto)
+        public async Task<IActionResult> CreateItem([FromBody] ZohoCreateItemDto itemDto)
         {
             try
             {
-                await _invoceService.AddJob(itemDto, InvoiceJobQueueType.CreateItem);
+                await _invoceService.AddJob(itemDto, InvoiceJobQueueType.CreateItem, ExternalInvoiceGatewayType.Zoho);
                 return Ok();
             }
             catch (Exception e)
@@ -66,11 +67,11 @@ namespace Empite.PaymentService.Controllers
         }
 
         [HttpPost("createRecurringInvoice")]
-        public async Task<IActionResult> CreateRecurringInvoice([FromBody]CreatePurchesDto model)
+        public async Task<IActionResult> CreateRecurringInvoice([FromBody]ZohoCreatePurchesDto model)
         {
             try
             {
-                await _invoceService.AddJob(model, InvoiceJobQueueType.CreateFirstInvoice);
+                await _invoceService.AddJob(model, InvoiceJobQueueType.CreateFirstInvoice, ExternalInvoiceGatewayType.Zoho);
                 return Ok();
             }
             catch (Exception e)

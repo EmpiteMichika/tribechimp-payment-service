@@ -6,6 +6,6 @@ namespace Empite.PaymentService.Interface.Service
     public interface IInvoceService
     {
         Task RunJobs();
-        Task AddJob(dynamic DataObject, InvoiceJobQueueType JobType);
+        Task AddJob(dynamic DataObject, InvoiceJobQueueType JobType, ExternalInvoiceGatewayType externalInvoiceGatewayType);
     }
 }

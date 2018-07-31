@@ -46,19 +46,19 @@ namespace Empite.PaymentService.Data.Migrations
 
                     b.Property<string>("Email");
 
+                    b.Property<string>("ExternalContactUserId");
+
+                    b.Property<string>("ExternalPrimaryContactId");
+
                     b.Property<string>("OrganizationId");
 
                     b.Property<DateTime?>("UpdatedAt");
 
                     b.Property<Guid?>("UpdatedBy");
 
-                    b.Property<string>("ZohoContactUserId");
-
-                    b.Property<string>("ZohoPrimaryContactId");
-
                     b.HasKey("UserId");
 
-                    b.HasIndex("ZohoContactUserId");
+                    b.HasIndex("ExternalContactUserId");
 
                     b.ToTable("InvoiceContacts");
                 });
@@ -76,6 +76,8 @@ namespace Empite.PaymentService.Data.Migrations
 
                     b.Property<Guid?>("DeletedBy");
 
+                    b.Property<string>("InvoiceId");
+
                     b.Property<int>("InvoiceStatus");
 
                     b.Property<DateTime?>("PaymentRecordedDate");
@@ -86,15 +88,96 @@ namespace Empite.PaymentService.Data.Migrations
 
                     b.Property<Guid?>("UpdatedBy");
 
-                    b.Property<string>("ZohoInvoiceId");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("InvoiceId");
 
                     b.HasIndex("PurcheseId");
 
-                    b.HasIndex("ZohoInvoiceId");
-
                     b.ToTable("InvoiceHistories");
+                });
+
+            modelBuilder.Entity("Empite.PaymentService.Data.Entity.InvoiceRelated.InvoiceJobQueue", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreatedAt");
+
+                    b.Property<Guid?>("CreatedBy");
+
+                    b.Property<DateTime?>("DeletedAt");
+
+                    b.Property<Guid?>("DeletedBy");
+
+                    b.Property<int>("InvoiceGatewayType");
+
+                    b.Property<bool>("IsSuccess");
+
+                    b.Property<int>("JobType");
+
+                    b.Property<string>("JsonData")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("LastErrorMessage")
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("ReTryCount");
+
+                    b.Property<DateTime?>("UpdatedAt");
+
+                    b.Property<Guid?>("UpdatedBy");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("InvoiceJobQueues");
+                });
+
+            modelBuilder.Entity("Empite.PaymentService.Data.Entity.InvoiceRelated.Item", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreatedAt");
+
+                    b.Property<Guid?>("CreatedBy");
+
+                    b.Property<DateTime?>("DeletedAt");
+
+                    b.Property<Guid?>("DeletedBy");
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("ItemId");
+
+                    b.Property<string>("Name");
+
+                    b.Property<double>("Rate");
+
+                    b.Property<DateTime?>("UpdatedAt");
+
+                    b.Property<Guid?>("UpdatedBy");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ItemId");
+
+                    b.ToTable("Items");
+                });
+
+            modelBuilder.Entity("Empite.PaymentService.Data.Entity.InvoiceRelated.Item_Purchese", b =>
+                {
+                    b.Property<string>("RecurringInvoiceId");
+
+                    b.Property<string>("ItemId");
+
+                    b.Property<int>("Qty");
+
+                    b.HasKey("RecurringInvoiceId", "ItemId");
+
+                    b.HasIndex("ItemId");
+
+                    b.ToTable("Item_Purchese");
                 });
 
             modelBuilder.Entity("Empite.PaymentService.Data.Entity.InvoiceRelated.Purchese", b =>
@@ -111,6 +194,8 @@ namespace Empite.PaymentService.Data.Migrations
                     b.Property<Guid?>("DeletedBy");
 
                     b.Property<string>("InvoiceContactUserId");
+
+                    b.Property<int>("InvoiceGatewayType");
 
                     b.Property<string>("InvoiceName");
 
@@ -135,87 +220,6 @@ namespace Empite.PaymentService.Data.Migrations
                     b.ToTable("Purcheses");
                 });
 
-            modelBuilder.Entity("Empite.PaymentService.Data.Entity.InvoiceRelated.ZohoInvoiceJobQueue", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("CreatedAt");
-
-                    b.Property<Guid?>("CreatedBy");
-
-                    b.Property<DateTime?>("DeletedAt");
-
-                    b.Property<Guid?>("DeletedBy");
-
-                    b.Property<bool>("IsSuccess");
-
-                    b.Property<int>("JobType");
-
-                    b.Property<string>("JsonData")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("LastErrorMessage")
-                        .HasColumnType("longtext");
-
-                    b.Property<int>("ReTryCount");
-
-                    b.Property<DateTime?>("UpdatedAt");
-
-                    b.Property<Guid?>("UpdatedBy");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ZohoInvoiceJobQueues");
-                });
-
-            modelBuilder.Entity("Empite.PaymentService.Data.Entity.InvoiceRelated.ZohoItem", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("CreatedAt");
-
-                    b.Property<Guid?>("CreatedBy");
-
-                    b.Property<DateTime?>("DeletedAt");
-
-                    b.Property<Guid?>("DeletedBy");
-
-                    b.Property<string>("Description");
-
-                    b.Property<string>("Name");
-
-                    b.Property<double>("Rate");
-
-                    b.Property<DateTime?>("UpdatedAt");
-
-                    b.Property<Guid?>("UpdatedBy");
-
-                    b.Property<string>("ZohoItemId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ZohoItemId");
-
-                    b.ToTable("ZohoItems");
-                });
-
-            modelBuilder.Entity("Empite.PaymentService.Data.Entity.InvoiceRelated.ZohoItem_Purchese", b =>
-                {
-                    b.Property<string>("RecurringInvoiceId");
-
-                    b.Property<string>("ZohoItemId");
-
-                    b.Property<int>("Qty");
-
-                    b.HasKey("RecurringInvoiceId", "ZohoItemId");
-
-                    b.HasIndex("ZohoItemId");
-
-                    b.ToTable("ZohoItem_Purchese");
-                });
-
             modelBuilder.Entity("Empite.PaymentService.Data.Entity.InvoiceRelated.InvoiceHistory", b =>
                 {
                     b.HasOne("Empite.PaymentService.Data.Entity.InvoiceRelated.Purchese", "Purchese")
@@ -223,24 +227,24 @@ namespace Empite.PaymentService.Data.Migrations
                         .HasForeignKey("PurcheseId");
                 });
 
+            modelBuilder.Entity("Empite.PaymentService.Data.Entity.InvoiceRelated.Item_Purchese", b =>
+                {
+                    b.HasOne("Empite.PaymentService.Data.Entity.InvoiceRelated.Item", "Item")
+                        .WithMany("RecurringInvoices")
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Empite.PaymentService.Data.Entity.InvoiceRelated.Purchese", "Purchese")
+                        .WithMany("Items")
+                        .HasForeignKey("RecurringInvoiceId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("Empite.PaymentService.Data.Entity.InvoiceRelated.Purchese", b =>
                 {
                     b.HasOne("Empite.PaymentService.Data.Entity.InvoiceRelated.InvoiceContact", "InvoiceContact")
                         .WithMany("Invoices")
                         .HasForeignKey("InvoiceContactUserId");
-                });
-
-            modelBuilder.Entity("Empite.PaymentService.Data.Entity.InvoiceRelated.ZohoItem_Purchese", b =>
-                {
-                    b.HasOne("Empite.PaymentService.Data.Entity.InvoiceRelated.Purchese", "Purchese")
-                        .WithMany("ZohoItems")
-                        .HasForeignKey("RecurringInvoiceId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Empite.PaymentService.Data.Entity.InvoiceRelated.ZohoItem", "ZohoItem")
-                        .WithMany("RecurringInvoices")
-                        .HasForeignKey("ZohoItemId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

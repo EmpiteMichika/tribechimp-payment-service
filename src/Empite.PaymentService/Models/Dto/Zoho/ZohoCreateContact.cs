@@ -1,6 +1,6 @@
-﻿namespace Empite.PaymentService.Models.Dto
+﻿namespace Empite.PaymentService.Models.Dto.Zoho
 {
-    public class CreateContact
+    public class ZohoCreateContact
     {
         public string UserId { get; set; }
         public string FirstName { get; set; }

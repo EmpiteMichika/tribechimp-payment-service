@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Empite.PaymentService.Data.Entity.InvoiceRelated
 {
-    public class ZohoItem: BaseModel
+    public class Item: BaseModel
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -12,7 +12,7 @@ namespace Empite.PaymentService.Data.Entity.InvoiceRelated
         public string Name { get; set; }
         public string Description { get; set; }
         public double Rate { get; set; }
-        public string ZohoItemId { get; set; }
-        public List<ZohoItem_Purchese> RecurringInvoices { get; set; }
+        public string ItemId { get; set; }
+        public List<Item_Purchese> RecurringInvoices { get; set; }
     }
 }

@@ -2,8 +2,9 @@
 
 namespace Empite.PaymentService.Interface.Service.Zoho
 {
-    public interface IZohoInvoiceDueCheckerSingleton
+    public interface IRecurringInvoiceService<T>
     {
         Task CheckInvoicesDueAsync();
+        Task CreateRecurringInvoice();
     }
 }

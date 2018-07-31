@@ -32,8 +32,8 @@ namespace Empite.PaymentService.Data.Migrations
                     DeletedBy = table.Column<Guid>(nullable: true),
                     OrganizationId = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: false),
-                    ZohoContactUserId = table.Column<string>(nullable: true),
-                    ZohoPrimaryContactId = table.Column<string>(nullable: true),
+                    ExternalContactUserId = table.Column<string>(nullable: true),
+                    ExternalPrimaryContactId = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -42,7 +42,7 @@ namespace Empite.PaymentService.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ZohoInvoiceJobQueues",
+                name: "InvoiceJobQueues",
                 columns: table => new
                 {
                     CreatedAt = table.Column<DateTime>(nullable: false),
@@ -54,17 +54,18 @@ namespace Empite.PaymentService.Data.Migrations
                     Id = table.Column<string>(nullable: false),
                     JsonData = table.Column<string>(type: "longtext", nullable: true),
                     JobType = table.Column<int>(nullable: false),
+                    InvoiceGatewayType = table.Column<int>(nullable: false),
                     IsSuccess = table.Column<bool>(nullable: false),
                     ReTryCount = table.Column<int>(nullable: false),
                     LastErrorMessage = table.Column<string>(type: "longtext", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ZohoInvoiceJobQueues", x => x.Id);
+                    table.PrimaryKey("PK_InvoiceJobQueues", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ZohoItems",
+                name: "Items",
                 columns: table => new
                 {
                     CreatedAt = table.Column<DateTime>(nullable: false),
@@ -77,11 +78,11 @@ namespace Empite.PaymentService.Data.Migrations
                     Name = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
                     Rate = table.Column<double>(nullable: false),
-                    ZohoItemId = table.Column<string>(nullable: true)
+                    ItemId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ZohoItems", x => x.Id);
+                    table.PrimaryKey("PK_Items", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -100,7 +101,8 @@ namespace Empite.PaymentService.Data.Migrations
                     ReferenceGuid = table.Column<Guid>(nullable: true),
                     IsPaidForThisMonth = table.Column<bool>(nullable: false),
                     InvoiceType = table.Column<int>(nullable: false),
-                    InvoiceStatus = table.Column<int>(nullable: false)
+                    InvoiceStatus = table.Column<int>(nullable: false),
+                    InvoiceGatewayType = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -124,7 +126,7 @@ namespace Empite.PaymentService.Data.Migrations
                     DeletedAt = table.Column<DateTime>(nullable: true),
                     DeletedBy = table.Column<Guid>(nullable: true),
                     Id = table.Column<string>(nullable: false),
-                    ZohoInvoiceId = table.Column<string>(nullable: true),
+                    InvoiceId = table.Column<string>(nullable: true),
                     PurcheseId = table.Column<string>(nullable: true),
                     PaymentRecordedDate = table.Column<DateTime>(nullable: true),
                     InvoiceStatus = table.Column<int>(nullable: false)
@@ -141,34 +143,39 @@ namespace Empite.PaymentService.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ZohoItem_Purchese",
+                name: "Item_Purchese",
                 columns: table => new
                 {
                     RecurringInvoiceId = table.Column<string>(nullable: false),
-                    ZohoItemId = table.Column<string>(nullable: false),
+                    ItemId = table.Column<string>(nullable: false),
                     Qty = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ZohoItem_Purchese", x => new { x.RecurringInvoiceId, x.ZohoItemId });
+                    table.PrimaryKey("PK_Item_Purchese", x => new { x.RecurringInvoiceId, x.ItemId });
                     table.ForeignKey(
-                        name: "FK_ZohoItem_Purchese_Purcheses_RecurringInvoiceId",
-                        column: x => x.RecurringInvoiceId,
-                        principalTable: "Purcheses",
+                        name: "FK_Item_Purchese_Items_ItemId",
+                        column: x => x.ItemId,
+                        principalTable: "Items",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ZohoItem_Purchese_ZohoItems_ZohoItemId",
-                        column: x => x.ZohoItemId,
-                        principalTable: "ZohoItems",
+                        name: "FK_Item_Purchese_Purcheses_RecurringInvoiceId",
+                        column: x => x.RecurringInvoiceId,
+                        principalTable: "Purcheses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_InvoiceContacts_ZohoContactUserId",
+                name: "IX_InvoiceContacts_ExternalContactUserId",
                 table: "InvoiceContacts",
-                column: "ZohoContactUserId");
+                column: "ExternalContactUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InvoiceHistories_InvoiceId",
+                table: "InvoiceHistories",
+                column: "InvoiceId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_InvoiceHistories_PurcheseId",
@@ -176,9 +183,14 @@ namespace Empite.PaymentService.Data.Migrations
                 column: "PurcheseId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_InvoiceHistories_ZohoInvoiceId",
-                table: "InvoiceHistories",
-                column: "ZohoInvoiceId");
+                name: "IX_Item_Purchese_ItemId",
+                table: "Item_Purchese",
+                column: "ItemId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Items_ItemId",
+                table: "Items",
+                column: "ItemId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Purcheses_InvoiceContactUserId",
@@ -189,16 +201,6 @@ namespace Empite.PaymentService.Data.Migrations
                 name: "IX_Purcheses_ReferenceGuid",
                 table: "Purcheses",
                 column: "ReferenceGuid");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ZohoItem_Purchese_ZohoItemId",
-                table: "ZohoItem_Purchese",
-                column: "ZohoItemId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ZohoItems_ZohoItemId",
-                table: "ZohoItems",
-                column: "ZohoItemId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -210,16 +212,16 @@ namespace Empite.PaymentService.Data.Migrations
                 name: "InvoiceHistories");
 
             migrationBuilder.DropTable(
-                name: "ZohoInvoiceJobQueues");
+                name: "InvoiceJobQueues");
 
             migrationBuilder.DropTable(
-                name: "ZohoItem_Purchese");
+                name: "Item_Purchese");
+
+            migrationBuilder.DropTable(
+                name: "Items");
 
             migrationBuilder.DropTable(
                 name: "Purcheses");
-
-            migrationBuilder.DropTable(
-                name: "ZohoItems");
 
             migrationBuilder.DropTable(
                 name: "InvoiceContacts");

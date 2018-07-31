@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Empite.PaymentService.Models.Dto
+namespace Empite.PaymentService.Models.Dto.Zoho
 {
-    public class CreatePurchesDto
+    public class ZohoCreatePurchesDto
     {
         public string UserId { get; set; }
         public List<RecurringInvoiceItemDto> Items { get; set; }

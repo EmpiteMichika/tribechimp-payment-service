@@ -1,6 +1,6 @@
-﻿namespace Empite.PaymentService.Models.Dto
+﻿namespace Empite.PaymentService.Models.Dto.Zoho
 {
-    public class CreateZohoItemDto
+    public class ZohoCreateItemDto
     {
         public string Name { get; set; }
         public double Rate { get; set; }

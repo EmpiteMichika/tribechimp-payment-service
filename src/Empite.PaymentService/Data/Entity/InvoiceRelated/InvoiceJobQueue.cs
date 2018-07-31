@@ -3,13 +3,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Empite.PaymentService.Data.Entity.InvoiceRelated
 {
-    public class ZohoInvoiceJobQueue:BaseModel
+    public class InvoiceJobQueue:BaseModel
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string Id { get; set; }
         public string JsonData { get; set; }
         public InvoiceJobQueueType JobType { get; set; }
+        public ExternalInvoiceGatewayType InvoiceGatewayType { get; set; }
         public bool IsSuccess { get; set; }
         public int ReTryCount { get; set; } = 0;
         public string LastErrorMessage { get; set; }
@@ -23,4 +24,10 @@ namespace Empite.PaymentService.Data.Entity.InvoiceRelated
         CreateFirstInvoice = 4,
         CreateSubInvoice = 5
     }
+
+    public enum ExternalInvoiceGatewayType
+    {
+        Zoho =1
+    }
+
 }
