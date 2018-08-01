@@ -282,7 +282,8 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
                                 dbPurchese.InvoiceHistories = new List<InvoiceHistory>{new InvoiceHistory
                                 {
                                     InvoiceStatus = InvoiceStatus.Unpaid,
-                                    InvoiceId = itemCreateResponse.invoice.invoice_id
+                                    InvoiceId = itemCreateResponse.invoice.invoice_id,
+                                    InvoiceNumber = itemCreateResponse.invoice.invoice_number
                                 }};
                                 dbPurchese.InvoiceName = "";
                                 dbPurchese.Items = zohoItems.Select(x => new Item_Purchese
@@ -295,6 +296,7 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
                                 dbPurchese.IsPaidForThisMonth = false;
                                 dbPurchese.ReferenceGuid = model.ReferenceGuid;
                                 dbPurchese.InvoiceGatewayType = ExternalInvoiceGatewayType.Zoho;
+                                dbContext.Purcheses.Add(dbPurchese);
                             }
                             else
                             {
@@ -303,9 +305,13 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
                                 InvoiceHistory dbHistory = new InvoiceHistory();
                                 dbHistory.InvoiceStatus = InvoiceStatus.Unpaid;
                                 dbHistory.InvoiceId = itemCreateResponse.invoice.invoice_id;
+                                dbHistory.InvoiceNumber = itemCreateResponse.invoice.invoice_number;
                                 dbHistory.Purchese = dbPurchese;
+                                dbContext.InvoiceHistories.Add(dbHistory);
                             }
+                            await dbContext.SaveChangesAsync();
 
+                            job.UpdatedAt = DateTime.UtcNow;
                             job.IsSuccess = true;
                             await dbContext.SaveChangesAsync();
                         }

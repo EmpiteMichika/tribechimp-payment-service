@@ -205,6 +205,15 @@ namespace Empite.PaymentService.Services.PaymentService
                     throw new Exception($"Frist invoice creating failed for job ID {job.Id}");
                 }
             }
+            else if (job.JobType == InvoiceJobQueueType.CreateSubInvoice)
+            {
+                ZohoCreatePurchesDto model = JsonConvert.DeserializeObject<ZohoCreatePurchesDto>(job.JsonData);
+                bool resut = await _workerService.CreateInvoice(job, model, _dbContext, false);
+                if (!resut)
+                {
+                    throw new Exception($"Frist invoice creating failed for job ID {job.Id}");
+                }
+            }
             else
             {
                 throw new Exception($"Job Queue type is not found for job ID {job.Id}");

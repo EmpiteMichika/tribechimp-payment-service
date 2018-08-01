@@ -10,6 +10,7 @@ namespace Empite.PaymentService.Data.Entity.InvoiceRelated
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string Id { get; set; }
         public string InvoiceId { get; set; }
+        public string InvoiceNumber { get; set; }
         public Purchese Purchese { get; set; }
         public DateTime? PaymentRecordedDate { get; set; }
         public InvoiceStatus InvoiceStatus { get; set; }

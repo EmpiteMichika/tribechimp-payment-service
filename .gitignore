@@ -260,3 +260,5 @@ paket-files/
 __pycache__/
 *.pyc
 src/Empite.TribechimpService.CoreService/Opt/Logs/
+
+src/Empite\.PaymentService/Opt/Logs/

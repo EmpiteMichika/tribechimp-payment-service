@@ -162,13 +162,13 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
                 using (ApplicationDbContext dbContext = _services.CreateScope().ServiceProvider.GetRequiredService<ApplicationDbContext>())
                 {
                     int currentPage = 0;
-                    int successCount = 0;
+                    
                     while (true)
                     {
                         await Task.Delay(10);
                         List<Purchese> recurringInvoices = dbContext.Purcheses
                             .Where(x => x.InvoiceType ==InvoicingType.Recurring && x.InvoiceStatus == InvoicingStatus.Active && x.InvoiceGatewayType == ExternalInvoiceGatewayType.Zoho)
-                            .Skip((currentPage * ResultPerPage) - successCount).Take(ResultPerPage).ToList();
+                            .Skip((currentPage * ResultPerPage)).Take(ResultPerPage).ToList();
                         if (!recurringInvoices.Any())
                             break;
                         foreach (Purchese purchese in recurringInvoices)
@@ -179,7 +179,7 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
                                 await Task.Delay(50);
                                 // keep this logic to check the fresh created invoices. since it doesnt contain any Sub invoices in the job queue, and it doesn't do any performance hit.
                                 bool isHistoryRecordExixsits = dbContext.InvoiceHistories.Include(x => x.Purchese)
-                                    .Any(x => x.CreatedAt.Date > DateTime.UtcNow.AddMonths(-1).Date);
+                                    .Any(x => x.Purchese.Id == purchese.Id && x.CreatedAt.Date > DateTime.UtcNow.AddMonths(-1).Date);
                                 if (isHistoryRecordExixsits)
                                 {
                                     continue;
@@ -199,9 +199,7 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
                                 };
                                 dbContext.InvoiceJobQueues.Add(dbJobQueue);
                                 await dbContext.SaveChangesAsync();
-                                //bool res = await ProcessRecurringInvoice(purchese, dbContext);
-                                //if (res)
-                                //    successCount++;
+                                
                             }
                             catch (Exception ex)
                             {
