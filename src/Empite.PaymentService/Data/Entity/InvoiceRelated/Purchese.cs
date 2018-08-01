@@ -14,13 +14,13 @@ namespace Empite.PaymentService.Data.Entity.InvoiceRelated
         public InvoiceContact InvoiceContact { get; set; }
         public List<Item_Purchese> Items { get; set; }
         public Guid? ReferenceGuid { get; set; }
-        public bool IsPaidForThisMonth { get; set; } = false;
         public List<InvoiceHistory> InvoiceHistories { get; set; }
         public InvoicingType InvoiceType { get; set; } = InvoicingType.Recurring;
         public InvoicingStatus InvoiceStatus { get; set; } = InvoicingStatus.Active;
         public ExternalInvoiceGatewayType InvoiceGatewayType { get; set; }
         public DateTime LastSuccessPayment { get; set; } = DateTime.MinValue;
         public DateTime LastSuccessInvoiceIssue { get; set; } = DateTime.MinValue;
+        
     }
 
     public enum InvoicingType

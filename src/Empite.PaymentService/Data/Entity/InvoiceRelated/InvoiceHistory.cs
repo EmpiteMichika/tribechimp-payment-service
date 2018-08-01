@@ -13,6 +13,7 @@ namespace Empite.PaymentService.Data.Entity.InvoiceRelated
         public string InvoiceNumber { get; set; }
         public Purchese Purchese { get; set; }
         public DateTime? PaymentRecordedDate { get; set; }
+        public DateTime DueDate { get; set; }
         public InvoiceStatus InvoiceStatus { get; set; }
     }
 

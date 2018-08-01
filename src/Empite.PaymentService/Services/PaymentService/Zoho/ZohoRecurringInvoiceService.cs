@@ -52,29 +52,7 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
                     int successCount = 0;
                     while (true)
                     {
-                        await Task.Delay(10);
-                        List<Purchese> recurringInvoices = dbContext.Purcheses
-                            .Where(x => (x.IsPaidForThisMonth || x.UpdatedAt < DateTime.UtcNow.AddMonths(-1)) && x.DeletedAt == null)
-                            .Skip((currentPage * ResultPerPage) - successCount).Take(ResultPerPage).ToList();
-                        if (!recurringInvoices.Any())
-                            break;
-                        foreach (Purchese purchese in recurringInvoices)
-                        {
-                            //usin try catch to contine the flow
-                            try
-                            {
-                                //bool res = await ProcessRecurringInvoice(purchese, dbContext);
-                                //if (res)
-                                //    successCount++;
-                            }
-                            catch (Exception ex)
-                            {
-                                //Todo Logging
-
-                            }
-
-
-                        }
+                       
 
                         currentPage++;
                     }

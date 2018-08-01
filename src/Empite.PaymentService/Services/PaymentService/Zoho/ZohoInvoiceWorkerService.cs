@@ -279,8 +279,17 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
                             dbHistory.InvoiceStatus = InvoiceStatus.Unpaid;
                             dbHistory.InvoiceId = itemCreateResponse.invoice.invoice_id;
                             dbHistory.InvoiceNumber = itemCreateResponse.invoice.invoice_number;
-                            dbPurchese.LastSuccessInvoiceIssue = DateTime.UtcNow;
-                            dbPurchese.IsPaidForThisMonth = false;
+                            DateTime utcNow = DateTime.UtcNow;
+                            DateTime lastSuccess;
+                            
+                            lastSuccess = new DateTime(utcNow.Year,utcNow.Month,);
+                            while (utcNow < lastSuccess)
+                            {
+                                var tempDate = lastSuccess.AddMonths(-1);
+                                lastSuccess = new DateTime(tempDate.Year, tempDate.Month, dbPurchese.InvoiceDayOfMonth);
+                            }
+                            dbPurchese.LastSuccessInvoiceIssue = ;
+                            dbHistory.DueDate = utcNow.AddDays(_settings.ZohoAccount.PaymentTerm);
                             dbHistory.Purchese = dbPurchese;
                             dbContext.InvoiceHistories.Add(dbHistory);
 
@@ -389,7 +398,7 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
                             }).ToList();
                             dbPurchese.InvoiceStatus = InvoicingStatus.Active;
                             dbPurchese.InvoiceType = InvoicingType.Recurring;
-                            dbPurchese.IsPaidForThisMonth = false;
+                            
                             dbPurchese.ReferenceGuid = model.ReferenceGuid;
                             dbPurchese.InvoiceGatewayType = ExternalInvoiceGatewayType.Zoho;
                             dbPurchese.LastSuccessInvoiceIssue = DateTime.UtcNow.AddDays(_settings.ZohoAccount.PaymentTerm*-1);
@@ -432,5 +441,9 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
             return true;
         }
 
+        public Task<bool> IsPaidForCurrentMonth(string purchaseId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
