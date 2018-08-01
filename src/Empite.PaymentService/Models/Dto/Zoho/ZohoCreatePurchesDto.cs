@@ -9,6 +9,11 @@ namespace Empite.PaymentService.Models.Dto.Zoho
         public List<RecurringInvoiceItemDto> Items { get; set; }
         public Guid? ReferenceGuid { get; set; }
     }
+    public class ZohoCreateSubInvoiceDto
+    {
+        public string PurchaseId { get; set; }
+    }
+    
 
     public class RecurringInvoiceItemDto
     {

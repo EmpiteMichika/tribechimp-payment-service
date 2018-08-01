@@ -199,7 +199,7 @@ namespace Empite.PaymentService.Services.PaymentService
             }else if (job.JobType == InvoiceJobQueueType.CreateFirstInvoice)
             {
                 ZohoCreatePurchesDto model = JsonConvert.DeserializeObject<ZohoCreatePurchesDto>(job.JsonData);
-                bool resut = await _workerService.CreateInvoice(job,model, _dbContext, true);
+                bool resut = await _workerService.CreateInvoice(job,model, _dbContext);
                 if (!resut)
                 {
                     throw new Exception($"Frist invoice creating failed for job ID {job.Id}");
@@ -207,8 +207,8 @@ namespace Empite.PaymentService.Services.PaymentService
             }
             else if (job.JobType == InvoiceJobQueueType.CreateSubInvoice)
             {
-                ZohoCreatePurchesDto model = JsonConvert.DeserializeObject<ZohoCreatePurchesDto>(job.JsonData);
-                bool resut = await _workerService.CreateInvoice(job, model, _dbContext, false);
+                
+                bool resut = await _workerService.CreateSubInvoice(job, job.JsonData, _dbContext);
                 if (!resut)
                 {
                     throw new Exception($"Frist invoice creating failed for job ID {job.Id}");

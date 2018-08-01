@@ -19,6 +19,8 @@ namespace Empite.PaymentService.Data.Entity.InvoiceRelated
         public InvoicingType InvoiceType { get; set; } = InvoicingType.Recurring;
         public InvoicingStatus InvoiceStatus { get; set; } = InvoicingStatus.Active;
         public ExternalInvoiceGatewayType InvoiceGatewayType { get; set; }
+        public DateTime LastSuccessPayment { get; set; } = DateTime.MinValue;
+        public DateTime LastSuccessInvoiceIssue { get; set; } = DateTime.MinValue;
     }
 
     public enum InvoicingType

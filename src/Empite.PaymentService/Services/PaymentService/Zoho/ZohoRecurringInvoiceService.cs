@@ -167,24 +167,26 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
                     {
                         await Task.Delay(10);
                         List<Purchese> recurringInvoices = dbContext.Purcheses
-                            .Where(x => x.InvoiceType ==InvoicingType.Recurring && x.InvoiceStatus == InvoicingStatus.Active && x.InvoiceGatewayType == ExternalInvoiceGatewayType.Zoho)
+                            .Where(x => x.InvoiceType ==InvoicingType.Recurring && x.InvoiceStatus == InvoicingStatus.Active 
+                                                                                && x.InvoiceGatewayType == ExternalInvoiceGatewayType.Zoho
+                                                                                && x.LastSuccessInvoiceIssue.Date <= DateTime.UtcNow.AddMonths(-1).Date)
                             .Skip((currentPage * ResultPerPage)).Take(ResultPerPage).ToList();
                         if (!recurringInvoices.Any())
                             break;
                         foreach (Purchese purchese in recurringInvoices)
                         {
-                            //usin try catch to contine the flow
+                            //using try catch to contine the flow
                             try
                             {
                                 await Task.Delay(50);
                                 // keep this logic to check the fresh created invoices. since it doesnt contain any Sub invoices in the job queue, and it doesn't do any performance hit.
-                                bool isHistoryRecordExixsits = dbContext.InvoiceHistories.Include(x => x.Purchese)
-                                    .Any(x => x.Purchese.Id == purchese.Id && x.CreatedAt.Date > DateTime.UtcNow.AddMonths(-1).Date);
-                                if (isHistoryRecordExixsits)
-                                {
-                                    continue;
-                                }
-
+                                //bool isHistoryRecordExixsits = dbContext.InvoiceHistories.Include(x => x.Purchese)
+                                //    .Any(x => x.Purchese.Id == purchese.Id && x.CreatedAt.Date > DateTime.UtcNow.AddMonths(-1).Date);
+                                //if (isHistoryRecordExixsits)
+                                //{
+                                //    continue;
+                                //}
+                                // Above statement must be there sicnce below statement where close columns are not in a index. to make JsonData a index we have to define a length but in this case we cant
                                 bool isDbJobQueExists = dbContext.InvoiceJobQueues.Any(x =>
                                     x.CreatedAt.Date > DateTime.UtcNow.AddMonths(-1).Date && x.JsonData == purchese.Id && x.JobType == InvoiceJobQueueType.CreateSubInvoice);
                                 if (isDbJobQueExists)

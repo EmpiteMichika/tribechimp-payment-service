@@ -224,7 +224,105 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
 
         }
 
-        public async Task<bool> CreateInvoice(InvoiceJobQueue job,ZohoCreatePurchesDto model,ApplicationDbContext dbContext,bool isFirst = false)
+        public async Task<bool> CreateSubInvoice(InvoiceJobQueue job, string purchaseId, ApplicationDbContext dbContext)
+        {
+            HttpClient httpClient = _httpClientFactory.CreateClient();
+            httpClient.AddZohoAuthorizationHeader(await _zohoTokenService.GetOAuthToken());
+            Uri url = new Uri(_settings.ZohoAccount.ApiBasePath).Append("invoices?send=true");
+
+            Purchese dbPurchese = dbContext.Purcheses.Include(x => x.Items).ThenInclude(x => x.Item).Include(x => x.InvoiceContact).First(x => x.Id == purchaseId);
+
+            //InvoiceContact contact = dbContext.InvoiceContacts.First(x => x.UserId == model.UserId);
+            if (dbPurchese == null)
+                throw new Exception($"Purchase not found in the database");
+            if (dbPurchese.InvoiceContact == null)
+            {
+                throw new Exception($"Contact not found in the database");
+            }
+
+
+            InvoceService.RootInvoiceCreateRequest invoiceCreateRequest = new InvoceService.RootInvoiceCreateRequest
+            {
+                customer_id = dbPurchese.InvoiceContact.ExternalContactUserId,
+                line_items = dbPurchese.Items.Select(x => new InvoceService.LineItemRecurringInvoiceCreateRequest
+                {
+                    item_id = x.Item.ItemId,
+                    quantity = x.Qty
+                }).ToList(),
+                payment_options = new InvoceService.PaymentOptionsRecurringInvoiceCreateRequest { payment_gateways = dbContext.ConfiguredPaymentGateways.Select(x => new InvoceService.PaymentGatewayRecurringInvoiceCreateRequest { configured = x.IsEnabled, gateway_name = x.GatewayName }).ToList() },
+                payment_terms = _settings.ZohoAccount.PaymentTerm,
+                date = DateTime.UtcNow.AddDays(-1).ToString("yyyy-MM-dd"),
+                contact_persons = new List<string> { dbPurchese.InvoiceContact.ExternalPrimaryContactId }
+            };
+            string jsonString = JsonConvert.SerializeObject(invoiceCreateRequest);
+            MultipartFormDataContent form = new MultipartFormDataContent();
+            StringContent content = new StringContent(jsonString);
+            form.Add(content, "JSONString");
+            HttpResponseMessage response = await httpClient.PostAsync(url, form);
+            if (response.StatusCode == HttpStatusCode.Created)
+            {
+                var byteArray = await response.Content.ReadAsByteArrayAsync();
+                var responseString = Encoding.UTF8.GetString(byteArray, 0, byteArray.Length);
+                InvoceService.RootInvoiceResponse itemCreateResponse =
+                    JsonConvert.DeserializeObject<InvoceService.RootInvoiceResponse>(responseString);
+                if (itemCreateResponse.code == ZohoSuccessResponseCode)
+                {
+                    if (!string.IsNullOrWhiteSpace(itemCreateResponse.invoice.invoice_id))
+                    {
+
+                        try
+                        {
+
+
+
+                            InvoiceHistory dbHistory = new InvoiceHistory();
+                            dbHistory.InvoiceStatus = InvoiceStatus.Unpaid;
+                            dbHistory.InvoiceId = itemCreateResponse.invoice.invoice_id;
+                            dbHistory.InvoiceNumber = itemCreateResponse.invoice.invoice_number;
+                            dbPurchese.LastSuccessInvoiceIssue = DateTime.UtcNow;
+                            dbPurchese.IsPaidForThisMonth = false;
+                            dbHistory.Purchese = dbPurchese;
+                            dbContext.InvoiceHistories.Add(dbHistory);
+
+
+                            await dbContext.SaveChangesAsync();
+
+                            job.UpdatedAt = DateTime.UtcNow;
+                            job.IsSuccess = true;
+                            await dbContext.SaveChangesAsync();
+                        }
+                        catch (Exception ex)
+                        {
+                            //Fall back method
+                            await DeleteInvoice(itemCreateResponse.invoice.invoice_id);
+                        }
+
+
+
+                    }
+                    else
+                    {
+                        StringBuilder builder = new StringBuilder();
+                        builder.Append((string.IsNullOrWhiteSpace(itemCreateResponse.invoice.invoice_id) ? "Recurring Purchese id is empty. " : ""));
+
+                        throw new Exception($"Response Filed came empty. Fields => {builder.ToString()}");
+                    }
+
+                }
+                else
+                {
+                    throw new Exception($"Zoho returns a erro code. Erro code is => {itemCreateResponse.code}. Message is => {itemCreateResponse.message}.");
+
+                }
+            }
+            else
+            {
+                throw new Exception($"Zoho Api call failed Erro code is => {response.StatusCode}. Reason sent by server is => {response.ReasonPhrase}.");
+            }
+
+            return true;
+        }
+        public async Task<bool> CreateInvoice(InvoiceJobQueue job, ZohoCreatePurchesDto model, ApplicationDbContext dbContext)
         {
             HttpClient httpClient = _httpClientFactory.CreateClient();
             httpClient.AddZohoAuthorizationHeader(await _zohoTokenService.GetOAuthToken());
@@ -232,7 +330,7 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
 
             InvoiceContact contact = dbContext.InvoiceContacts.First(x => x.UserId == model.UserId);
             if (contact == null)
-                    throw new Exception($"User is not found in the database UserId is => {contact.UserId}");
+                throw new Exception($"User is not found in the database UserId is => {model.UserId}");
             List<Item> zohoItems = new List<Item>();
             zohoItems = model.Items.Select(x =>
             {
@@ -253,9 +351,9 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
                     };
                 }).ToList(),
                 payment_options = new InvoceService.PaymentOptionsRecurringInvoiceCreateRequest { payment_gateways = dbContext.ConfiguredPaymentGateways.Select(x => new InvoceService.PaymentGatewayRecurringInvoiceCreateRequest { configured = x.IsEnabled, gateway_name = x.GatewayName }).ToList() },
-                payment_terms = (isFirst)? 0:_settings.ZohoAccount.PaymentTerm,
+                payment_terms = 0,
                 date = DateTime.UtcNow.AddDays(-1).ToString("yyyy-MM-dd"),
-                contact_persons = new List<string> { contact.ExternalPrimaryContactId}
+                contact_persons = new List<string> { contact.ExternalPrimaryContactId }
             };
             string jsonString = JsonConvert.SerializeObject(invoiceCreateRequest);
             MultipartFormDataContent form = new MultipartFormDataContent();
@@ -275,40 +373,27 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
 
                         try
                         {
-                            if (isFirst)
-                            {
-                                Purchese dbPurchese = new Purchese();
-                                dbPurchese.InvoiceContact = contact;
-                                dbPurchese.InvoiceHistories = new List<InvoiceHistory>{new InvoiceHistory
+                            Purchese dbPurchese = new Purchese();
+                            dbPurchese.InvoiceContact = contact;
+                            dbPurchese.InvoiceHistories = new List<InvoiceHistory>{new InvoiceHistory
                                 {
                                     InvoiceStatus = InvoiceStatus.Unpaid,
                                     InvoiceId = itemCreateResponse.invoice.invoice_id,
                                     InvoiceNumber = itemCreateResponse.invoice.invoice_number
                                 }};
-                                dbPurchese.InvoiceName = "";
-                                dbPurchese.Items = zohoItems.Select(x => new Item_Purchese
-                                {
-                                    Qty = model.Items.First(y => y.ItemId == x.Id).Qty,
-                                    Item = x
-                                }).ToList();
-                                dbPurchese.InvoiceStatus = InvoicingStatus.Active;
-                                dbPurchese.InvoiceType = InvoicingType.Recurring;
-                                dbPurchese.IsPaidForThisMonth = false;
-                                dbPurchese.ReferenceGuid = model.ReferenceGuid;
-                                dbPurchese.InvoiceGatewayType = ExternalInvoiceGatewayType.Zoho;
-                                dbContext.Purcheses.Add(dbPurchese);
-                            }
-                            else
+                            dbPurchese.InvoiceName = "";
+                            dbPurchese.Items = zohoItems.Select(x => new Item_Purchese
                             {
-                                Purchese dbPurchese =
-                                    dbContext.Purcheses.First(x => x.ReferenceGuid == model.ReferenceGuid);
-                                InvoiceHistory dbHistory = new InvoiceHistory();
-                                dbHistory.InvoiceStatus = InvoiceStatus.Unpaid;
-                                dbHistory.InvoiceId = itemCreateResponse.invoice.invoice_id;
-                                dbHistory.InvoiceNumber = itemCreateResponse.invoice.invoice_number;
-                                dbHistory.Purchese = dbPurchese;
-                                dbContext.InvoiceHistories.Add(dbHistory);
-                            }
+                                Qty = model.Items.First(y => y.ItemId == x.Id).Qty,
+                                Item = x
+                            }).ToList();
+                            dbPurchese.InvoiceStatus = InvoicingStatus.Active;
+                            dbPurchese.InvoiceType = InvoicingType.Recurring;
+                            dbPurchese.IsPaidForThisMonth = false;
+                            dbPurchese.ReferenceGuid = model.ReferenceGuid;
+                            dbPurchese.InvoiceGatewayType = ExternalInvoiceGatewayType.Zoho;
+                            dbPurchese.LastSuccessInvoiceIssue = DateTime.UtcNow.AddDays(_settings.ZohoAccount.PaymentTerm*-1);
+                            dbContext.Purcheses.Add(dbPurchese);
                             await dbContext.SaveChangesAsync();
 
                             job.UpdatedAt = DateTime.UtcNow;
@@ -321,7 +406,7 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
                             await DeleteInvoice(itemCreateResponse.invoice.invoice_id);
                         }
 
-                        
+
 
                     }
                     else
