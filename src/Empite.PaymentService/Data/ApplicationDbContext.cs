@@ -19,7 +19,11 @@ namespace Empite.PaymentService.Data
             builder.Entity<Item>().HasIndex(x => x.ItemId);
             builder.Entity<Purchese>().HasIndex(x => x.ReferenceGuid);
             builder.Entity<Purchese>().HasIndex(x => x.InvoiceGatewayType);
+            builder.Entity<Purchese>().HasIndex(x => x.InvoiceStatus);
+            builder.Entity<Purchese>().HasIndex(x => x.InvoiceType);
+
             builder.Entity<InvoiceHistory>().HasIndex(x => x.InvoiceId);
+            builder.Entity<InvoiceHistory>().HasIndex(x => x.InvoiceStatus);
 
             builder.Entity<InvoiceJobQueue>().HasIndex(x => x.InvoiceGatewayType);
             builder.Entity<InvoiceJobQueue>().Property(x=> x.LastErrorMessage).HasColumnType("longtext");
