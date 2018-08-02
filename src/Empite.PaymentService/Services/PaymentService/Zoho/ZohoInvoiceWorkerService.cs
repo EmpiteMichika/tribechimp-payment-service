@@ -439,15 +439,59 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
         {
             try
             {
-                List<InvoiceHistory> LastTwoInvoiceHistory = dbContext.InvoiceHistories
-                    .Where(x => x.Purchese.Id == purchaseId).OrderByDescending(x => x.DueDate).Take(2).ToList();
+                List<InvoiceHistory> invoiceHistory = await dbContext.InvoiceHistories.Include(x => x.Purchese)
+                    .Where(x => x.Purchese.Id == purchaseId && x.DueDate.Date <= DateTime.UtcNow.Date)
+                    .OrderByDescending(x => x.DueDate).Take(2).ToListAsync();
+                if (invoiceHistory.Any())
+                {
+                    
+                    if (invoiceHistory.Count == 1)
+                    {
+                        //Check for initial invoice
+                        InvoiceHistory history = invoiceHistory[0];
+                        return CheckIspaid(history);
+                    }
+                    else
+                    {
+                        InvoiceHistory newHistory = invoiceHistory[0];
+                        InvoiceHistory oldHistory = invoiceHistory[1];
+                        if (newHistory.DueDate.Date < DateTime.UtcNow.Date)
+                        {
+                            return CheckIspaid(newHistory);
+                        }
 
+                        return CheckIspaid(oldHistory);
+                    }
+                }
+                else
+                {
+                    throw new Exception($"No history records found for purchaseId: {purchaseId}");
+                }
             }
             catch (Exception ex)
             {
-
+                //Todo Logging
+                throw ex;
             }
-            return true;
+        }
+
+        private bool CheckIspaid(InvoiceHistory history)
+        {
+            
+            if (history.DueDate.AddMonths(1).Date >= DateTime.UtcNow.Date)
+            {
+                //Check for 1 month range
+                if (history.PaymentRecordedDate == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }
