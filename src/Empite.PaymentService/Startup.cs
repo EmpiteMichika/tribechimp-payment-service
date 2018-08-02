@@ -1,5 +1,5 @@
 ﻿using Empite.PaymentService.Infrastructure;
-using Empite.PaymentService.Interface.Service;
+using Empite.PaymentService.Interface;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;

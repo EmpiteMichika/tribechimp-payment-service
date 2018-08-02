@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Empite.PaymentService.Interface.Service
+namespace Empite.PaymentService.Interface
 {
     public interface IDbInitializer
     {

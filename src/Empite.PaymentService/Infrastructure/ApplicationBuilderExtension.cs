@@ -6,10 +6,10 @@ using Empite.Core.Infrastructure.Constant;
 using Empite.Core.Middleware.Hmac;
 using Empite.Core.Resilience;
 using Empite.PaymentService.Data;
+using Empite.PaymentService.Infrastructure.Filter;
+using Empite.PaymentService.Interface;
 using Empite.PaymentService.Interface.Service;
 using Empite.PaymentService.Interface.Service.Zoho;
-using Empite.PaymentService.Interface.Service.Zoho.Zoho;
-using Empite.PaymentService.Interface.Service.Zoho.Zoho.Zoho.Infrastructure.Filter;
 using Empite.PaymentService.Models.Configs;
 using Empite.PaymentService.Services.PaymentService;
 
@@ -132,12 +132,12 @@ namespace Empite.PaymentService.Infrastructure
             var config = Configuration.GetSection(nameof(Settings)).Get<Settings>();
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddSingleton<Func<ApplicationDbContext>>(() =>
-            {
-                var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
-                optionsBuilder.UseMySql(Configuration.GetConnectionString("DefaultConnection"));
-                return new ApplicationDbContext(optionsBuilder.Options);
-            });
+            //services.AddSingleton<Func<ApplicationDbContext>>(() =>
+            //{
+            //    var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
+            //    optionsBuilder.UseMySql(Configuration.GetConnectionString("DefaultConnection"));
+            //    return new ApplicationDbContext(optionsBuilder.Options);
+            //});
             return services;
         }
 

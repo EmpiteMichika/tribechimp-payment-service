@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Empite.PaymentService.Data.Entity.InvoiceRelated;
-using Empite.PaymentService.Interface.Service;
+using Empite.PaymentService.Interface;
 using Microsoft.EntityFrameworkCore;
 
 namespace Empite.PaymentService.Data
