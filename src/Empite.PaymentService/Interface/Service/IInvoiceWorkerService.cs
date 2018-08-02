@@ -14,6 +14,6 @@ namespace Empite.PaymentService.Interface.Service
         Task DeleteInvoice(string invoiceId);
         Task<bool> CreateInvoice(InvoiceJobQueue job,ZohoCreatePurchesDto model, ApplicationDbContext dbContext);
         Task<bool> CreateSubInvoice(InvoiceJobQueue job, string purchaseId, ApplicationDbContext dbContext);
-        Task<bool> IsPaidForCurrentMonth(string purchaseId);
+        Task<bool> IsPaidForCurrentDate(string purchaseId, ApplicationDbContext dbContext);
     }
 }

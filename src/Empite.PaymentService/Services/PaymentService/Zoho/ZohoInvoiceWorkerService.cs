@@ -279,17 +279,9 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
                             dbHistory.InvoiceStatus = InvoiceStatus.Unpaid;
                             dbHistory.InvoiceId = itemCreateResponse.invoice.invoice_id;
                             dbHistory.InvoiceNumber = itemCreateResponse.invoice.invoice_number;
-                            DateTime utcNow = DateTime.UtcNow;
-                            DateTime lastSuccess;
                             
-                            lastSuccess = new DateTime(utcNow.Year,utcNow.Month,);
-                            while (utcNow < lastSuccess)
-                            {
-                                var tempDate = lastSuccess.AddMonths(-1);
-                                lastSuccess = new DateTime(tempDate.Year, tempDate.Month, dbPurchese.InvoiceDayOfMonth);
-                            }
-                            dbPurchese.LastSuccessInvoiceIssue = ;
-                            dbHistory.DueDate = utcNow.AddDays(_settings.ZohoAccount.PaymentTerm);
+                            dbPurchese.LastSuccessInvoiceIssue = dbPurchese.LastSuccessInvoiceIssue.AddMonths(1);
+                            dbHistory.DueDate = dbPurchese.LastSuccessInvoiceIssue.AddDays(_settings.ZohoAccount.PaymentTerm);
                             dbHistory.Purchese = dbPurchese;
                             dbContext.InvoiceHistories.Add(dbHistory);
 
@@ -388,7 +380,8 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
                                 {
                                     InvoiceStatus = InvoiceStatus.Unpaid,
                                     InvoiceId = itemCreateResponse.invoice.invoice_id,
-                                    InvoiceNumber = itemCreateResponse.invoice.invoice_number
+                                    InvoiceNumber = itemCreateResponse.invoice.invoice_number,
+                                    DueDate = DateTime.UtcNow
                                 }};
                             dbPurchese.InvoiceName = "";
                             dbPurchese.Items = zohoItems.Select(x => new Item_Purchese
@@ -402,6 +395,7 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
                             dbPurchese.ReferenceGuid = model.ReferenceGuid;
                             dbPurchese.InvoiceGatewayType = ExternalInvoiceGatewayType.Zoho;
                             dbPurchese.LastSuccessInvoiceIssue = DateTime.UtcNow.AddDays(_settings.ZohoAccount.PaymentTerm*-1);
+                            
                             dbContext.Purcheses.Add(dbPurchese);
                             await dbContext.SaveChangesAsync();
 
@@ -441,9 +435,19 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
             return true;
         }
 
-        public Task<bool> IsPaidForCurrentMonth(string purchaseId)
+        public async Task<bool> IsPaidForCurrentDate(string purchaseId, ApplicationDbContext dbContext)
         {
-            throw new NotImplementedException();
+            try
+            {
+                List<InvoiceHistory> LastTwoInvoiceHistory = dbContext.InvoiceHistories
+                    .Where(x => x.Purchese.Id == purchaseId).OrderByDescending(x => x.DueDate).Take(2).ToList();
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return true;
         }
     }
 }
