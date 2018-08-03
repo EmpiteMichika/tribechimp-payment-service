@@ -24,7 +24,7 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
         private readonly IHttpClientFactory _httpClientFactory;
         private const int ResultPerPage = 100;
         private IServiceProvider _services { get; }
-        private static bool isRunningCheckInvoicesDue = false;
+        
         private static bool isRunningRecurringInvoiceCreate = false;
 
         private const int ZohoSuccessResponseCode = 0;
@@ -35,96 +35,8 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
             _httpClientFactory = httpClientFactory;
             _services = services;
         }
+        
         [AutomaticRetry(Attempts = 0, LogEvents = true, OnAttemptsExceeded = AttemptsExceededAction.Delete)]
-        public async Task CheckInvoicesDueAsync()
-        {
-            throw new NotImplementedException();
-
-            if (isRunningCheckInvoicesDue)
-                return;
-            isRunningCheckInvoicesDue = true;
-            try
-            {
-
-                using (ApplicationDbContext dbContext = _services.CreateScope().ServiceProvider.GetRequiredService<ApplicationDbContext>())
-                {
-                    int currentPage = 0;
-                    int successCount = 0;
-                    while (true)
-                    {
-                       
-
-                        currentPage++;
-                    }
-
-
-                }
-            }
-            catch (Exception ex)
-            {
-                isRunningCheckInvoicesDue = false;
-                //Todo Logger
-            }
-            isRunningCheckInvoicesDue = false;
-        }
-        //Retrn True If the recurring purchese is changes to paid, so we can get the skkippin elements
-        private async Task<bool> CheckInvoice(Purchese purchese, ApplicationDbContext dbContext)
-        {
-            throw new NotImplementedException();
-            //try
-            //{
-            //    HttpClient httpClient = _httpClientFactory.CreateClient();
-            //    httpClient.AddZohoAuthorizationHeader(_zohoTokenService.GetOAuthToken().Result);
-            //    Uri url = new Uri(_settings.ZohoAccount.ApiBasePath).Append("recurringinvoices", );
-            //    HttpResponseMessage response = await httpClient.GetAsync(url);
-            //    if (response.IsSuccessStatusCode)
-            //    {
-            //        var byteArray = await response.Content.ReadAsByteArrayAsync();
-            //        var responseString = Encoding.UTF8.GetString(byteArray, 0, byteArray.Length);
-            //        ZohoInvoceService.RootRecurringPaymentCheckInvoiceClass enablePortalResponse =
-            //            JsonConvert.DeserializeObject<ZohoInvoceService.RootRecurringPaymentCheckInvoiceClass>(responseString);
-            //        if (enablePortalResponse.code == ZohoSuccessResponseCode)
-            //        {
-            //            if (enablePortalResponse.recurring_invoice.unpaid_child_invoices_count == 0)
-            //            {
-            //                purchese.IsDue = false;
-            //                purchese.UpdatedAt = DateTime.UtcNow;
-                           
-            //                await dbContext.SaveChangesAsync();
-            //                return true;
-            //            }
-            //            else
-            //            {
-            //                if (!purchese.IsDue)
-            //                {
-            //                    purchese.IsDue = true;
-            //                    purchese.UpdatedAt = DateTime.UtcNow;
-            //                    await dbContext.SaveChangesAsync();
-            //                    return false;
-            //                }
-            //            }
-            //        }
-            //        else
-            //        {
-
-            //            throw new Exception($"Zoho Portle Enable failed. Respond with code {enablePortalResponse.code}, Message is => {enablePortalResponse.message}");
-            //        }
-            //    }
-            //    else
-            //    {
-            //        throw new Exception($"Zoho Api call failed Erro code is => {response.StatusCode}. Reason sent by server is => {response.ReasonPhrase}.");
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    //Todo Logging
-            //    return false;
-            //}
-
-            //return false;
-            return false;
-        }
-
         public async Task CreateRecurringInvoice()
         {
             //throw new NotImplementedException();
@@ -157,14 +69,7 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
                             try
                             {
                                 await Task.Delay(50);
-                                // keep this logic to check the fresh created invoices. since it doesnt contain any Sub invoices in the job queue, and it doesn't do any performance hit.
-                                //bool isHistoryRecordExixsits = dbContext.InvoiceHistories.Include(x => x.Purchese)
-                                //    .Any(x => x.Purchese.Id == purchese.Id && x.CreatedAt.Date > DateTime.UtcNow.AddMonths(-1).Date);
-                                //if (isHistoryRecordExixsits)
-                                //{
-                                //    continue;
-                                //}
-                                // Above statement must be there sicnce below statement where close columns are not in a index. to make JsonData a index we have to define a length but in this case we cant
+                                
                                 bool isDbJobQueExists = dbContext.InvoiceJobQueues.Any(x =>
                                     x.CreatedAt.Date > DateTime.UtcNow.AddMonths(-1).Date && x.JsonData == purchese.Id && x.JobType == InvoiceJobQueueType.CreateSubInvoice);
                                 if (isDbJobQueExists)

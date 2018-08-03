@@ -39,7 +39,8 @@
       "Port": "3306"
     },
     "HangfireServiceConfig": {
-      "CheckRecurringPayment": true
+      "CreateRecurringPayment": true,
+      "RunJobs": true 
     }
   }
 }

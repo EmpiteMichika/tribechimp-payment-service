@@ -227,9 +227,12 @@ namespace Empite.PaymentService.Infrastructure
             {
 
                 IRecurringInvoiceService<ZohoRecurringInvoiceService> sender = serviceScope.ServiceProvider.GetRequiredService<IRecurringInvoiceService<ZohoRecurringInvoiceService>>();
-               
-                if (_settings.HangfireServiceConfig.CheckRecurringPayment)
-                    RecurringJob.AddOrUpdate(() => sender.CreateRecurringInvoice(), Cron.Minutely);
+                IInvoceService jobs = serviceScope.ServiceProvider.GetRequiredService<IInvoceService>();
+                if (_settings.HangfireServiceConfig.CreateRecurringPayment)
+                    RecurringJob.AddOrUpdate(() => sender.CreateRecurringInvoice(), Cron.Daily);
+                if (_settings.HangfireServiceConfig.RunJobs)
+                    RecurringJob.AddOrUpdate(() => jobs.RunJobs(), Cron.MinuteInterval(1));
+
             }
             app.UseSwagger();
             app.UseSwaggerUI(option =>

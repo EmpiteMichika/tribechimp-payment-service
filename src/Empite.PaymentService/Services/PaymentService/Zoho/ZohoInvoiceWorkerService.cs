@@ -295,7 +295,9 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
                         catch (Exception ex)
                         {
                             //Fall back method
+                            //todo logging
                             await DeleteInvoice(itemCreateResponse.invoice.invoice_id);
+                            throw ex;
                         }
 
 

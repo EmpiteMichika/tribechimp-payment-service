@@ -14,6 +14,7 @@ using Empite.PaymentService.Models.Configs;
 using Empite.PaymentService.Models.Dto;
 using Empite.PaymentService.Models.Dto.Zoho;
 using Empite.PaymentService.Services.PaymentService.Zoho;
+using Hangfire;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
@@ -91,7 +92,7 @@ namespace Empite.PaymentService.Services.PaymentService
         /// </summary>
         /// <returns></returns>
         ///
-
+        [AutomaticRetry(Attempts = 0, LogEvents = true, OnAttemptsExceeded = AttemptsExceededAction.Delete)]
         public async Task RunJobs()
         {
             if (_isJobsProcessing)

@@ -80,6 +80,7 @@
     }
     public class HangfireServiceConfig
     {
-        public bool CheckRecurringPayment { get; set; }
+        public bool CreateRecurringPayment { get; set; }
+        public bool RunJobs { get; set; }
     }
 }
