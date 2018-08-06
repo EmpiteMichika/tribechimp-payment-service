@@ -55,7 +55,7 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
                     
                     while (true)
                     {
-                        await Task.Delay(10);
+                        await Task.Delay(2000);
                         List<Purchese> recurringInvoices = dbContext.Purcheses
                             .Where(x => x.InvoiceType ==InvoicingType.Recurring && x.InvoiceStatus == InvoicingStatus.Active 
                                                                                 && x.InvoiceGatewayType == ExternalInvoiceGatewayType.Zoho
