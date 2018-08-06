@@ -26,7 +26,7 @@ namespace Empite.PaymentService.Data.Entity.InvoiceRelated
     public enum InvoicingType
     {
         Recurring=1,
-        Temporary=2
+        OneTime= 2
     }
 
     public enum InvoicingStatus

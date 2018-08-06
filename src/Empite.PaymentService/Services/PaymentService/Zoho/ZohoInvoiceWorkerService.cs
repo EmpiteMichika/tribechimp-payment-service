@@ -37,13 +37,13 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
             HttpClient httpClient = _httpClientFactory.CreateClient();
             httpClient.AddZohoAuthorizationHeader(await _zohoTokenService.GetOAuthToken());
             Uri url = new Uri(_settings.ZohoAccount.ApiBasePath).Append("contacts");
-            InvoceService.ContactPersonRoot contactPerson = new InvoceService.ContactPersonRoot
+            ContactPersonRoot contactPerson = new ContactPersonRoot
             {
                 contact_name = model.FirstName + " " + model.LastName,
                 payment_terms = _settings.ZohoAccount.PaymentTerm,
-                contact_persons = new List<InvoceService.ContactPerson>
+                contact_persons = new List<ContactPerson>
                 {
-                    new InvoceService.ContactPerson
+                    new ContactPerson
                     {
                         email = model.Email,
                         first_name = model.FirstName,
@@ -62,8 +62,8 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
             {
                 var byteArray = await response.Content.ReadAsByteArrayAsync();
                 var responseString = Encoding.UTF8.GetString(byteArray, 0, byteArray.Length);
-                InvoceService.RootContactResponse contactResponse =
-                    JsonConvert.DeserializeObject<InvoceService.RootContactResponse>(responseString);
+                RootContactResponse contactResponse =
+                    JsonConvert.DeserializeObject<RootContactResponse>(responseString);
                 if (contactResponse.code == ZohoSuccessResponseCode)
                 {
                     if (!string.IsNullOrWhiteSpace(contactResponse.contact.contact_id) &&
@@ -110,8 +110,8 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
             {
                 var byteArray = await response.Content.ReadAsByteArrayAsync();
                 var responseString = Encoding.UTF8.GetString(byteArray, 0, byteArray.Length);
-                InvoceService.RootZohoBasicResponse enablePortalResponse =
-                    JsonConvert.DeserializeObject<InvoceService.RootZohoBasicResponse>(responseString);
+                RootZohoBasicResponse enablePortalResponse =
+                    JsonConvert.DeserializeObject<RootZohoBasicResponse>(responseString);
                 if (enablePortalResponse.code == ZohoSuccessResponseCode)
                 {
                     return true;
@@ -133,7 +133,7 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
             HttpClient httpClient = _httpClientFactory.CreateClient();
             httpClient.AddZohoAuthorizationHeader(await _zohoTokenService.GetOAuthToken());
             Uri url = new Uri(_settings.ZohoAccount.ApiBasePath).Append("items");
-            InvoceService.ZohoCreateItemReqeust zohoItem = new InvoceService.ZohoCreateItemReqeust();
+            ZohoCreateItemReqeust zohoItem = new ZohoCreateItemReqeust();
             zohoItem.description = model.Description;
             zohoItem.name = model.Name;
             zohoItem.rate = model.Rate;
@@ -148,8 +148,8 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
             {
                 var byteArray = await response.Content.ReadAsByteArrayAsync();
                 var responseString = Encoding.UTF8.GetString(byteArray, 0, byteArray.Length);
-                InvoceService.RootItemCreateResponse itemCreateResponse =
-                    JsonConvert.DeserializeObject<InvoceService.RootItemCreateResponse>(responseString);
+                RootItemCreateResponse itemCreateResponse =
+                    JsonConvert.DeserializeObject<RootItemCreateResponse>(responseString);
                 if (itemCreateResponse.code == ZohoSuccessResponseCode)
                 {
                     if (!string.IsNullOrWhiteSpace(itemCreateResponse.item.item_id))
@@ -204,8 +204,8 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
                     //Todo Logging success delete of the Purchese deletion
                     var byteArray = await response.Content.ReadAsByteArrayAsync();
                     var responseString = Encoding.UTF8.GetString(byteArray, 0, byteArray.Length);
-                    InvoceService.RootZohoBasicResponse sendEmailZohoResponse =
-                        JsonConvert.DeserializeObject<InvoceService.RootZohoBasicResponse>(responseString);
+                    RootZohoBasicResponse sendEmailZohoResponse =
+                        JsonConvert.DeserializeObject<RootZohoBasicResponse>(responseString);
                     if (sendEmailZohoResponse.code != ZohoSuccessResponseCode)
                     {
                         throw new Exception(
@@ -241,15 +241,15 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
             }
 
 
-            InvoceService.RootInvoiceCreateRequest invoiceCreateRequest = new InvoceService.RootInvoiceCreateRequest
+            RootInvoiceCreateRequest invoiceCreateRequest = new RootInvoiceCreateRequest
             {
                 customer_id = dbPurchese.InvoiceContact.ExternalContactUserId,
-                line_items = dbPurchese.Items.Select(x => new InvoceService.LineItemRecurringInvoiceCreateRequest
+                line_items = dbPurchese.Items.Select(x => new LineItemRecurringInvoiceCreateRequest
                 {
                     item_id = x.Item.ItemId,
                     quantity = x.Qty
                 }).ToList(),
-                payment_options = new InvoceService.PaymentOptionsRecurringInvoiceCreateRequest { payment_gateways = dbContext.ConfiguredPaymentGateways.Select(x => new InvoceService.PaymentGatewayRecurringInvoiceCreateRequest { configured = x.IsEnabled, gateway_name = x.GatewayName }).ToList() },
+                payment_options = new PaymentOptionsRecurringInvoiceCreateRequest { payment_gateways = dbContext.ConfiguredPaymentGateways.Select(x => new PaymentGatewayRecurringInvoiceCreateRequest { configured = x.IsEnabled, gateway_name = x.GatewayName }).ToList() },
                 payment_terms = _settings.ZohoAccount.PaymentTerm,
                 date = DateTime.UtcNow.AddDays(-1).ToString("yyyy-MM-dd"),
                 contact_persons = new List<string> { dbPurchese.InvoiceContact.ExternalPrimaryContactId }
@@ -263,8 +263,8 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
             {
                 var byteArray = await response.Content.ReadAsByteArrayAsync();
                 var responseString = Encoding.UTF8.GetString(byteArray, 0, byteArray.Length);
-                InvoceService.RootInvoiceResponse itemCreateResponse =
-                    JsonConvert.DeserializeObject<InvoceService.RootInvoiceResponse>(responseString);
+                RootInvoiceResponse itemCreateResponse =
+                    JsonConvert.DeserializeObject<RootInvoiceResponse>(responseString);
                 if (itemCreateResponse.code == ZohoSuccessResponseCode)
                 {
                     if (!string.IsNullOrWhiteSpace(itemCreateResponse.invoice.invoice_id))
@@ -341,19 +341,19 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
                 return dbZohoItems;
             }).ToList();
 
-            InvoceService.RootInvoiceCreateRequest invoiceCreateRequest = new InvoceService.RootInvoiceCreateRequest
+            RootInvoiceCreateRequest invoiceCreateRequest = new RootInvoiceCreateRequest
             {
                 customer_id = contact.ExternalContactUserId,
                 line_items = model.Items.Select(x =>
                 {
                     var dbZohoItems = zohoItems.First(y => y.Id == x.ItemId);
-                    return new InvoceService.LineItemRecurringInvoiceCreateRequest
+                    return new LineItemRecurringInvoiceCreateRequest
                     {
                         item_id = dbZohoItems.ItemId,
                         quantity = x.Qty
                     };
                 }).ToList(),
-                payment_options = new InvoceService.PaymentOptionsRecurringInvoiceCreateRequest { payment_gateways = dbContext.ConfiguredPaymentGateways.Select(x => new InvoceService.PaymentGatewayRecurringInvoiceCreateRequest { configured = x.IsEnabled, gateway_name = x.GatewayName }).ToList() },
+                payment_options = new PaymentOptionsRecurringInvoiceCreateRequest { payment_gateways = dbContext.ConfiguredPaymentGateways.Select(x => new PaymentGatewayRecurringInvoiceCreateRequest { configured = x.IsEnabled, gateway_name = x.GatewayName }).ToList() },
                 payment_terms = 0,
                 date = DateTime.UtcNow.AddDays(-1).ToString("yyyy-MM-dd"),
                 contact_persons = new List<string> { contact.ExternalPrimaryContactId }
@@ -367,8 +367,8 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
             {
                 var byteArray = await response.Content.ReadAsByteArrayAsync();
                 var responseString = Encoding.UTF8.GetString(byteArray, 0, byteArray.Length);
-                InvoceService.RootInvoiceResponse itemCreateResponse =
-                    JsonConvert.DeserializeObject<InvoceService.RootInvoiceResponse>(responseString);
+                RootInvoiceResponse itemCreateResponse =
+                    JsonConvert.DeserializeObject<RootInvoiceResponse>(responseString);
                 if (itemCreateResponse.code == ZohoSuccessResponseCode)
                 {
                     if (!string.IsNullOrWhiteSpace(itemCreateResponse.invoice.invoice_id))

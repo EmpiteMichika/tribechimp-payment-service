@@ -256,7 +256,7 @@ namespace Empite.PaymentService.Infrastructure
                 {
                     Title = config.ApiSettings.Title,
                     Version = config.ApiSettings.Version,
-                    Contact = new Contact { Email = config.ApiSettings.Contact, Name = "Empite" },
+                    Contact = new Swashbuckle.AspNetCore.Swagger.Contact { Email = config.ApiSettings.Contact, Name = "Empite" },
                     Description = config.ApiSettings.Description,
                     TermsOfService = config.ApiSettings.Toc
                 });

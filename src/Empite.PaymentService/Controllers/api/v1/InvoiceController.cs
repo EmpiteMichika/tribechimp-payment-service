@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Empite.PaymentService.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class InvoiceController : ControllerBase
     {
@@ -23,51 +23,8 @@ namespace Empite.PaymentService.Controllers
             _invoceService = service;
             _dbContext = dbContext;
         }
-        
-        [HttpPost("createContact")]
-        public async Task<IActionResult> CreateContact([FromBody]ZohoCreateContact createContact)
-        {
-            try
-            {
-                await _invoceService.AddJob(createContact, InvoiceJobQueueType.CreateContact,ExternalInvoiceGatewayType.Zoho);
-                await _invoceService.AddJob(createContact.UserId, InvoiceJobQueueType.EnablePaymentReminders, ExternalInvoiceGatewayType.Zoho);
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                //Todo Logging
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Exception is => {e.Message}, stacktrace => {e.StackTrace}");
-            }
-        }
-
-        
-
-        [HttpGet("runjobs")]
-        public async Task<IActionResult> RunJobs()
-        {
-            _invoceService.RunJobs();
-            return Ok();
-        }
-
-        [HttpPost("createItem")]
-        public async Task<IActionResult> CreateItem([FromBody] ZohoCreateItemDto itemDto)
-        {
-            try
-            {
-                await _invoceService.AddJob(itemDto, InvoiceJobQueueType.CreateItem, ExternalInvoiceGatewayType.Zoho);
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                //Todo Logging
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Exception is => {e.Message}, stacktrace => {e.StackTrace}");
-            }
-        }
-
-        [HttpPost("createRecurringInvoice")]
-        public async Task<IActionResult> CreateRecurringInvoice([FromBody]ZohoCreatePurchesDto model)
+        [HttpPut]
+        public async Task<IActionResult> Put([FromBody]ZohoCreatePurchesDto model)
         {
             try
             {
@@ -82,7 +39,7 @@ namespace Empite.PaymentService.Controllers
             }
         }
 
-        [HttpGet("getRecInvoiceStatus/{guid}")]
+        [HttpGet("{guid}")]
         public async Task<IActionResult> GetRecInvoiceStatus(string guid)
         {
             try
