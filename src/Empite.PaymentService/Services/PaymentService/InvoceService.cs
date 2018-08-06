@@ -112,7 +112,7 @@ namespace Empite.PaymentService.Services.PaymentService
                     for (int y = 0; y <= pages; y++)
                     {
                         List<InvoiceJobQueue> jobs = _dbContext.InvoiceJobQueues.Where(x => x.IsSuccess == false).OrderBy(x => x.CreatedAt)
-                            .Skip(pages * RowsPerPage).Take(RowsPerPage).ToList();
+                            .Take(RowsPerPage).ToList();
                         foreach (InvoiceJobQueue job in jobs)
                         {
                             await Task.Delay(10);
@@ -132,6 +132,7 @@ namespace Empite.PaymentService.Services.PaymentService
                                 job.LastErrorMessage =
                                     $"Exception message is => {ex.Message}, Stacktrace is => {ex.StackTrace}";
                                 await _dbContext.SaveChangesAsync();
+                                throw ex;
                             }
 
                         }
@@ -143,6 +144,7 @@ namespace Empite.PaymentService.Services.PaymentService
             {
                 _isJobsProcessing = false;
                 //Todo Logging
+                throw ex;
             }
 
             _isJobsProcessing = false;

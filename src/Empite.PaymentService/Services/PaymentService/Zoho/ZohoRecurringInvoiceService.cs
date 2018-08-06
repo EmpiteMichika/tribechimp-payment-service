@@ -22,7 +22,7 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
         private readonly Settings _settings;
         private readonly IZohoInvoiceSingleton _zohoTokenService;
         private readonly IHttpClientFactory _httpClientFactory;
-        private const int ResultPerPage = 100;
+        private const int ResultPerPage = 300;
         private IServiceProvider _services { get; }
         
         private static bool isRunningRecurringInvoiceCreate = false;
@@ -60,9 +60,28 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
                             .Where(x => x.InvoiceType ==InvoicingType.Recurring && x.InvoiceStatus == InvoicingStatus.Active 
                                                                                 && x.InvoiceGatewayType == ExternalInvoiceGatewayType.Zoho
                                                                                 && x.LastSuccessInvoiceIssue.Date <= DateTime.UtcNow.AddMonths(-1).Date)
-                            .Skip((currentPage * ResultPerPage)).Take(ResultPerPage).ToList();
+                            .Skip((currentPage * ResultPerPage)).OrderBy(x=> x.CreatedAt).Take(ResultPerPage).ToList();
                         if (!recurringInvoices.Any())
-                            break;
+                        {
+                            var temp = dbContext.Purcheses
+                                .Any(x => x.InvoiceType == InvoicingType.Recurring && x.InvoiceStatus ==
+                                                                             InvoicingStatus.Active
+                                                                             && x.InvoiceGatewayType ==
+                                                                             ExternalInvoiceGatewayType.Zoho
+                                                                             && x.LastSuccessInvoiceIssue.Date <=
+                                                                             DateTime.UtcNow.AddMonths(-1).Date);
+                            if (temp)
+                            {
+                                currentPage--;
+                                continue;
+                            }
+                            else
+                            {
+                                break;
+                            }
+                            
+                        }
+                            
                         foreach (Purchese purchese in recurringInvoices)
                         {
                             //using try catch to contine the flow
@@ -89,7 +108,7 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
                             catch (Exception ex)
                             {
                                 //Todo Logging
-
+                                throw ex;
                             }
 
 
@@ -105,6 +124,7 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
             {
                 isRunningRecurringInvoiceCreate = false;
                 //Todo Logger
+                throw ex;
             }
             isRunningRecurringInvoiceCreate = false;
         }
