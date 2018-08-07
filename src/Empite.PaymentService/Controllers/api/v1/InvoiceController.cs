@@ -6,6 +6,7 @@ using Empite.PaymentService.Interface.Service;
 
 using Empite.PaymentService.Models.Dto;
 using Empite.PaymentService.Models.Dto.Zoho;
+using Empite.PaymentService.Services.PaymentService.Zoho;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -18,10 +19,12 @@ namespace Empite.PaymentService.Controllers
     {
         private readonly IInvoceService _invoceService;
         private readonly ApplicationDbContext _dbContext;
-        public InvoiceController(IInvoceService service,ApplicationDbContext dbContext)
+        private IInvoiceWorkerService<ZohoInvoiceWorkerService> _workerService;
+        public InvoiceController(IInvoceService service,ApplicationDbContext dbContext, IInvoiceWorkerService<ZohoInvoiceWorkerService> workerService)
         {
             _invoceService = service;
             _dbContext = dbContext;
+            _workerService = workerService;
         }
         [HttpPut]
         public async Task<IActionResult> Put([FromBody]ZohoCreatePurchesDto model)
@@ -40,14 +43,13 @@ namespace Empite.PaymentService.Controllers
         }
 
         [HttpGet("{guid}")]
-        public async Task<IActionResult> GetRecInvoiceStatus(string guid)
+        public async Task<IActionResult> GetRecInvoiceStatus(Guid guid)
         {
             try
             {
-                Purchese purchese = await _dbContext.Purcheses.FirstAsync(x => x.ReferenceGuid.ToString() == guid);
-                return Ok();
-                //status is 0 if its paid, 1 if its unpaid       
-                //return Ok((purchese.IsDue)?(new {status = 1}): new { status = 0 });
+                var res = await _workerService.IsPaidForCurrentDate(guid, _dbContext);
+                //status is 1 if its paid, 0 if its unpaid       
+                return Ok((res) ?(new {paid = 1}): new { paid = 0 });
             }
             catch (Exception e)
             {

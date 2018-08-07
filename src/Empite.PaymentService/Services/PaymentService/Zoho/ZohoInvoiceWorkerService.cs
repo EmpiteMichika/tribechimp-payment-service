@@ -437,12 +437,12 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
             return true;
         }
 
-        public async Task<bool> IsPaidForCurrentDate(string purchaseId, ApplicationDbContext dbContext)
+        public async Task<bool> IsPaidForCurrentDate(Guid purchaseId, ApplicationDbContext dbContext)
         {
             try
             {
                 List<InvoiceHistory> invoiceHistory = await dbContext.InvoiceHistories.Include(x => x.Purchese)
-                    .Where(x => x.Purchese.Id == purchaseId && x.DueDate.Date <= DateTime.UtcNow.Date)
+                    .Where(x => x.Purchese.ReferenceGuid == purchaseId && x.DueDate.Date <= DateTime.UtcNow.Date)
                     .OrderByDescending(x => x.DueDate).Take(2).ToListAsync();
                 if (invoiceHistory.Any())
                 {

@@ -132,7 +132,7 @@ namespace Empite.PaymentService.Services.PaymentService
                                 job.LastErrorMessage =
                                     $"Exception message is => {ex.Message}, Stacktrace is => {ex.StackTrace}";
                                 await _dbContext.SaveChangesAsync();
-                                throw ex;
+                                
                             }
 
                         }
