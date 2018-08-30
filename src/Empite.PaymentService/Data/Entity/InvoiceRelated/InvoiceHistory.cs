@@ -14,6 +14,7 @@ namespace Empite.PaymentService.Data.Entity.InvoiceRelated
         public Purchese Purchese { get; set; }
         public DateTime? PaymentRecordedDate { get; set; }
         public DateTime DueDate { get; set; }
+        public double PaidAmount { get; set; } = 0;
         public InvoiceStatus InvoiceStatus { get; set; }
     }
 
@@ -21,6 +22,7 @@ namespace Empite.PaymentService.Data.Entity.InvoiceRelated
     {
         Paid=1,
         Unpaid=2,
-        Canceled=3
+        Canceled=3,
+        PartialPayment
     }
 }

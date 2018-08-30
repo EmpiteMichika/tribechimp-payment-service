@@ -483,7 +483,7 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
             if (history.DueDate.AddMonths(1).Date >= DateTime.UtcNow.Date)
             {
                 //Check for 1 month range
-                if (history.PaymentRecordedDate == null)
+                if (history.PaymentRecordedDate == null && history.InvoiceStatus == InvoiceStatus.Paid)
                 {
                     return false;
                 }
