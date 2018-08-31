@@ -16,6 +16,7 @@ using Empite.PaymentService.Models.Dto.Zoho;
 using Empite.PaymentService.Services.PaymentService.Zoho;
 using Hangfire;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
@@ -24,25 +25,46 @@ namespace Empite.PaymentService.Services.PaymentService
     public class InvoceService: IInvoceService
     {
         
-        private static bool _isJobsProcessing = false;
+       
         private const int RowsPerPage = 100;
         private readonly Settings _settings;
         private const int ZohoSuccessResponseCode = 0;
         private const int ZohoPaymentTermDaysGap = 10;
         private IServiceProvider _services { get; }
         private IInvoiceWorkerService<ZohoInvoiceWorkerService> _workerService;
-
-        public InvoceService(IOptions<Settings> options, IServiceProvider services,IInvoiceWorkerService<ZohoInvoiceWorkerService> workerService)
+        private ILogger<InvoceService> _logger;
+        private readonly Guid _sessionGuid;
+        public InvoceService(IOptions<Settings> options, IServiceProvider services,IInvoiceWorkerService<ZohoInvoiceWorkerService> workerService, ILogger<InvoceService> logger)
         {
 
             _services = services;
             _workerService = workerService;
-
-
+            _logger = logger;
+            _sessionGuid = Guid.NewGuid();
         }
-
+        /// <summary>
+        /// Log Errors
+        /// </summary>
+        /// <param name="message"></param>
+        private void LogError(string message)
+        {
+            string finalMessage = ($"Guid:{_sessionGuid.ToString()} || ");
+            finalMessage += message;
+            _logger.LogError(finalMessage);
+        }
+        /// <summary>
+        /// Log Informations
+        /// </summary>
+        /// <param name="message"></param>
+        private void LogInformation(string message)
+        {
+            string finalMessage = ($"Guid:{_sessionGuid.ToString()} || ");
+            finalMessage += message;
+            _logger.LogInformation(finalMessage);
+        }
         public async Task AddJob(dynamic DataObject, InvoiceJobQueueType JobType, ExternalInvoiceGatewayType externalInvoiceGatewayType)
         {
+            LogInformation($"++++++++++++++++++++++++++++++ Start AddJob. Jobtype is => {JobType.ToString()}, ExternalGateway type is => {externalInvoiceGatewayType.ToString()} ++++++++++++++++++++++++++++++");
             using (ApplicationDbContext _dbContext = _services.CreateScope().ServiceProvider.GetRequiredService<ApplicationDbContext>())
             {
                 InvoiceJobQueue job = new InvoiceJobQueue();
@@ -86,6 +108,7 @@ namespace Empite.PaymentService.Services.PaymentService
                 _dbContext.InvoiceJobQueues.Add(job);
                 await _dbContext.SaveChangesAsync(); 
             }
+            LogInformation($"++++++++++++++++++++++++++++++ Stop AddJob. Jobtype is => {JobType.ToString()}, ExternalGateway type is => {externalInvoiceGatewayType.ToString()} ++++++++++++++++++++++++++++++");
         }
         /// <summary>
         /// Root function for the Running saved purchese related jobs in the database
@@ -95,13 +118,14 @@ namespace Empite.PaymentService.Services.PaymentService
         [AutomaticRetry(Attempts = 0, LogEvents = true, OnAttemptsExceeded = AttemptsExceededAction.Delete)]
         public async Task RunJobs()
         {
-            if (_isJobsProcessing)
+            
+            if (InvoiceServiceStatics._isJobsProcessing)
             {
                 return;
 
             }
-
-            _isJobsProcessing = true;
+            LogInformation($"++++++++++++++++++++++++++++++ Start RunJob ++++++++++++++++++++++++++++++");
+            InvoiceServiceStatics._isJobsProcessing = true;
             try
             {
                 using (ApplicationDbContext _dbContext = _services.CreateScope().ServiceProvider.GetRequiredService<ApplicationDbContext>())
@@ -115,6 +139,7 @@ namespace Empite.PaymentService.Services.PaymentService
                             .Take(RowsPerPage).ToList();
                         foreach (InvoiceJobQueue job in jobs)
                         {
+                            LogInformation($"-------------- Start processing Job id {job.Id} ---------------------------");
                             await Task.Delay(10);
                             try
                             {
@@ -126,15 +151,16 @@ namespace Empite.PaymentService.Services.PaymentService
                             }
                             catch (Exception ex)
                             {
-                                //Todo logging
+                                
                                 //Log With the Job ID
+                                LogError($"Error in Invoice service job loog. Job id is => {job.Id}, exception message is => {ex.Message}, Stacktrace is => {ex.StackTrace}");
                                 job.ReTryCount++;
                                 job.LastErrorMessage =
                                     $"Exception message is => {ex.Message}, Stacktrace is => {ex.StackTrace}";
                                 await _dbContext.SaveChangesAsync();
                                 
                             }
-
+                            LogInformation($"-------------- Stop processing Job id {job.Id} ---------------------------");
                         }
                     } 
                 }
@@ -142,16 +168,18 @@ namespace Empite.PaymentService.Services.PaymentService
             }
             catch (Exception ex)
             {
-                _isJobsProcessing = false;
-                //Todo Logging
+                InvoiceServiceStatics._isJobsProcessing = false;
+               
+                LogError($"Error in RunJob. Exception is => {ex.Message}, StackTrace is => {ex.StackTrace}");
                 throw ex;
             }
 
-            _isJobsProcessing = false;
-            
+            InvoiceServiceStatics._isJobsProcessing = false;
+            LogInformation($"++++++++++++++++++++++++++++++ Stop RunJob ++++++++++++++++++++++++++++++");
         }
         private async Task<bool> ZohoJobRunner(InvoiceJobQueue job, ApplicationDbContext _dbContext)
         {
+            LogInformation($"+++++++++++++++++++++++++++++++ Start Zoho Job runner. JobDetails job id => {job.Id} +++++++++++++++++++++++++++++++++++++++++");
             if (job.JobType == InvoiceJobQueueType.CreateContact)
             {
                 ZohoCreateContact model = JsonConvert.DeserializeObject<ZohoCreateContact>(job.JsonData);
@@ -221,7 +249,7 @@ namespace Empite.PaymentService.Services.PaymentService
             {
                 throw new Exception($"Job Queue type is not found for job ID {job.Id}");
             }
-
+            LogInformation($"+++++++++++++++++++++++++++++++ Stop Zoho Job runner. JobDetails job id => {job.Id} +++++++++++++++++++++++++++++++++++++++++");
             return true;
         }
 
@@ -268,6 +296,9 @@ namespace Empite.PaymentService.Services.PaymentService
 
     #endregion
 
-    
 
+    public static class InvoiceServiceStatics
+    {
+        public static bool _isJobsProcessing { get; set; } = false;
+    }
 }

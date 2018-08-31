@@ -13,6 +13,7 @@ using Empite.PaymentService.Models.Configs;
 using Empite.PaymentService.Models.Dto;
 using Empite.PaymentService.Models.Dto.Zoho;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
@@ -25,15 +26,46 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
         private IServiceProvider _services { get; }
         private const int ZohoSuccessResponseCode = 0;
         private readonly Settings _settings;
-        public ZohoInvoiceWorkerService(IZohoInvoiceSingleton zohoTokenService, IHttpClientFactory httpClientFactory, IServiceProvider services, IOptions<Settings> options)
+        private readonly Guid _sessionGuid;
+        private ILogger<ZohoInvoiceWorkerService> _logger;
+        public ZohoInvoiceWorkerService(ILogger<ZohoInvoiceWorkerService> logger,IZohoInvoiceSingleton zohoTokenService, IHttpClientFactory httpClientFactory, IServiceProvider services, IOptions<Settings> options)
         {
             _zohoTokenService = zohoTokenService;
             _httpClientFactory = httpClientFactory;
             _services = services;
             _settings = options.Value;
+            _sessionGuid = Guid.NewGuid();
+            _logger = logger;
         }
+        /// <summary>
+        /// Log Errors
+        /// </summary>
+        /// <param name="message"></param>
+        private void LogError(string message)
+        {
+            string finalMessage = ($"Guid:{_sessionGuid.ToString()} || ");
+            finalMessage += message;
+            _logger.LogError(finalMessage);
+        }
+        /// <summary>
+        /// Log Informations
+        /// </summary>
+        /// <param name="message"></param>
+        private void LogInformation(string message)
+        {
+            string finalMessage = ($"Guid:{_sessionGuid.ToString()} || ");
+            finalMessage += message;
+            _logger.LogInformation(finalMessage);
+        }
+        /// <summary>
+        /// Creating Contact
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="_dbContext"></param>
+        /// <returns></returns>
         public async Task<InvoiceContact> CreateContact(ZohoCreateContact model, ApplicationDbContext _dbContext)
         {
+            LogInformation($"++++++++++ Starting Creating Contact, UserId =>{model.UserId} ++++++++++++++++++++++++++");
             HttpClient httpClient = _httpClientFactory.CreateClient();
             httpClient.AddZohoAuthorizationHeader(await _zohoTokenService.GetOAuthToken());
             Uri url = new Uri(_settings.ZohoAccount.ApiBasePath).Append("contacts");
@@ -78,6 +110,7 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
                         };
                         _dbContext.InvoiceContacts.Add(dbInvoiceContact);
                         await _dbContext.SaveChangesAsync();
+                        LogInformation($"++++++++++ Stop Creating Contact UserId =>{model.UserId}  ++++++++++++++++++++++++++");
                         return dbInvoiceContact;
                     }
                     else
@@ -99,9 +132,11 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
             {
                 throw new Exception($"Zoho Api call failed Erro code is => {response.StatusCode}. Reason sent by server is => {response.ReasonPhrase}.");
             }
+            
         }
         public async Task<bool> EnablePaymentReminder(InvoiceContact contactDetails)
         {
+            LogInformation($"+++++++++++ Start PaymentReminder Data. Contact Deatils user id => {contactDetails.UserId} ++++++++++++++++++++++++++++");
             HttpClient httpClient = _httpClientFactory.CreateClient();
             httpClient.AddZohoAuthorizationHeader(await _zohoTokenService.GetOAuthToken());
             Uri url = new Uri(_settings.ZohoAccount.ApiBasePath).Append("contacts", contactDetails.ExternalContactUserId, "paymentreminder", "enable");
@@ -114,6 +149,7 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
                     JsonConvert.DeserializeObject<RootZohoBasicResponse>(responseString);
                 if (enablePortalResponse.code == ZohoSuccessResponseCode)
                 {
+                    LogInformation($"+++++++++++ Stop PaymentReminder Data. Contact Deatils user id => {contactDetails.UserId} ++++++++++++++++++++++++++++");
                     return true;
                 }
                 else
@@ -126,10 +162,12 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
             {
                 throw new Exception($"Zoho Api call failed Erro code is => {response.StatusCode}. Reason sent by server is => {response.ReasonPhrase}.");
             }
+            
         }
 
         public async Task<Item> CreateItem(ZohoCreateItemDto model, ApplicationDbContext _dbContext)
         {
+            LogInformation($"+++++++++ Start Create Item Referenceid is {model.ReferenceId} +++++++++++++++++++++");
             HttpClient httpClient = _httpClientFactory.CreateClient();
             httpClient.AddZohoAuthorizationHeader(await _zohoTokenService.GetOAuthToken());
             Uri url = new Uri(_settings.ZohoAccount.ApiBasePath).Append("items");
@@ -159,11 +197,13 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
                             ItemId = itemCreateResponse.item.item_id,
                             Description = model.Description,
                             Name = model.Name,
-                            Rate = model.Rate
+                            Rate = model.Rate,
+                            ReferenceId = model.ReferenceId
                         };
 
                         _dbContext.Items.Add(dbItem);
                         await _dbContext.SaveChangesAsync();
+                        LogInformation($"+++++++++ Stop Create Item Referenceid is {model.ReferenceId} +++++++++++++++++++++");
                         return dbItem;
                     }
                     else
@@ -185,10 +225,12 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
             {
                 throw new Exception($"Zoho Api call failed Erro code is => {response.StatusCode}. Reason sent by server is => {response.ReasonPhrase}.");
             }
+            
         }
 
         public async Task DeleteInvoice(string invoiceId)
         {
+            LogInformation($"+++++++++++++++++ Start Deleting Invoice. Invoice id {invoiceId} +++++++++++++++++++++++++++");
             try
             {
                 HttpClient httpClient = _httpClientFactory.CreateClient();
@@ -201,7 +243,7 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
                 }
                 else
                 {
-                    //Todo Logging success delete of the Purchese deletion
+                    
                     var byteArray = await response.Content.ReadAsByteArrayAsync();
                     var responseString = Encoding.UTF8.GetString(byteArray, 0, byteArray.Length);
                     RootZohoBasicResponse sendEmailZohoResponse =
@@ -211,21 +253,23 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
                         throw new Exception(
                             $"Deleteing Purchese Failed. Zoho Error code is => {sendEmailZohoResponse.code}, message is => {sendEmailZohoResponse.message}, invoice id is => {invoiceId}");
                     }
-
+                    LogInformation($"Success Fully Deleted Invoice. Invoice is is => {invoiceId}");
                 }
 
             }
             catch (Exception ex)
             {
-                //Todo Logging
+                
+                LogError($"Error in Deleting Invoice. Invoce id {invoiceId}, exceptions is => {ex.Message}, exception stacktrace is => {ex.StackTrace}");
                 throw new Exception($"Deleteing Recurring Purchese Failed. Recurring Purchese Id is => {invoiceId}");
             }
-
+            LogInformation($"+++++++++++++++++ Stop Deleting Invoice. Invoice id {invoiceId} +++++++++++++++++++++++++++");
 
         }
 
         public async Task<bool> CreateSubInvoice(InvoiceJobQueue job, string purchaseId, ApplicationDbContext dbContext)
         {
+            LogInformation($"+++++++++++++++ Start Create Sub Invoice => {job.Id}, Purchase id => {purchaseId} ++++++++++++++++++++++++++++++");
             HttpClient httpClient = _httpClientFactory.CreateClient();
             httpClient.AddZohoAuthorizationHeader(await _zohoTokenService.GetOAuthToken());
             Uri url = new Uri(_settings.ZohoAccount.ApiBasePath).Append("invoices?send=true");
@@ -295,7 +339,8 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
                         catch (Exception ex)
                         {
                             //Fall back method
-                            //todo logging
+                            
+                            LogError($"Error in Create Sub Invoice Going in Fallback method. Exception message is => {ex.Message}, Stacktrance is => {ex.StackTrace}");
                             await DeleteInvoice(itemCreateResponse.invoice.invoice_id);
                             throw ex;
                         }
@@ -322,11 +367,12 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
             {
                 throw new Exception($"Zoho Api call failed Erro code is => {response.StatusCode}. Reason sent by server is => {response.ReasonPhrase}.");
             }
-
+            LogInformation($"+++++++++++++++ Stop Create Sub Invoice => {job.Id}, Purchase id => {purchaseId} ++++++++++++++++++++++++++++++");
             return true;
         }
         public async Task<bool> CreateInvoice(InvoiceJobQueue job, ZohoCreatePurchesDto model, ApplicationDbContext dbContext)
         {
+            LogInformation($"++++++++++++++++++++++ Start creating Invoice {job.Id}, Model Details Reference Id => {model.ReferenceGuid} ++++++++++++++++++++++++++++++");
             HttpClient httpClient = _httpClientFactory.CreateClient();
             httpClient.AddZohoAuthorizationHeader(await _zohoTokenService.GetOAuthToken());
             Uri url = new Uri(_settings.ZohoAccount.ApiBasePath).Append("invoices?send=true");
@@ -337,7 +383,7 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
             List<Item> zohoItems = new List<Item>();
             zohoItems = model.Items.Select(x =>
             {
-                var dbZohoItems = dbContext.Items.First(y => y.Id == x.ItemId);
+                var dbZohoItems = dbContext.Items.First(y => y.ReferenceId == x.ItemId);
                 return dbZohoItems;
             }).ToList();
 
@@ -346,7 +392,7 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
                 customer_id = contact.ExternalContactUserId,
                 line_items = model.Items.Select(x =>
                 {
-                    var dbZohoItems = zohoItems.First(y => y.Id == x.ItemId);
+                    var dbZohoItems = zohoItems.First(y => y.ReferenceId == x.ItemId);
                     return new LineItemRecurringInvoiceCreateRequest
                     {
                         item_id = dbZohoItems.ItemId,
@@ -408,6 +454,7 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
                         catch (Exception ex)
                         {
                             //Fall back method
+                            LogError($"Error In create invoice. Calling Falling back method. Exception message is => { ex.Message}, stacktrace is => {ex.StackTrace}");
                             await DeleteInvoice(itemCreateResponse.invoice.invoice_id);
                         }
 
@@ -433,12 +480,13 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
             {
                 throw new Exception($"Zoho Api call failed Erro code is => {response.StatusCode}. Reason sent by server is => {response.ReasonPhrase}.");
             }
-
+            LogInformation($"++++++++++++++++++++++ Stop creating Invoice {job.Id}, Model Details Reference Id => {model.ReferenceGuid} ++++++++++++++++++++++++++++++");
             return true;
         }
 
         public async Task<bool> IsPaidForCurrentDate(Guid purchaseId, ApplicationDbContext dbContext)
         {
+            LogInformation($"++++++++++++++++++ Start Is Paid For Current Date Purchase Id {purchaseId} +++++++++++++++++++++++++++++++");
             try
             {
                 List<InvoiceHistory> invoiceHistory = await dbContext.InvoiceHistories.Include(x => x.Purchese)
@@ -451,7 +499,9 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
                     {
                         //Check for initial invoice
                         InvoiceHistory history = invoiceHistory[0];
-                        return CheckIspaid(history);
+                        bool res = CheckIspaid(history);
+                        LogInformation($"++++++++++++++++++ Stop Is Paid For Current Date Purchase Id {purchaseId} +++++++++++++++++++++++++++++++");
+                        return res;
                     }
                     else
                     {
@@ -459,10 +509,16 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
                         InvoiceHistory oldHistory = invoiceHistory[1];
                         if (newHistory.DueDate.Date < DateTime.UtcNow.Date)
                         {
-                            return CheckIspaid(newHistory);
+                            bool res = CheckIspaid(newHistory);
+                            LogInformation($"++++++++++++++++++ Start Is Paid For Current Date Purchase Id {purchaseId} +++++++++++++++++++++++++++++++");
+
+                            return res;
                         }
 
-                        return CheckIspaid(oldHistory);
+                        bool res2 = CheckIspaid(oldHistory);
+                        LogInformation($"++++++++++++++++++ Start Is Paid For Current Date Purchase Id {purchaseId} +++++++++++++++++++++++++++++++");
+
+                        return res2;
                     }
                 }
                 else
@@ -472,9 +528,11 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
             }
             catch (Exception ex)
             {
-                //Todo Logging
+                
+                LogError($"Error in IsPaid For Current Date Exception Message is => {ex.Message}, Stacktrace is => {ex.StackTrace}");
                 throw ex;
             }
+
         }
 
         private bool CheckIspaid(InvoiceHistory history)

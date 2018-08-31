@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Empite.PaymentService.Controllers.api.v1;
 using Empite.PaymentService.Data;
 using Empite.PaymentService.Data.Entity.InvoiceRelated;
 using Empite.PaymentService.Interface.Service;
@@ -10,6 +11,7 @@ using Empite.PaymentService.Services.PaymentService.Zoho;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace Empite.PaymentService.Controllers
 {
@@ -20,11 +22,13 @@ namespace Empite.PaymentService.Controllers
         private readonly IInvoceService _invoceService;
         private readonly ApplicationDbContext _dbContext;
         private IInvoiceWorkerService<ZohoInvoiceWorkerService> _workerService;
-        public InvoiceController(IInvoceService service,ApplicationDbContext dbContext, IInvoiceWorkerService<ZohoInvoiceWorkerService> workerService)
+        private ILogger<InvoiceController> _logger;
+        public InvoiceController(IInvoceService service,ApplicationDbContext dbContext, IInvoiceWorkerService<ZohoInvoiceWorkerService> workerService, ILogger<InvoiceController> logger)
         {
             _invoceService = service;
             _dbContext = dbContext;
             _workerService = workerService;
+            _logger = logger;
         }
         [HttpPut]
         public async Task<IActionResult> Put([FromBody]ZohoCreatePurchesDto model)
@@ -36,7 +40,7 @@ namespace Empite.PaymentService.Controllers
             }
             catch (Exception e)
             {
-                //Todo Logging
+                _logger.LogError($"Error in Put Method Invoice Controller. Message is => {e.Message}, Stacktrace is => {e.StackTrace}");
                 return StatusCode(StatusCodes.Status500InternalServerError,
                     $"Exception is => {e.Message}, stacktrace => {e.StackTrace}");
             }
@@ -53,7 +57,7 @@ namespace Empite.PaymentService.Controllers
             }
             catch (Exception e)
             {
-                //Todo Logging
+                _logger.LogError($"Error in Put Method GetRecInvoiceStatus Controller. Message is => {e.Message}, Stacktrace is => {e.StackTrace}");
                 return StatusCode(StatusCodes.Status500InternalServerError,
                     $"Exception is => {e.Message}, stacktrace => {e.StackTrace}");
             }

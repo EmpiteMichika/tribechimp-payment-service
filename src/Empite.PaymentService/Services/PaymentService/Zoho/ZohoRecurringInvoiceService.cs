@@ -11,6 +11,7 @@ using Empite.PaymentService.Models.Dto.Zoho;
 using Hangfire;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
@@ -24,28 +25,49 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
         private readonly IHttpClientFactory _httpClientFactory;
         private const int ResultPerPage = 300;
         private IServiceProvider _services { get; }
-        
-        private static bool isRunningRecurringInvoiceCreate = false;
+        private readonly Guid _sessionGuid;
+        private ILogger<ZohoRecurringInvoiceService> _logger;
 
         private const int ZohoSuccessResponseCode = 0;
-        public ZohoRecurringInvoiceService(IServiceProvider services, IZohoInvoiceSingleton zohoTokenService, IOptions<Settings> options, IHttpClientFactory httpClientFactory)
+        public ZohoRecurringInvoiceService(IServiceProvider services, ILogger<ZohoRecurringInvoiceService> logger, IZohoInvoiceSingleton zohoTokenService, IOptions<Settings> options, IHttpClientFactory httpClientFactory)
         {
             _zohoTokenService = zohoTokenService;
             _settings = options.Value;
             _httpClientFactory = httpClientFactory;
             _services = services;
+            _sessionGuid = Guid.NewGuid();
+            _logger = logger;
         }
-        
+        /// <summary>
+        /// Log Errors
+        /// </summary>
+        /// <param name="message"></param>
+        private void LogError(string message)
+        {
+            string finalMessage = ($"Guid:{_sessionGuid.ToString()} || ");
+            finalMessage += message;
+            _logger.LogError(finalMessage);
+        }
+        /// <summary>
+        /// Log Informations
+        /// </summary>
+        /// <param name="message"></param>
+        private void LogInformation(string message)
+        {
+            string finalMessage = ($"Guid:{_sessionGuid.ToString()} || ");
+            finalMessage += message;
+            _logger.LogInformation(finalMessage);
+        }
+
         [AutomaticRetry(Attempts = 0, LogEvents = true, OnAttemptsExceeded = AttemptsExceededAction.Delete)]
         public async Task CreateRecurringInvoice()
         {
-            //throw new NotImplementedException();
-            if (isRunningRecurringInvoiceCreate)
+            if (ZohoRecurringInvoiceServiceStatics.isRunningRecurringInvoiceCreate)
             {
                 return;
             }
-
-            isRunningRecurringInvoiceCreate = true;
+            LogInformation("+++++++++++++++++++++ Starting Creating Recurring invoice Service +++++++++++++++++++++++++++");
+            ZohoRecurringInvoiceServiceStatics.isRunningRecurringInvoiceCreate = true;
             try
             {
 
@@ -55,7 +77,7 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
                     
                     while (true)
                     {
-                        await Task.Delay(2000);
+                        await Task.Delay(5000);
                         List<Purchese> recurringInvoices = dbContext.Purcheses
                             .Where(x => x.InvoiceType ==InvoicingType.Recurring && x.InvoiceStatus == InvoicingStatus.Active 
                                                                                 && x.InvoiceGatewayType == ExternalInvoiceGatewayType.Zoho
@@ -107,7 +129,8 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
                             }
                             catch (Exception ex)
                             {
-                                //Todo Logging
+                                
+                                LogError($"Error in Purcess loop.Purches id is {purchese.Id} Exception is => {ex.Message}, Stacktrace is => {ex.StackTrace}");
                                 throw ex;
                             }
 
@@ -122,11 +145,20 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
             }
             catch (Exception ex)
             {
-                isRunningRecurringInvoiceCreate = false;
-                //Todo Logger
+                ZohoRecurringInvoiceServiceStatics.isRunningRecurringInvoiceCreate = false;
+                
+                LogError($"Error in creating recurring invoices service. Exception is => {ex.Message}, Stacktrace is => {ex.StackTrace}");
+                LogInformation("+++++++++++++++++++++ Stop Creating Recurring invoice Service +++++++++++++++++++++++++++");
                 throw ex;
             }
-            isRunningRecurringInvoiceCreate = false;
+            ZohoRecurringInvoiceServiceStatics.isRunningRecurringInvoiceCreate = false;
+            LogInformation("+++++++++++++++++++++ Stop Creating Recurring invoice Service +++++++++++++++++++++++++++");
         }
     }
+
+    public static class ZohoRecurringInvoiceServiceStatics
+    {
+        public static bool isRunningRecurringInvoiceCreate { get; set; } = false;
+    }
+
 }

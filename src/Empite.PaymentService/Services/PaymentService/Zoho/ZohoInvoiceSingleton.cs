@@ -16,7 +16,7 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
         private DateTime _tokenTime;
         private string OAuthToken = null;
         private readonly Settings _settings;
-        private static bool _isInRetrivingOAuthToken = false;
+        
         public ZohoInvoiceSingletonTokenService(IOptions<Settings> options)
         {
             _settings = options.Value;
@@ -25,7 +25,7 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
 
         public async Task<string> GetOAuthToken()
         {
-            if (_isInRetrivingOAuthToken)
+            if (ZohoInvoiceSingletonStatics._isInRetrivingOAuthToken)
             {
                 while ((string.IsNullOrWhiteSpace(OAuthToken) || (_tokenTime - DateTime.UtcNow).Seconds < 0))
                 {
@@ -34,7 +34,7 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
                 return OAuthToken;
             }
 
-            _isInRetrivingOAuthToken = true;
+            ZohoInvoiceSingletonStatics._isInRetrivingOAuthToken = true;
 
             try
             {
@@ -80,11 +80,11 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
                     }
                 }
 
-                _isInRetrivingOAuthToken = false;
+                ZohoInvoiceSingletonStatics._isInRetrivingOAuthToken = false;
             }
             catch (Exception ex)
             {
-                _isInRetrivingOAuthToken = false;
+                ZohoInvoiceSingletonStatics._isInRetrivingOAuthToken = false;
                 throw ex;
             }
             return OAuthToken;
@@ -100,5 +100,10 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
         }
 
         #endregion
+    }
+
+    public static class ZohoInvoiceSingletonStatics
+    {
+        public static bool _isInRetrivingOAuthToken { get; set; } = false;
     }
 }
