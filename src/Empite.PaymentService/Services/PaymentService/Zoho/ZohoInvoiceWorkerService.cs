@@ -434,7 +434,7 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
                             dbPurchese.InvoiceName = "";
                             dbPurchese.Items = zohoItems.Select(x => new Item_Purchese
                             {
-                                Qty = model.Items.First(y => y.ItemId == x.Id).Qty,
+                                Qty = model.Items.First(y => y.ItemId == x.ReferenceId).Qty,
                                 Item = x
                             }).ToList();
                             dbPurchese.InvoiceStatus = InvoicingStatus.Active;
@@ -541,7 +541,7 @@ namespace Empite.PaymentService.Services.PaymentService.Zoho
             if (history.DueDate.AddMonths(1).Date >= DateTime.UtcNow.Date)
             {
                 //Check for 1 month range
-                if (history.PaymentRecordedDate == null && history.InvoiceStatus == InvoiceStatus.Paid)
+                if (history.PaymentRecordedDate == null && history.InvoiceStatus != InvoiceStatus.Paid)
                 {
                     return false;
                 }

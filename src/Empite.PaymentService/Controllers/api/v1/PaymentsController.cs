@@ -30,7 +30,7 @@ namespace Empite.PaymentService.Controllers.api.v1
             try
             {
                 InvoiceHistory dbInvoiceHistory = await _dbContext.InvoiceHistories.Include(x => x.Purchese).ThenInclude(x => x.Items).ThenInclude(x => x.Item)
-                    .Where(x => x.Id == status.InvoiceId).FirstOrDefaultAsync();
+                    .Where(x => x.InvoiceId == status.InvoiceId).FirstOrDefaultAsync();
                 if (dbInvoiceHistory == null)
                 {
                     //Todo log
@@ -43,13 +43,14 @@ namespace Empite.PaymentService.Controllers.api.v1
                 {
                     dbInvoiceHistory.InvoiceStatus = InvoiceStatus.Paid;
                     dbInvoiceHistory.PaidAmount += status.Amount;
+                    
                 }
                 else
                 {
                     dbInvoiceHistory.InvoiceStatus = InvoiceStatus.PartialPayment;
                     dbInvoiceHistory.PaidAmount += status.Amount;
                 }
-
+                dbInvoiceHistory.PaymentRecordedDate = DateTime.UtcNow;
                 await _dbContext.SaveChangesAsync();
                 return Ok();
             }
